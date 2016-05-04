@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <RobotVIII>
     <Model>
-        <Environment gravity="{0 , -9.8 , 0 , 0 , 0 , 0}"/>
-        <Variable>
+        <Environment type="environment" gravity="{0 , -9.8 , 0 , 0 , 0 , 0}"/>
+        <Variable type="variable_pool_element">
             <PI type="matrix">3.14159265358979</PI>
             <U1ipe type="matrix">{ 0, 0,      0,     PI / 2, PI / 2, 0 }</U1ipe>
             <U1jpe type="matrix">{ 0, 0,      0,     PI / 2, PI / 2, 0 }</U1jpe>
@@ -43,7 +43,7 @@
             <P23b_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_VIII\p23b.x_t</P23b_graphic>
             <Body_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_VIII\body.x_t</Body_graphic>
         </Variable>
-        <Akima>
+        <Akima type="akima_pool_element">
             <LF_M1_akima type="akima" x="{0 , 0.05 , 0.1 , 0.15 , 0.2 , 0.25 , 0.3 , 0.35 , 0.4 , 0.45 , 0.5 , 0.55 , 0.6 , 0.65 , 0.7 , 0.75 , 0.8 , 0.85 , 0.9 , 0.95 , 1 , 1.05 , 1.1 , 1.15 , 1.2 , 1.25 , 1.3 , 1.35 , 1.4 , 1.45 , 1.5 , 1.55 , 1.6 , 1.65 , 1.7 , 1.75 , 1.8 , 1.85 , 1.9 , 1.95 , 2 , 2.05 , 2.1 , 2.15 , 2.2 , 2.25 , 2.3 , 2.35 , 2.4 , 2.45 , 2.5 , 2.55 , 2.6 , 2.65 , 2.7 , 2.75 , 2.8 , 2.85 , 2.9 , 2.95 , 3 , 3.05 , 3.1 , 3.15 , 3.2 , 3.25 , 3.3 , 3.35 , 3.4 , 3.45 , 3.5 , 3.55 , 3.6 , 3.65 , 3.7 , 3.75 , 3.8 , 3.85 , 3.9 , 3.95 , 4}" y="{0.877488110747292 , 0.877241294796172 , 0.876508894961439 , 0.875315431705427 , 0.873702251676607 , 0.871727861298556 , 0.869468183691833 , 0.867016533875369 , 0.864483058078454 , 0.861993345805791 , 0.859685908125936 , 0.857708237896588 , 0.856211246805514 , 0.855342028928939 , 0.855235139759068 , 0.856002890229248 , 0.857725492359971 , 0.86044217960822 , 0.864144566072796 , 0.86877342225368 , 0.874219697734826 , 0.880330053476691 , 0.886916491080207 , 0.893769036273326 , 0.900669992220508 , 0.907408113538694 , 0.91379117603717 , 0.919655772539552 , 0.924873651999271 , 0.929354429219066 , 0.933044936057106 , 0.935925805509338 , 0.938006056807902 , 0.939316491881781 , 0.939902650148237 , 0.939817937557184 , 0.939117384879952 , 0.937852330839787 , 0.936066189704804 , 0.933791362175146 , 0.931047285684387 , 0.928122864906579 , 0.925299566352555 , 0.922575361838053 , 0.919948261406942 , 0.917416314914796 , 0.91497761356895 , 0.912630291423796 , 0.910372526830294 , 0.908202543838839 , 0.906118613554862 , 0.904119055446659 , 0.902202238605168 , 0.900366582955539 , 0.898610560420492 , 0.896932696035609 , 0.895331569016811 , 0.893805813780383 , 0.892354120916027 , 0.890975238113474 , 0.889667971043298 , 0.888431184192586 , 0.88726380165621 , 0.886164807884454 , 0.885133248387775 , 0.884168230399481 , 0.883268923497134 , 0.882434560183432 , 0.881664436427326 , 0.880957912166106 , 0.880314411769107 , 0.879733424463677 , 0.879214504723962 , 0.878757272623008 , 0.878361414148606 , 0.87802668148321 , 0.877752893248209 , 0.877539934712695 , 0.877387757966819 , 0.877296382059701 , 0.877265893101781}"/>
             <LF_M2_akima type="akima" x="{0 , 0.05 , 0.1 , 0.15 , 0.2 , 0.25 , 0.3 , 0.35 , 0.4 , 0.45 , 0.5 , 0.55 , 0.6 , 0.65 , 0.7 , 0.75 , 0.8 , 0.85 , 0.9 , 0.95 , 1 , 1.05 , 1.1 , 1.15 , 1.2 , 1.25 , 1.3 , 1.35 , 1.4 , 1.45 , 1.5 , 1.55 , 1.6 , 1.65 , 1.7 , 1.75 , 1.8 , 1.85 , 1.9 , 1.95 , 2 , 2.05 , 2.1 , 2.15 , 2.2 , 2.25 , 2.3 , 2.35 , 2.4 , 2.45 , 2.5 , 2.55 , 2.6 , 2.65 , 2.7 , 2.75 , 2.8 , 2.85 , 2.9 , 2.95 , 3 , 3.05 , 3.1 , 3.15 , 3.2 , 3.25 , 3.3 , 3.35 , 3.4 , 3.45 , 3.5 , 3.55 , 3.6 , 3.65 , 3.7 , 3.75 , 3.8 , 3.85 , 3.9 , 3.95 , 4}" y="{0.842476375343431 , 0.84222408168831 , 0.841471208784189 , 0.840230146757095 , 0.838522394440396 , 0.836379638248667 , 0.833845133623063 , 0.830975244880507 , 0.827840938002078 , 0.824528949979429 , 0.821142285311562 , 0.817799631259134 , 0.814633264274654 , 0.811785073306373 , 0.809400482891087 , 0.807620336598019 , 0.80657118445944 , 0.806354847628968 , 0.807038507965347 , 0.808646766979643 , 0.81115703546195 , 0.814499216986299 , 0.818559996019701 , 0.823191282456599 , 0.82822168697201 , 0.833469467800009 , 0.838755282655912 , 0.843913285969393 , 0.848799540626557 , 0.853297238622109 , 0.857318726696983 , 0.860804726495333 , 0.863721384228268 , 0.866055882522 , 0.867811324559341 , 0.869001498133111 , 0.86964598593324 , 0.869765942257089 , 0.869380728504389 , 0.868505502286939 , 0.867149790402894 , 0.865592961577644 , 0.864109334961796 , 0.862696319417386 , 0.861351384915227 , 0.860072063580586 , 0.858855950659009 , 0.857700705405661 , 0.856604051901721 , 0.855563779801524 , 0.854577745014284 , 0.853643870324297 , 0.852760145953627 , 0.851924630071286 , 0.85113544925297 , 0.8503907988954 , 0.849688943589278 , 0.849028217454869 , 0.848407024444117 , 0.847823838613152 , 0.847277204368968 , 0.846765736693912 , 0.84628812135155 , 0.845843115077336 , 0.84542954575736 , 0.845046312598332 , 0.844692386291796 , 0.844366809175418 , 0.844068695393992 , 0.843797231062709 , 0.843551674434976 , 0.843331356076944 , 0.843135679050713 , 0.842964119107966 , 0.842816224895626 , 0.8426916181749 , 0.842589994054902 , 0.842511121241825 , 0.842454842304431 , 0.842421073956409 , 0.842409807355957}"/>
             <LF_M3_akima type="akima" x="{0 , 0.05 , 0.1 , 0.15 , 0.2 , 0.25 , 0.3 , 0.35 , 0.4 , 0.45 , 0.5 , 0.55 , 0.6 , 0.65 , 0.7 , 0.75 , 0.8 , 0.85 , 0.9 , 0.95 , 1 , 1.05 , 1.1 , 1.15 , 1.2 , 1.25 , 1.3 , 1.35 , 1.4 , 1.45 , 1.5 , 1.55 , 1.6 , 1.65 , 1.7 , 1.75 , 1.8 , 1.85 , 1.9 , 1.95 , 2 , 2.05 , 2.1 , 2.15 , 2.2 , 2.25 , 2.3 , 2.35 , 2.4 , 2.45 , 2.5 , 2.55 , 2.6 , 2.65 , 2.7 , 2.75 , 2.8 , 2.85 , 2.9 , 2.95 , 3 , 3.05 , 3.1 , 3.15 , 3.2 , 3.25 , 3.3 , 3.35 , 3.4 , 3.45 , 3.5 , 3.55 , 3.6 , 3.65 , 3.7 , 3.75 , 3.8 , 3.85 , 3.9 , 3.95 , 4}" y="{0.88768431372229 , 0.887432473555889 , 0.886683042285829 , 0.885454492929706 , 0.883778188212985 , 0.881699124518621 , 0.879276800602443 , 0.876586033284901 , 0.873717485998784 , 0.870777620920396 , 0.867887740411863 , 0.865181764647779 , 0.862802422460874 , 0.860895637550513 , 0.859603092531954 , 0.859053250544969 , 0.859351478065029 , 0.860570274450507 , 0.862740874440595 , 0.865847546092763 , 0.869825690523985 , 0.874564364590338 , 0.87991318111873 , 0.885692844814861 , 0.891708021198835 , 0.897760935490716 , 0.903664105016216 , 0.909250886529627 , 0.914382974145859 , 0.918954498010723 , 0.922892844638228 , 0.926156676876456 , 0.928731844391219 , 0.930625948573551 , 0.931862286394963 , 0.93247378439759 , 0.932497385665559 , 0.931969201719893 , 0.930920610305153 , 0.929375381046224 , 0.927347847012924 , 0.925122489347641 , 0.922978123240124 , 0.920912952114548 , 0.918925215146737 , 0.917013188064169 , 0.915175183914886 , 0.913409553805566 , 0.9117146876091 , 0.91008901464213 , 0.908531004313105 , 0.907039166741478 , 0.905612053348775 , 0.904248257422314 , 0.902946414652433 , 0.901705203644134 , 0.900523346404116 , 0.899399608804181 , 0.898332801022073 , 0.897321777960803 , 0.896365439647565 , 0.895462731613336 , 0.894612645254276 , 0.893814218176057 , 0.893066534522222 , 0.892368725287679 , 0.891719968618433 , 0.891119490098609 , 0.890566563025831 , 0.890060508675952 , 0.889600696558135 , 0.889186544661217 , 0.888817519692265 , 0.888493137308171 , 0.888212962341087 , 0.887976609018466 , 0.88778374117838 , 0.887634072480758 , 0.887527366615109 , 0.887463437505234 , 0.887442149511349}"/>
@@ -63,57 +63,9 @@
             <RR_M2_akima type="akima" x="{0 , 0.05 , 0.1 , 0.15 , 0.2 , 0.25 , 0.3 , 0.35 , 0.4 , 0.45 , 0.5 , 0.55 , 0.6 , 0.65 , 0.7 , 0.75 , 0.8 , 0.85 , 0.9 , 0.95 , 1 , 1.05 , 1.1 , 1.15 , 1.2 , 1.25 , 1.3 , 1.35 , 1.4 , 1.45 , 1.5 , 1.55 , 1.6 , 1.65 , 1.7 , 1.75 , 1.8 , 1.85 , 1.9 , 1.95 , 2 , 2.05 , 2.1 , 2.15 , 2.2 , 2.25 , 2.3 , 2.35 , 2.4 , 2.45 , 2.5 , 2.55 , 2.6 , 2.65 , 2.7 , 2.75 , 2.8 , 2.85 , 2.9 , 2.95 , 3 , 3.05 , 3.1 , 3.15 , 3.2 , 3.25 , 3.3 , 3.35 , 3.4 , 3.45 , 3.5 , 3.55 , 3.6 , 3.65 , 3.7 , 3.75 , 3.8 , 3.85 , 3.9 , 3.95 , 4}" y="{0.842476375343431 , 0.842481961553723 , 0.842498864012603 , 0.842527381217247 , 0.842567921775574 , 0.842621004136877 , 0.842687256342133 , 0.842767415792069 , 0.842862329030573 , 0.842972951540599 , 0.843100347549238 , 0.843245689838196 , 0.843410259555434 , 0.843595446023338 , 0.843802746538316 , 0.844033766156296 , 0.844290217458203 , 0.844573920289084 , 0.844886801464146 , 0.845230894434634 , 0.845608338906088 , 0.846021380401213 , 0.846472369759293 , 0.846963762563785 , 0.84749811848953 , 0.848078100560759 , 0.848706474310989 , 0.849386106835722 , 0.850119965728862 , 0.850911117893719 , 0.851762728219587 , 0.852678058114967 , 0.853660463888749 , 0.854713394970953 , 0.855840391964981 , 0.857045084523825 , 0.858331189043206 , 0.859702506165285 , 0.861162918087311 , 0.862716385670469 , 0.864366945345067 , 0.865837599179986 , 0.866843570245559 , 0.867371294412136 , 0.867399348708538 , 0.866899603959742 , 0.865839655648978 , 0.864186596558152 , 0.861912112668291 , 0.858998740275777 , 0.85544691855552 , 0.851282224969124 , 0.846561927648842 , 0.841379785679059 , 0.8358679459336 , 0.830194896343784 , 0.824558793863326 , 0.819176099730061 , 0.814266263453699 , 0.810034055868848 , 0.806651847938954 , 0.804244437432518 , 0.802878779711057 , 0.802560172420504 , 0.803235254371005 , 0.80480092482637 , 0.807117313367691 , 0.810022467546116 , 0.813346525319959 , 0.816923675304036 , 0.820600955758068 , 0.82424367737872 , 0.827737817994085 , 0.830990064114013 , 0.833926278304204 , 0.836489112110904 , 0.838635334953431 , 0.840333273773431 , 0.841560599619178 , 0.842302577503332 , 0.842550819568066}"/>
             <RR_M3_akima type="akima" x="{0 , 0.05 , 0.1 , 0.15 , 0.2 , 0.25 , 0.3 , 0.35 , 0.4 , 0.45 , 0.5 , 0.55 , 0.6 , 0.65 , 0.7 , 0.75 , 0.8 , 0.85 , 0.9 , 0.95 , 1 , 1.05 , 1.1 , 1.15 , 1.2 , 1.25 , 1.3 , 1.35 , 1.4 , 1.45 , 1.5 , 1.55 , 1.6 , 1.65 , 1.7 , 1.75 , 1.8 , 1.85 , 1.9 , 1.95 , 2 , 2.05 , 2.1 , 2.15 , 2.2 , 2.25 , 2.3 , 2.35 , 2.4 , 2.45 , 2.5 , 2.55 , 2.6 , 2.65 , 2.7 , 2.75 , 2.8 , 2.85 , 2.9 , 2.95 , 3 , 3.05 , 3.1 , 3.15 , 3.2 , 3.25 , 3.3 , 3.35 , 3.4 , 3.45 , 3.5 , 3.55 , 3.6 , 3.65 , 3.7 , 3.75 , 3.8 , 3.85 , 3.9 , 3.95 , 4}" y="{0.887684313722289 , 0.887716359162888 , 0.887812567496953 , 0.887973122534134 , 0.888198308951233 , 0.888488511996912 , 0.888844217123523 , 0.889266009545504 , 0.88975457372353 , 0.890310692773408 , 0.890935247798475 , 0.89162921714408 , 0.892393675572534 , 0.893229793356794 , 0.894138835290955 , 0.895122159615592 , 0.896181216855819 , 0.897317548569974 , 0.898532786006729 , 0.899828648668494 , 0.901206942778992 , 0.902669559652946 , 0.904218473965987 , 0.905855741922957 , 0.907583499323044 , 0.90940395952036 , 0.91131941127885 , 0.913332216520741 , 0.915444807968041 , 0.917659686677011 , 0.919979419465925 , 0.922406636236886 , 0.924944027192964 , 0.927594339952383 , 0.930360376562106 , 0.933244990413638 , 0.93625108306451 , 0.9393816009695 , 0.942639532126223 , 0.946027902640369 , 0.949549773216493 , 0.952898522625398 , 0.955756985032455 , 0.958098869279091 , 0.959880475240003 , 0.961042698245054 , 0.961514529037323 , 0.961218132816615 , 0.960075509900293 , 0.958016595989661 , 0.954988454476221 , 0.950964963277287 , 0.945956137491685 , 0.940016005927099 , 0.933247834984187 , 0.925805530202796 , 0.917890294319614 , 0.909742100963305 , 0.901626226506646 , 0.893815879122938 , 0.886572723742414 , 0.880127638417161 , 0.874664179372873 , 0.870306885107138 , 0.867115752813592 , 0.865087153881381 , 0.864160391166728 , 0.864228305972739 , 0.865149982544815 , 0.866763687630557 , 0.868898605778303 , 0.871384505883701 , 0.874059029197424 , 0.876772711423973 , 0.879392102099912 , 0.881801440405293 , 0.883903334439743 , 0.885618821495098 , 0.8868870995951 , 0.887665139013903 , 0.887927315929047}"/>
         </Akima>
-        <Script>
-            <default_script type="script">
-                deactivate/joint, id=6
-                deactivate/sforce, id=1
-                deactivate/sforce, id=2
-                deactivate/sforce, id=3
-                deactivate/motion, id=4
-                deactivate/sforce, id=5
-                deactivate/sforce, id=6
-                deactivate/joint, id=24
-                deactivate/sforce, id=7
-                deactivate/sforce, id=8
-                deactivate/sforce, id=9
-                deactivate/motion, id=10
-                deactivate/sforce, id=11
-                deactivate/sforce, id=12
-                deactivate/joint, id=42
-                deactivate/sforce, id=13
-                deactivate/sforce, id=14
-                deactivate/sforce, id=15
-                deactivate/motion, id=16
-                deactivate/sforce, id=17
-                deactivate/sforce, id=18
-                simulate/transient, dur=2, dtout=0.05
-                activate/joint, id=6
-                deactivate/motion, id=1
-                activate/sforce, id=1
-                marker/1 , QP = -0.412518650455251,-0.849998580477897,-0.846463371429507 , REULER =2.00180921858028,2.59107277731869,4.02156825681859
-                deactivate/joint, id=15
-                activate/motion, id=4
-                deactivate/sforce, id=4
-                activate/joint, id=24
-                deactivate/motion, id=7
-                activate/sforce, id=7
-                marker/3 , QP = -0.218248839743012,-0.849998623802925,0.438939683519262 , REULER =4.87813628419867,2.51028768387854,0.457857432579678
-                deactivate/joint, id=33
-                activate/motion, id=10
-                deactivate/sforce, id=10
-                activate/joint, id=42
-                deactivate/motion, id=13
-                activate/sforce, id=13
-                marker/5 , QP = 0.426194160708213,-0.849997841213599,-0.315840477893413 , REULER =0.618598025331767,0.20502843221467,4.46788143100944
-                deactivate/joint, id=51
-                activate/motion, id=16
-                deactivate/sforce, id=16
-                simulate/transient, dur=2, dtout=0.05
-            </default_script>
-        </Script>
-        <Part>
+        <Part type="part_pool_element">
             <Ground type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="{1 , 0 , 0 , 0 , 1 , 1 , 1 , 0 , 0 , 0}" graphic_file_path="">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <LF_Sfj type="marker" active="true" pe="{-0.3 , -0.85 , -0.65 , 1.87076482717163 , 2.55246655579383 , 3.81038157127293}"/>
                     <LM_Sfj type="marker" active="true" pe="{-0.45 , -0.85 , 0 , 2.16210430732683 , 3.14159265358979 , 4.12108099985276}"/>
                     <LR_Sfj type="marker" active="true" pe="{-0.3 , -0.85 , 0.65 , 5.01235748076143 , 2.55246655579383 , 0.668788917683143}"/>
@@ -124,37 +76,37 @@
                 </ChildMarker>
             </Ground>
             <LF_P1a type="part" active="true" pe="{-0.05433 , 0 , -0.3253 , 1.87076482717163 , 2.55246655579383 , 3.81038157127293}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P1aGamma" graphic_file_path="${P1a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P1j type="marker" active="true" pe="P1jpe"/>
                     <U1j type="marker" active="true" pe="U1jpe"/>
                 </ChildMarker>
             </LF_P1a>
             <LF_P2a type="part" active="true" pe="{-0.181401782467171 , 0.0600460184637857 , -0.553394799956647 , 1.67242939438052 , 2.60172195202901 , 3.44213495507482}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P2aGamma" graphic_file_path="${P23a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P2j type="marker" active="true" pe="P2jpe"/>
                     <U2j type="marker" active="true" pe="U2jpe"/>
                 </ChildMarker>
             </LF_P2a>
             <LF_P2b type="part" active="true" pe="{-0.312586693716602 , -0.762220108040695 , -0.681595343152072 , 1.67242939438052 , 2.60172195202901 , 3.44213495507482}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P2bGamma" graphic_file_path="${P23b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P2i type="marker" active="true" pe="P2ipe"/>
                     <S2j type="marker" active="true" pe="S2jpe"/>
                 </ChildMarker>
             </LF_P2b>
             <LF_P3a type="part" active="true" pe="{-0.315401782467171 , 0.0600460184637859 , -0.321299991742418 , 2.03020849392424 , 2.49137127895773 , 3.7423502327588}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P3aGamma" graphic_file_path="${P23a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P3j type="marker" active="true" pe="P3jpe"/>
                     <U3j type="marker" active="true" pe="U3jpe"/>
                 </ChildMarker>
             </LF_P3a>
             <LF_P3b type="part" active="true" pe="{-0.348682673184127 , -0.773384657158319 , -0.625058336605207 , 2.03020849392424 , 2.49137127895773 , 3.7423502327588}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P3bGamma" graphic_file_path="${P23b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P3i type="marker" active="true" pe="P3ipe"/>
                     <S3j type="marker" active="true" pe="S3jpe"/>
                 </ChildMarker>
             </LF_P3b>
             <LF_Thigh type="part" active="true" pe="{-0.283057027650631 , -0.791378570859432 , -0.627606614068303 , 1.87076482717163 , 2.55246655579383 , 3.81038157127293}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="ThighGamma" graphic_file_path="${P1b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P1i type="marker" active="true" pe="P1ipe"/>
                     <S2i type="marker" active="true" pe="S2ipe"/>
                     <S3i type="marker" active="true" pe="S3ipe"/>
@@ -162,37 +114,37 @@
                 </ChildMarker>
             </LF_Thigh>
             <LM_P1a type="part" active="true" pe="{-0.10241 , 0 , 0 , 2.16210430732683 , 3.14159265358979 , 4.12108099985276}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P1aGamma" graphic_file_path="${P1a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P1j type="marker" active="true" pe="P1jpe"/>
                     <U1j type="marker" active="true" pe="U1jpe"/>
                 </ChildMarker>
             </LM_P1a>
             <LM_P2a type="part" active="true" pe="{-0.326504791699063 , 0.0600460184637858 , -0.134000000000001 , 6.02138591938046 , 3.02297421948715 , 1.49295161468752}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P2aGamma" graphic_file_path="${P23a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P2j type="marker" active="true" pe="P2jpe"/>
                     <U2j type="marker" active="true" pe="U2jpe"/>
                 </ChildMarker>
             </LM_P2a>
             <LM_P2b type="part" active="true" pe="{-0.480007549218388 , -0.767504260777262 , -0.0340000000000002 , 6.02138591938046 , 3.02297421948715 , 1.49295161468752}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P2bGamma" graphic_file_path="${P23b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P2i type="marker" active="true" pe="P2ipe"/>
                     <S2j type="marker" active="true" pe="S2jpe"/>
                 </ChildMarker>
             </LM_P2b>
             <LM_P3a type="part" active="true" pe="{-0.326504791699064 , 0.0600460184637858 , 0.133999999999999 , 2.87979326579062 , 3.02297421948715 , 4.63454426827726}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P3aGamma" graphic_file_path="${P23a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P3j type="marker" active="true" pe="P3jpe"/>
                     <U3j type="marker" active="true" pe="U3jpe"/>
                 </ChildMarker>
             </LM_P3a>
             <LM_P3b type="part" active="true" pe="{-0.480007549218388 , -0.767504260777262 , 0.0339999999999998 , 2.87979326579062 , 3.02297421948715 , 4.63454426827726}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P3bGamma" graphic_file_path="${P23b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P3i type="marker" active="true" pe="P3ipe"/>
                     <S3j type="marker" active="true" pe="S3jpe"/>
                 </ChildMarker>
             </LM_P3b>
             <LM_Thigh type="part" active="true" pe="{-0.425397188622955 , -0.789836043411811 , 0 , 2.16210430732683 , 3.14159265358979 , 4.12108099985276}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="ThighGamma" graphic_file_path="${P1b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P1i type="marker" active="true" pe="P1ipe"/>
                     <S2i type="marker" active="true" pe="S2ipe"/>
                     <S3i type="marker" active="true" pe="S3ipe"/>
@@ -200,37 +152,37 @@
                 </ChildMarker>
             </LM_Thigh>
             <LR_P1a type="part" active="true" pe="{-0.05433 , 0 , 0.3253 , 5.01235748076143 , 2.55246655579383 , 0.668788917683143}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P1aGamma" graphic_file_path="${P1a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P1j type="marker" active="true" pe="P1jpe"/>
                     <U1j type="marker" active="true" pe="U1jpe"/>
                 </ChildMarker>
             </LR_P1a>
             <LR_P2a type="part" active="true" pe="{-0.315401782467171 , 0.0600460184637859 , 0.321299991742416 , 5.17180114751404 , 2.49137127895774 , 0.600757579169014}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P2aGamma" graphic_file_path="${P23a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P2j type="marker" active="true" pe="P2jpe"/>
                     <U2j type="marker" active="true" pe="U2jpe"/>
                 </ChildMarker>
             </LR_P2a>
             <LR_P2b type="part" active="true" pe="{-0.348682673184127 , -0.773384657158319 , 0.625058336605206 , 5.17180114751404 , 2.49137127895774 , 0.600757579169014}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P2bGamma" graphic_file_path="${P23b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P2i type="marker" active="true" pe="P2ipe"/>
                     <S2j type="marker" active="true" pe="S2jpe"/>
                 </ChildMarker>
             </LR_P2b>
             <LR_P3a type="part" active="true" pe="{-0.181401782467172 , 0.0600460184637857 , 0.553394799956646 , 4.81402204797032 , 2.60172195202902 , 0.300542301485031}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P3aGamma" graphic_file_path="${P23a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P3j type="marker" active="true" pe="P3jpe"/>
                     <U3j type="marker" active="true" pe="U3jpe"/>
                 </ChildMarker>
             </LR_P3a>
             <LR_P3b type="part" active="true" pe="{-0.312586693716603 , -0.762220108040695 , 0.681595343152071 , 4.81402204797032 , 2.60172195202902 , 0.300542301485031}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P3bGamma" graphic_file_path="${P23b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P3i type="marker" active="true" pe="P3ipe"/>
                     <S3j type="marker" active="true" pe="S3jpe"/>
                 </ChildMarker>
             </LR_P3b>
             <LR_Thigh type="part" active="true" pe="{-0.283057027650632 , -0.791378570859432 , 0.627606614068303 , 5.01235748076143 , 2.55246655579383 , 0.668788917683143}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="ThighGamma" graphic_file_path="${P1b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P1i type="marker" active="true" pe="P1ipe"/>
                     <S2i type="marker" active="true" pe="S2ipe"/>
                     <S3i type="marker" active="true" pe="S3ipe"/>
@@ -238,7 +190,7 @@
                 </ChildMarker>
             </LR_Thigh>
             <MainBody type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="BodyGamma" graphic_file_path="${Body_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <BodyCenter type="marker" active="true" pe="{-0 , 0 , -0 , -0 , 0 , -0}"/>
                     <LF_Base type="marker" active="true" pe="LFpe"/>
                     <LF_U1i type="marker" active="true" pe="U1ipe" relative_to="LF_Base"/>
@@ -268,37 +220,37 @@
                 </ChildMarker>
             </MainBody>
             <RF_P1a type="part" active="true" pe="{0.05433 , 0 , -0.3253 , 1.27082782641815 , 0.589126097795963 , 3.81038157127293}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P1aGamma" graphic_file_path="${P1a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P1j type="marker" active="true" pe="P1jpe"/>
                     <U1j type="marker" active="true" pe="U1jpe"/>
                 </ChildMarker>
             </RF_P1a>
             <RF_P2a type="part" active="true" pe="{0.315401782467171 , 0.0600460184637851 , -0.321299991742417 , 1.11138415966554 , 0.650221374632058 , 3.74235023275881}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P2aGamma" graphic_file_path="${P23a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P2j type="marker" active="true" pe="P2jpe"/>
                     <U2j type="marker" active="true" pe="U2jpe"/>
                 </ChildMarker>
             </RF_P2a>
             <RF_P2b type="part" active="true" pe="{0.348682673184127 , -0.773384657158319 , -0.625058336605207 , 1.11138415966554 , 0.650221374632058 , 3.74235023275881}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P2bGamma" graphic_file_path="${P23b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P2i type="marker" active="true" pe="P2ipe"/>
                     <S2j type="marker" active="true" pe="S2jpe"/>
                 </ChildMarker>
             </RF_P2b>
             <RF_P3a type="part" active="true" pe="{0.181401782467171 , 0.0600460184637853 , -0.553394799956647 , 1.46916325920927 , 0.539870701560778 , 3.44213495507482}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P3aGamma" graphic_file_path="${P23a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P3j type="marker" active="true" pe="P3jpe"/>
                     <U3j type="marker" active="true" pe="U3jpe"/>
                 </ChildMarker>
             </RF_P3a>
             <RF_P3b type="part" active="true" pe="{0.312586693716603 , -0.762220108040695 , -0.681595343152072 , 1.46916325920927 , 0.539870701560778 , 3.44213495507482}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P3bGamma" graphic_file_path="${P23b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P3i type="marker" active="true" pe="P3ipe"/>
                     <S3j type="marker" active="true" pe="S3jpe"/>
                 </ChildMarker>
             </RF_P3b>
             <RF_Thigh type="part" active="true" pe="{0.283057027650631 , -0.791378570859432 , -0.627606614068303 , 1.27082782641815 , 0.589126097795963 , 3.81038157127293}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="ThighGamma" graphic_file_path="${P1b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P1i type="marker" active="true" pe="P1ipe"/>
                     <S2i type="marker" active="true" pe="S2ipe"/>
                     <S3i type="marker" active="true" pe="S3ipe"/>
@@ -306,37 +258,37 @@
                 </ChildMarker>
             </RF_Thigh>
             <RM_P1a type="part" active="true" pe="{0.10241 , 0 , 0 , 5.69187732664766 , 0 , 5.69187732664766}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P1aGamma" graphic_file_path="${P1a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P1j type="marker" active="true" pe="P1jpe"/>
                     <U1j type="marker" active="true" pe="U1jpe"/>
                 </ChildMarker>
             </RM_P1a>
             <RM_P2a type="part" active="true" pe="{0.326504791699064 , 0.0600460184637851 , 0.134 , 0.261799387799146 , 0.118618434102643 , 4.63454426827729}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P2aGamma" graphic_file_path="${P23a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P2j type="marker" active="true" pe="P2jpe"/>
                     <U2j type="marker" active="true" pe="U2jpe"/>
                 </ChildMarker>
             </RM_P2a>
             <RM_P2b type="part" active="true" pe="{0.480007549218388 , -0.767504260777262 , 0.034 , 0.261799387799146 , 0.118618434102643 , 4.63454426827729}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P2bGamma" graphic_file_path="${P23b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P2i type="marker" active="true" pe="P2ipe"/>
                     <S2j type="marker" active="true" pe="S2jpe"/>
                 </ChildMarker>
             </RM_P2b>
             <RM_P3a type="part" active="true" pe="{0.326504791699064 , 0.0600460184637851 , -0.134 , 3.40339204138894 , 0.118618434102643 , 1.4929516146875}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P3aGamma" graphic_file_path="${P23a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P3j type="marker" active="true" pe="P3jpe"/>
                     <U3j type="marker" active="true" pe="U3jpe"/>
                 </ChildMarker>
             </RM_P3a>
             <RM_P3b type="part" active="true" pe="{0.480007549218388 , -0.767504260777262 , -0.034 , 3.40339204138894 , 0.118618434102643 , 1.4929516146875}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P3bGamma" graphic_file_path="${P23b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P3i type="marker" active="true" pe="P3ipe"/>
                     <S3j type="marker" active="true" pe="S3jpe"/>
                 </ChildMarker>
             </RM_P3b>
             <RM_Thigh type="part" active="true" pe="{0.425397188622954 , -0.789836043411811 , 0 , 5.69187732664766 , 0 , 5.69187732664766}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="ThighGamma" graphic_file_path="${P1b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P1i type="marker" active="true" pe="P1ipe"/>
                     <S2i type="marker" active="true" pe="S2ipe"/>
                     <S3i type="marker" active="true" pe="S3ipe"/>
@@ -344,37 +296,37 @@
                 </ChildMarker>
             </RM_Thigh>
             <RR_P1a type="part" active="true" pe="{0.05433 , 0 , 0.3253 , 4.41242048000795 , 0.589126097795968 , 0.668788917683135}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P1aGamma" graphic_file_path="${P1a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P1j type="marker" active="true" pe="P1jpe"/>
                     <U1j type="marker" active="true" pe="U1jpe"/>
                 </ChildMarker>
             </RR_P1a>
             <RR_P2a type="part" active="true" pe="{0.18140178246717 , 0.0600460184637853 , 0.553394799956647 , 4.61075591279907 , 0.539870701560784 , 0.300542301485025}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P2aGamma" graphic_file_path="${P23a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P2j type="marker" active="true" pe="P2jpe"/>
                     <U2j type="marker" active="true" pe="U2jpe"/>
                 </ChildMarker>
             </RR_P2a>
             <RR_P2b type="part" active="true" pe="{0.312586693716602 , -0.762220108040695 , 0.681595343152072 , 4.61075591279907 , 0.539870701560784 , 0.300542301485025}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P2bGamma" graphic_file_path="${P23b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P2i type="marker" active="true" pe="P2ipe"/>
                     <S2j type="marker" active="true" pe="S2jpe"/>
                 </ChildMarker>
             </RR_P2b>
             <RR_P3a type="part" active="true" pe="{0.315401782467171 , 0.0600460184637851 , 0.321299991742419 , 4.25297681325535 , 0.650221374632063 , 0.600757579169006}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P3aGamma" graphic_file_path="${P23a_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P3j type="marker" active="true" pe="P3jpe"/>
                     <U3j type="marker" active="true" pe="U3jpe"/>
                 </ChildMarker>
             </RR_P3a>
             <RR_P3b type="part" active="true" pe="{0.348682673184127 , -0.773384657158319 , 0.625058336605207 , 4.25297681325535 , 0.650221374632063 , 0.600757579169006}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P3bGamma" graphic_file_path="${P23b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P3i type="marker" active="true" pe="P3ipe"/>
                     <S3j type="marker" active="true" pe="S3jpe"/>
                 </ChildMarker>
             </RR_P3b>
             <RR_Thigh type="part" active="true" pe="{0.283057027650631 , -0.791378570859432 , 0.627606614068303 , 4.41242048000795 , 0.589126097795968 , 0.668788917683135}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="ThighGamma" graphic_file_path="${P1b_graphic}">
-                <ChildMarker>
+                <ChildMarker type="marker_pool_element">
                     <P1i type="marker" active="true" pe="P1ipe"/>
                     <S2i type="marker" active="true" pe="S2ipe"/>
                     <S3i type="marker" active="true" pe="S3ipe"/>
@@ -382,7 +334,7 @@
                 </ChildMarker>
             </RR_Thigh>
         </Part>
-        <Joint>
+        <Joint type="joint_pool_element">
             <LF_P1 type="translational" active="true" prt_m="LF_Thigh" prt_n="LF_P1a" mak_i="P1i" mak_j="P1j"/>
             <LF_P2 type="translational" active="true" prt_m="LF_P2b" prt_n="LF_P2a" mak_i="P2i" mak_j="P2j"/>
             <LF_P3 type="translational" active="true" prt_m="LF_P3b" prt_n="LF_P3a" mak_i="P3i" mak_j="P3j"/>
@@ -438,27 +390,27 @@
             <RR_U2 type="universal" active="true" prt_m="MainBody" prt_n="RR_P2a" mak_i="RR_U2i" mak_j="U2j"/>
             <RR_U3 type="universal" active="true" prt_m="MainBody" prt_n="RR_P3a" mak_i="RR_U3i" mak_j="U3j"/>
         </Joint>
-        <Motion>
-            <LF_M1 type="single_component_motion" active="true" prt_m="LF_Thigh" prt_n="LF_P1a" mak_i="P1i" mak_j="P1j" frc_coe="Mot_friction" component="2"/>
-            <LF_M2 type="single_component_motion" active="true" prt_m="LF_P2b" prt_n="LF_P2a" mak_i="P2i" mak_j="P2j" frc_coe="Mot_friction" component="2"/>
-            <LF_M3 type="single_component_motion" active="true" prt_m="LF_P3b" prt_n="LF_P3a" mak_i="P3i" mak_j="P3j" frc_coe="Mot_friction" component="2"/>
-            <LM_M1 type="single_component_motion" active="true" prt_m="LM_Thigh" prt_n="LM_P1a" mak_i="P1i" mak_j="P1j" frc_coe="Mot_friction" component="2"/>
-            <LM_M2 type="single_component_motion" active="true" prt_m="LM_P2b" prt_n="LM_P2a" mak_i="P2i" mak_j="P2j" frc_coe="Mot_friction" component="2"/>
-            <LM_M3 type="single_component_motion" active="true" prt_m="LM_P3b" prt_n="LM_P3a" mak_i="P3i" mak_j="P3j" frc_coe="Mot_friction" component="2"/>
-            <LR_M1 type="single_component_motion" active="true" prt_m="LR_Thigh" prt_n="LR_P1a" mak_i="P1i" mak_j="P1j" frc_coe="Mot_friction" component="2"/>
-            <LR_M2 type="single_component_motion" active="true" prt_m="LR_P2b" prt_n="LR_P2a" mak_i="P2i" mak_j="P2j" frc_coe="Mot_friction" component="2"/>
-            <LR_M3 type="single_component_motion" active="true" prt_m="LR_P3b" prt_n="LR_P3a" mak_i="P3i" mak_j="P3j" frc_coe="Mot_friction" component="2"/>
-            <RF_M1 type="single_component_motion" active="true" prt_m="RF_Thigh" prt_n="RF_P1a" mak_i="P1i" mak_j="P1j" frc_coe="Mot_friction" component="2"/>
-            <RF_M2 type="single_component_motion" active="true" prt_m="RF_P2b" prt_n="RF_P2a" mak_i="P2i" mak_j="P2j" frc_coe="Mot_friction" component="2"/>
-            <RF_M3 type="single_component_motion" active="true" prt_m="RF_P3b" prt_n="RF_P3a" mak_i="P3i" mak_j="P3j" frc_coe="Mot_friction" component="2"/>
-            <RM_M1 type="single_component_motion" active="true" prt_m="RM_Thigh" prt_n="RM_P1a" mak_i="P1i" mak_j="P1j" frc_coe="Mot_friction" component="2"/>
-            <RM_M2 type="single_component_motion" active="true" prt_m="RM_P2b" prt_n="RM_P2a" mak_i="P2i" mak_j="P2j" frc_coe="Mot_friction" component="2"/>
-            <RM_M3 type="single_component_motion" active="true" prt_m="RM_P3b" prt_n="RM_P3a" mak_i="P3i" mak_j="P3j" frc_coe="Mot_friction" component="2"/>
-            <RR_M1 type="single_component_motion" active="true" prt_m="RR_Thigh" prt_n="RR_P1a" mak_i="P1i" mak_j="P1j" frc_coe="Mot_friction" component="2"/>
-            <RR_M2 type="single_component_motion" active="true" prt_m="RR_P2b" prt_n="RR_P2a" mak_i="P2i" mak_j="P2j" frc_coe="Mot_friction" component="2"/>
-            <RR_M3 type="single_component_motion" active="true" prt_m="RR_P3b" prt_n="RR_P3a" mak_i="P3i" mak_j="P3j" frc_coe="Mot_friction" component="2"/>
+        <Motion type="motion_pool_element">
+            <LF_M1 type="motion" active="true" prt_m="LF_Thigh" prt_n="LF_P1a" mak_i="P1i" mak_j="P1j" frc_coe="Mot_friction" component="2"/>
+            <LF_M2 type="motion" active="true" prt_m="LF_P2b" prt_n="LF_P2a" mak_i="P2i" mak_j="P2j" frc_coe="Mot_friction" component="2"/>
+            <LF_M3 type="motion" active="true" prt_m="LF_P3b" prt_n="LF_P3a" mak_i="P3i" mak_j="P3j" frc_coe="Mot_friction" component="2"/>
+            <LM_M1 type="motion" active="true" prt_m="LM_Thigh" prt_n="LM_P1a" mak_i="P1i" mak_j="P1j" frc_coe="Mot_friction" component="2"/>
+            <LM_M2 type="motion" active="true" prt_m="LM_P2b" prt_n="LM_P2a" mak_i="P2i" mak_j="P2j" frc_coe="Mot_friction" component="2"/>
+            <LM_M3 type="motion" active="true" prt_m="LM_P3b" prt_n="LM_P3a" mak_i="P3i" mak_j="P3j" frc_coe="Mot_friction" component="2"/>
+            <LR_M1 type="motion" active="true" prt_m="LR_Thigh" prt_n="LR_P1a" mak_i="P1i" mak_j="P1j" frc_coe="Mot_friction" component="2"/>
+            <LR_M2 type="motion" active="true" prt_m="LR_P2b" prt_n="LR_P2a" mak_i="P2i" mak_j="P2j" frc_coe="Mot_friction" component="2"/>
+            <LR_M3 type="motion" active="true" prt_m="LR_P3b" prt_n="LR_P3a" mak_i="P3i" mak_j="P3j" frc_coe="Mot_friction" component="2"/>
+            <RF_M1 type="motion" active="true" prt_m="RF_Thigh" prt_n="RF_P1a" mak_i="P1i" mak_j="P1j" frc_coe="Mot_friction" component="2"/>
+            <RF_M2 type="motion" active="true" prt_m="RF_P2b" prt_n="RF_P2a" mak_i="P2i" mak_j="P2j" frc_coe="Mot_friction" component="2"/>
+            <RF_M3 type="motion" active="true" prt_m="RF_P3b" prt_n="RF_P3a" mak_i="P3i" mak_j="P3j" frc_coe="Mot_friction" component="2"/>
+            <RM_M1 type="motion" active="true" prt_m="RM_Thigh" prt_n="RM_P1a" mak_i="P1i" mak_j="P1j" frc_coe="Mot_friction" component="2"/>
+            <RM_M2 type="motion" active="true" prt_m="RM_P2b" prt_n="RM_P2a" mak_i="P2i" mak_j="P2j" frc_coe="Mot_friction" component="2"/>
+            <RM_M3 type="motion" active="true" prt_m="RM_P3b" prt_n="RM_P3a" mak_i="P3i" mak_j="P3j" frc_coe="Mot_friction" component="2"/>
+            <RR_M1 type="motion" active="true" prt_m="RR_Thigh" prt_n="RR_P1a" mak_i="P1i" mak_j="P1j" frc_coe="Mot_friction" component="2"/>
+            <RR_M2 type="motion" active="true" prt_m="RR_P2b" prt_n="RR_P2a" mak_i="P2i" mak_j="P2j" frc_coe="Mot_friction" component="2"/>
+            <RR_M3 type="motion" active="true" prt_m="RR_P3b" prt_n="RR_P3a" mak_i="P3i" mak_j="P3j" frc_coe="Mot_friction" component="2"/>
         </Motion>
-        <Force>
+        <Force type="force_pool_element">
             <LF_F1 type="single_component_force" active="true" prt_m="LF_Thigh" prt_n="LF_P1a" mak_i="P1i" mak_j="P1j" component="2"/>
             <LF_F2 type="single_component_force" active="true" prt_m="LF_P2b" prt_n="LF_P2a" mak_i="P2i" mak_j="P2j" component="2"/>
             <LF_F3 type="single_component_force" active="true" prt_m="LF_P3b" prt_n="LF_P3a" mak_i="P3i" mak_j="P3j" component="2"/>
@@ -478,6 +430,54 @@
             <RR_F2 type="single_component_force" active="true" prt_m="RR_P2b" prt_n="RR_P2a" mak_i="P2i" mak_j="P2j" component="2"/>
             <RR_F3 type="single_component_force" active="true" prt_m="RR_P3b" prt_n="RR_P3a" mak_i="P3i" mak_j="P3j" component="2"/>
         </Force>
+        <Script type="script_pool_element">
+            <default_script type="script">
+                deactivate/joint, id=6
+                deactivate/sforce, id=1
+                deactivate/sforce, id=2
+                deactivate/sforce, id=3
+                deactivate/motion, id=4
+                deactivate/sforce, id=5
+                deactivate/sforce, id=6
+                deactivate/joint, id=24
+                deactivate/sforce, id=7
+                deactivate/sforce, id=8
+                deactivate/sforce, id=9
+                deactivate/motion, id=10
+                deactivate/sforce, id=11
+                deactivate/sforce, id=12
+                deactivate/joint, id=42
+                deactivate/sforce, id=13
+                deactivate/sforce, id=14
+                deactivate/sforce, id=15
+                deactivate/motion, id=16
+                deactivate/sforce, id=17
+                deactivate/sforce, id=18
+                simulate/transient, dur=2, dtout=0.05
+                activate/joint, id=6
+                deactivate/motion, id=1
+                activate/sforce, id=1
+                marker/1 , QP = -0.412518650455251,-0.849998580477897,-0.846463371429507 , REULER =2.00180921858028,2.59107277731869,4.02156825681859
+                deactivate/joint, id=15
+                activate/motion, id=4
+                deactivate/sforce, id=4
+                activate/joint, id=24
+                deactivate/motion, id=7
+                activate/sforce, id=7
+                marker/3 , QP = -0.218248839743012,-0.849998623802925,0.438939683519262 , REULER =4.87813628419867,2.51028768387854,0.457857432579678
+                deactivate/joint, id=33
+                activate/motion, id=10
+                deactivate/sforce, id=10
+                activate/joint, id=42
+                deactivate/motion, id=13
+                activate/sforce, id=13
+                marker/5 , QP = 0.426194160708213,-0.849997841213599,-0.315840477893413 , REULER =0.618598025331767,0.20502843221467,4.46788143100944
+                deactivate/joint, id=51
+                activate/motion, id=16
+                deactivate/sforce, id=16
+                simulate/transient, dur=2, dtout=0.05
+            </default_script>
+        </Script>
     </Model>
     <Server ip="127.0.0.1" port="5866">
         <Commands>
@@ -625,6 +625,5 @@
     </Controller>
     <Sensors>
         <IMU active="false" type="xsens_imu" portLinux="/dev/ttyUSB0" baudRate="921600" sampleRate="400" PeImuGround2BodyGound="{0,0,0,0,-PI/2,PI}" PeImu2Body="{0,0,0,0,PI/2,0}"/>
-        <Vision type="kinect2.0"/>
     </Sensors>
 </RobotVIII>

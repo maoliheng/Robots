@@ -44,7 +44,6 @@ int main(int argc, char *argv[])
 	}
 	
 	auto &rs = aris::server::ControlServer::instance();
-	
 
 	rs.createModel<Robots::RobotTypeI>();
 	rs.loadXml(xml_address.c_str());

@@ -77,8 +77,8 @@ void get_const(aris::dynamic::FastPath::Data & data)
 	double bodyPm[16];
 	aris::dynamic::s_pe2pm(bodyPe, bodyPm);
 	robot.body().setPm(bodyPm);
-	robot.body().setVel(bodyVel);
-	robot.body().setAcc(bodyAcc);
+	robot.body().setVs(bodyVel);
+	robot.body().setAs(bodyAcc);
 
 	double pEE[3]{ 0 }, vEE[3]{ 0 };
 	
@@ -86,7 +86,7 @@ void get_const(aris::dynamic::FastPath::Data & data)
 	g_const(data.s, data.g);
 	h_const(data.s, data.h);
 	
-	aris::dynamic::s_daxpy(3, data.ds, data.g, 1, vEE, 1);
+	aris::dynamic::s_va(3, data.ds, data.g, 1, vEE);
 
 	robot.pLegs[leg_index]->SetPee(pEE);
 	robot.pLegs[leg_index]->SetVee(vEE);
@@ -122,8 +122,8 @@ void get_acc(aris::dynamic::FastPath::Data & data)
 	double bodyPm[16];
 	aris::dynamic::s_pe2pm(bodyPe, bodyPm);
 	robot.body().setPm(bodyPm);
-	robot.body().setVel(bodyVel);
-	robot.body().setAcc(bodyAcc);
+	robot.body().setVs(bodyVel);
+	robot.body().setAs(bodyAcc);
 
 	double pEE[3]{ 0 }, vEE[3]{ 0 };
 
@@ -131,7 +131,7 @@ void get_acc(aris::dynamic::FastPath::Data & data)
 	g_acc(data.s, data.g);
 	h_acc(data.s, data.h);
 
-	aris::dynamic::s_daxpy(3, data.ds, data.g, 1, vEE, 1);
+	aris::dynamic::s_va(3, data.ds, data.g, 1, vEE);
 
 	robot.pLegs[leg_index]->SetPee(pEE);
 	robot.pLegs[leg_index]->SetVee(vEE);
@@ -169,8 +169,8 @@ void get_dec(aris::dynamic::FastPath::Data & data)
 	double bodyPm[16];
 	aris::dynamic::s_pe2pm(bodyPe, bodyPm);
 	robot.body().setPm(bodyPm);
-	robot.body().setVel(bodyVel);
-	robot.body().setAcc(bodyAcc);
+	robot.body().setVs(bodyVel);
+	robot.body().setAs(bodyAcc);
 
 	double pEE[3]{ 0 }, vEE[3]{ 0 };
 
@@ -178,7 +178,7 @@ void get_dec(aris::dynamic::FastPath::Data & data)
 	g_dec(data.s, data.g);
 	h_dec(data.s, data.h);
 
-	aris::dynamic::s_daxpy(3, data.ds, data.g, 1, vEE, 1);
+	aris::dynamic::s_va(3, data.ds, data.g, 1, vEE);
 
 	robot.pLegs[leg_index]->SetPee(pEE);
 	robot.pLegs[leg_index]->SetVee(vEE);

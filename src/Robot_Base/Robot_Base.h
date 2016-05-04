@@ -10,7 +10,7 @@ namespace Robots
 {
 	class RobotBase;
 
-	class LegBase:public aris::dynamic::Object
+	class LegBase:public aris::core::Object
 	{
 	public:
 		using Coordinate = aris::dynamic::Coordinate;
@@ -23,8 +23,6 @@ namespace Robots
 		Part& body();
 		const Marker& base() const;
 		Marker& base();
-		
-
 
 		void GetPee(double *pEE) const { GetPee(pEE, ground()); };
 		void GetPee(double *pEE, const Coordinate &Mak) const;
@@ -336,7 +334,7 @@ namespace Robots
 		aris::dynamic::Marker *force_sensor_mak_;
 
 	private:
-		double _BodyPm[4][4]{ {0} }, _BodyVel[6]{ 0 }, _BodyAcc[6]{ 0 };
+		//double _BodyPm[4][4]{ {0} }, _BodyVel[6]{ 0 }, _BodyAcc[6]{ 0 };
 		double Jvi[18][6]{ {0} };
 		double vJvi[18][6]{ {0} };
 		void calculate_jac();

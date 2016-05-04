@@ -3,6 +3,7 @@
 #include <aris.h>
 #include <Robot_Type_I.h>
 
+#include <type_traits>
 
 Robots::RobotTypeI rbt;
 
@@ -29,6 +30,8 @@ int main(int argc, char *argv[])
 int main_test(int argc, char *argv[])
 {
 	
+
+
 #ifdef WIN32
 	rbt.loadXml("C:\\Robots\\resource\\Robot_Type_I\\Robot_III\\Robot_III.xml");
 	//rbt.loadXml("C:\\Robots\\resource\\Robot_Type_I\\Robot_VIII\\Robot_VIII.xml");
@@ -46,21 +49,63 @@ int main_test(int argc, char *argv[])
 		0.3, -0.85, 0.65 };
 
 	double beginPE[6]{ 0 };
-	
-	Robots::WalkParam wk_param;
-	wk_param.totalCount = 2000;
-	wk_param.n = 3;
-	wk_param.beta = 0.3;
-	wk_param.alpha = 0;
-	wk_param.d = 0.9;
 
 	rbt.SetPeb(beginPE);
 	rbt.SetPee(beginEE);
-	
-	auto result = rbt.simToAdams("C:\\Users\\yang\\Desktop\\test.cmd", Robots::walkGait, wk_param, 50);
-	
-	result.saveToTxt("C:\\Users\\yang\\Desktop\\test");
 
+	/*
+	rbt.SetFixFeet("000000");
+
+	std::vector<std::array<double,18> > pin_vec(9901), vin_vec(9901), ain_vec(9901), fin_vec(9901), fee_vec(9901);
+
+	aris::dynamic::dlmread("D:\\kuaipan\\Hexapod_Robot\\Robot_III\\m_calibration\\pos_for_test.txt", pin_vec.data()->data());
+	aris::dynamic::dlmread("D:\\kuaipan\\Hexapod_Robot\\Robot_III\\m_calibration\\vel_for_test.txt", vin_vec.data()->data());
+	aris::dynamic::dlmread("D:\\kuaipan\\Hexapod_Robot\\Robot_III\\m_calibration\\acc_for_test.txt", ain_vec.data()->data());
+	aris::dynamic::dlmread("D:\\kuaipan\\Hexapod_Robot\\Robot_III\\m_calibration\\fce_for_test.txt", fin_vec.data()->data());
+
+	rbt.SetVb(beginPE);
+	rbt.SetAb(beginPE);
+
+	for (auto i = 0; i < 9901; ++i)
+	{
+		std::cout << i << std::endl;
+		
+		rbt.SetPin(pin_vec.at(i).data());
+		rbt.SetVin(vin_vec.at(i).data());
+		rbt.SetAin(ain_vec.at(i).data());
+
+		rbt.FastDyn();
+
+		double f[18];
+		rbt.GetFin(f);
+		
+		double f_sta[18];
+		std::copy(fin_vec.at(i).begin(), fin_vec.at(i).end(), f_sta);
+		aris::dynamic::s_va(18, -1, f, 1, f_sta, 1);
+
+		rbt.SetFinSta(f_sta);
+
+		rbt.GetFeeSta(fee_vec.at(i).data());
+	}
+
+	aris::dynamic::dlmwrite("D:\\kuaipan\\Hexapod_Robot\\Robot_III\\m_calibration\\fee_after_test.txt",fee_vec);
+	*/
+
+
+
+
+
+	Robots::WalkParam wk_param;
+	wk_param.totalCount = 2000;
+	wk_param.n = 1;
+	wk_param.beta = 0.3;
+	wk_param.alpha = 0.3;
+	wk_param.d = 0.9;
+	
+	//auto result = rbt.simKin(Robots::walkGait, wk_param, 1);
+
+	auto result = rbt.simToAdams("C:\\Users\\yang\\Desktop\\test.cmd", Robots::walkGait, wk_param, 50);
+	result.saveToTxt("C:\\Users\\yang\\Desktop\\test");
 	rbt.saveXml("C:\\Users\\yang\\Desktop\\test.xml");
 	
 	/*

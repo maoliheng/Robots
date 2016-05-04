@@ -240,23 +240,23 @@ namespace Robots
 			}
 			else if (i.first == "n")
 			{
-				param.n = stoi(i.second);
+				param.n = std::stoi(i.second);
 			}
 			else if (i.first == "distance")
 			{
-				param.d = stod(i.second);
+				param.d = std::stod(i.second);
 			}
 			else if (i.first == "height")
 			{
-				param.h = stod(i.second);
+				param.h = std::stod(i.second);
 			}
 			else if (i.first == "alpha")
 			{
-				param.alpha = stod(i.second);
+				param.alpha = std::stod(i.second);
 			}
 			else if (i.first == "beta")
 			{
-				param.beta = stod(i.second);
+				param.beta = std::stod(i.second);
 			}
 		}
 		msg.copyStruct(param);
@@ -318,8 +318,8 @@ namespace Robots
 				s_pm_dot_v3(pm_b_quad, front, leg_forward_dir);
 
 				s_pm_dot_v3(pm_b_half, beginPee + i, forward_d);
-				s_daxpy(3, -1, beginPee + i, 1, forward_d, 1);
-				s_daxpy(3, d/2, leg_forward_dir, 1, forward_d, 1);
+				s_va(3, -1, beginPee + i, 1, forward_d);
+				s_va(3, d/2, leg_forward_dir, 1, forward_d);
 
 				for (int j = 0; j < 3; ++j)
 				{
@@ -355,8 +355,8 @@ namespace Robots
 				s_pm_dot_v3(pm_b_quad, front, leg_forward_dir);
 
 				s_pm_dot_v3(pm_b_half, beginPee + i, forward_d);
-				s_daxpy(3, -1, beginPee + i, 1, forward_d, 1);
-				s_daxpy(3, d / 2, leg_forward_dir, 1, forward_d, 1);
+				s_va(3, -1, beginPee + i, 1, forward_d);
+				s_va(3, d / 2, leg_forward_dir, 1, forward_d);
 
 				for (int j = 0; j < 3; ++j)
 				{
@@ -392,8 +392,8 @@ namespace Robots
 				s_pm_dot_v3(pm_b_half, front, leg_forward_dir);
 				
 				s_pm_dot_v3(pm_b, beginPee + i, forward_d);
-				s_daxpy(3, -1, beginPee + i, 1, forward_d, 1);
-				s_daxpy(3, d, leg_forward_dir, 1, forward_d, 1);
+				s_va(3, -1, beginPee + i, 1, forward_d);
+				s_va(3, d, leg_forward_dir, 1, forward_d);
 				
 				for (int j = 0; j < 3; ++j)
 				{
@@ -446,7 +446,7 @@ namespace Robots
 
 		// s_f2f 用来转换坐标系 // 
 		std::copy(param.force_data->at(0).fce, param.force_data->at(0).fce + 6, force_on_marker);
-		aris::dynamic::s_f2f(*robot.forceSensorMak().prtPm(), force_on_marker, force_on_body);
+		aris::dynamic::s_fs2fs(*robot.forceSensorMak().prtPm(), force_on_marker, force_on_body);
 
 		rt_printf("force on marker: %f  %f  %f  %f  %f  %f \n", force_on_marker[0], force_on_marker[1], force_on_marker[2], force_on_marker[3], force_on_marker[4], force_on_marker[5]);
 		rt_printf("force on body: %f  %f  %f  %f  %f  %f \n", force_on_body[0], force_on_body[1], force_on_body[2], force_on_body[3], force_on_body[4], force_on_body[5]);

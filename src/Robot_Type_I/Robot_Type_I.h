@@ -52,9 +52,9 @@ namespace Robots
 		auto sf()->aris::dynamic::SphericalJoint& { return static_cast<aris::dynamic::SphericalJoint&>(*sf_); };
 		auto s2()->aris::dynamic::SphericalJoint& { return static_cast<aris::dynamic::SphericalJoint&>(*s2_); };
 		auto s3()->aris::dynamic::SphericalJoint& { return static_cast<aris::dynamic::SphericalJoint&>(*s3_); };
-		auto m1()->aris::dynamic::SingleComponentMotion& { return static_cast<aris::dynamic::SingleComponentMotion&>(*m1_); };
-		auto m2()->aris::dynamic::SingleComponentMotion& { return static_cast<aris::dynamic::SingleComponentMotion&>(*m2_); };
-		auto m3()->aris::dynamic::SingleComponentMotion& { return static_cast<aris::dynamic::SingleComponentMotion&>(*m3_); };
+		auto m1()->aris::dynamic::Motion& { return static_cast<aris::dynamic::Motion&>(*m1_); };
+		auto m2()->aris::dynamic::Motion& { return static_cast<aris::dynamic::Motion&>(*m2_); };
+		auto m3()->aris::dynamic::Motion& { return static_cast<aris::dynamic::Motion&>(*m3_); };
 		auto f1()->aris::dynamic::SingleComponentForce& { return static_cast<aris::dynamic::SingleComponentForce&>(*f1_); };
 		auto f2()->aris::dynamic::SingleComponentForce& { return static_cast<aris::dynamic::SingleComponentForce&>(*f2_); };
 		auto f3()->aris::dynamic::SingleComponentForce& { return static_cast<aris::dynamic::SingleComponentForce&>(*f3_); };
@@ -250,7 +250,7 @@ namespace Robots
 			}
 			SetVinFixFeet(Vin, FixFeet(), ActiveMotion());
 		};
-		auto simToAdams(const std::string &adams_file, const aris::dynamic::PlanFunc &fun, const aris::dynamic::PlanParamBase &param, int ms_dt)->aris::dynamic::SimResult;
+		auto simToAdams(const std::string &adams_file, const aris::dynamic::PlanFunc &fun, const aris::dynamic::PlanParamBase &param, int ms_dt)->SimResult;
 	
 	public:
 		union
