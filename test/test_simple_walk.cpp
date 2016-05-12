@@ -5,7 +5,7 @@
 
 #include <type_traits>
 
-Robots::RobotTypeI rbt;
+
 
 int main_test(int argc, char *argv[]);
 int main(int argc, char *argv[])
@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 
 int main_test(int argc, char *argv[])
 {
-	
+	Robots::RobotTypeI rbt;
 
 
 #ifdef WIN32
