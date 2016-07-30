@@ -22,14 +22,33 @@
             <S3jpe type="matrix">{ 0, 0,      0,     0, -PI / 2, 0 }</S3jpe>
             <Sfipe type="matrix">{ 0.065, 0, 0, 0, 0, 0 }</Sfipe>
             <Sfjpe type="matrix">{ 0,   0, 0, 0, 0, 0 }</Sfjpe>
-            <LFpe type="matrix">{-0.05433 , 0 , -0.3300 + 0.0047, PI/2,  PI* 5/6,   -PI/2-PI*75/180}</LFpe>
-            <LMpe type="matrix">{-0.10241 , 0 ,  0,         PI/2,  PI* 6/6,   -PI/2-PI*75/180}</LMpe>
-            <LRpe type="matrix">{-0.05433 , 0 ,  0.3300 - 0.0047, PI/2,  PI* 7/6,   -PI/2-PI*75/180}</LRpe>
-            <RFpe type="matrix">{ 0.05433 , 0 , -0.3300 + 0.0047, PI/2,  PI* 1/6,   -PI/2-PI*75/180}</RFpe>
-            <RMpe type="matrix">{ 0.10241 , 0 ,  0,         PI/2,  PI* 0/6,   -PI/2-PI*75/180}</RMpe>
-            <RRpe type="matrix">{ 0.05433 , 0 ,  0.3300 - 0.0047, PI/2,  PI*11/6,   -PI/2-PI*75/180}</RRpe>
+            <LFpe type="matrix">{-0.05433 , 0 , -0.3300,  PI/2,  PI* 5/6,   -PI/2-PI*75/180}</LFpe>
+            <LMpe type="matrix">{-0.10241 , 0 ,  0,       PI/2,  PI* 6/6,   -PI/2-PI*75/180}</LMpe>
+            <LRpe type="matrix">{-0.05433 , 0 ,  0.3300,  PI/2,  PI* 7/6,   -PI/2-PI*75/180}</LRpe>
+            <RFpe type="matrix">{ 0.05433 , 0 , -0.3300,  PI/2,  PI* 1/6,   -PI/2-PI*75/180}</RFpe>
+            <RMpe type="matrix">{ 0.10241 , 0 ,  0,       PI/2,  PI* 0/6,   -PI/2-PI*75/180}</RMpe>
+            <RRpe type="matrix">{ 0.05433 , 0 ,  0.3300,  PI/2,  PI*11/6,   -PI/2-PI*75/180}</RRpe>
             <ForceSensorMakPe type="matrix">{ 0,0,0,0,0,0 }</ForceSensorMakPe>
-            <BodyGamma type="matrix">{140,0,0,0,0,0,0,0,0,0}</BodyGamma>
+            <BF_R1ipe type="matrix">{ 0, 0.135,  0,       PI / 2, PI / 2, 0 }</BF_R1ipe>
+            <BF_R1jpe type="matrix">{ 0, 0,      -0.415,  PI / 2, PI / 2, 0 }</BF_R1jpe>
+            <BM_R1ipe type="matrix">{ 0, 0.135,  0,       PI / 2, PI / 2, 0 }</BM_R1ipe>
+            <BM_R1jpe type="matrix">{ 0, 0,      0,       PI / 2, PI / 2, 0 }</BM_R1jpe>
+            <BR_R1ipe type="matrix">{ 0, 0.135,  0,       PI / 2, PI / 2, 0 }</BR_R1ipe>
+            <BR_R1jpe type="matrix">{ 0, 0,      0.415,   PI / 2, PI / 2, 0 }</BR_R1jpe>
+            <BF_R2ipe type="matrix">{ 0, 0.325,  0,       PI / 2, PI / 2, 0 }</BF_R2ipe>
+            <BF_R2jpe type="matrix">{ 0, 0,      -0.415,  PI / 2, PI / 2, 0 }</BF_R2jpe>
+            <BM_R2ipe type="matrix">{ 0, 0.325,  0,       PI / 2, PI / 2, 0 }</BM_R2ipe>
+            <BM_R2jpe type="matrix">{ 0, 0,      0,       PI / 2, PI / 2, 0 }</BM_R2jpe>
+            <BR_R2ipe type="matrix">{ 0, 0.325,  0,       PI / 2, PI / 2, 0 }</BR_R2ipe>
+            <BR_R2jpe type="matrix">{ 0, 0,      0.415,   PI / 2, PI / 2, 0 }</BR_R2jpe>
+
+            <FBodyGamma type="matrix">{40,0,0,0,0,0,0,0,0,0}</FBodyGamma>
+            <MBodyGamma type="matrix">{60,0,0,0,0,0,0,0,0,0}</MBodyGamma>
+            <RBodyGamma type="matrix">{40,0,0,0,0,0,0,0,0,0}</RBodyGamma>
+            <LLinkGamma type="matrix">{10,0,0,0,0,0,0,0,0,0}</LLinkGamma>
+            <ULinkGamma type="matrix">{15,0,0,0,0,0,0,0,0,0}</ULinkGamma>
+            <ScrewGamma type="matrix">{0,0,0,0,0,0,0,0,0,0}</ScrewGamma>
+            <NutGamma type="matrix">{0,0,0,0,0,0,0,0,0,0}</NutGamma>
             <P1aGamma type="matrix">{0,0,0,0,0,0,0,0,0,0}</P1aGamma>
             <P2aGamma type="matrix">{0,0,0,0,0,0,0,0,0,0}</P2aGamma>
             <P3aGamma type="matrix">{0,0,0,0,0,0,0,0,0,0}</P3aGamma>
@@ -41,7 +60,13 @@
             <P1b_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_VIII\p1b.x_t</P1b_graphic>
             <P23a_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_VIII\p23a.x_t</P23a_graphic>
             <P23b_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_VIII\p23b.x_t</P23b_graphic>
-            <Body_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_VIII\body.x_t</Body_graphic>
+            <FBody_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_VIII\fbody.x_t</FBody_graphic>
+            <MBody_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_VIII\mbody.x_t</MBody_graphic>
+            <RBody_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_VIII\rbody.x_t</RBody_graphic>
+            <LLink_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_VIII\llink.x_t</LLink_graphic>
+            <ULink_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_VIII\ulink.x_t</ULink_graphic>
+            <Screw_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_VIII\screw.x_t</Screw_graphic>
+            <Nut_graphic type="string">C:\Robots\resource\Robot_Type_I\Robot_VIII\nut.x_t</Nut_graphic>
         </Variable>
         <Akima type="akima_pool_element">
             <LF_M1_akima type="akima" x="{0 , 0.05 , 0.1 , 0.15 , 0.2 , 0.25 , 0.3 , 0.35 , 0.4 , 0.45 , 0.5 , 0.55 , 0.6 , 0.65 , 0.7 , 0.75 , 0.8 , 0.85 , 0.9 , 0.95 , 1 , 1.05 , 1.1 , 1.15 , 1.2 , 1.25 , 1.3 , 1.35 , 1.4 , 1.45 , 1.5 , 1.55 , 1.6 , 1.65 , 1.7 , 1.75 , 1.8 , 1.85 , 1.9 , 1.95 , 2 , 2.05 , 2.1 , 2.15 , 2.2 , 2.25 , 2.3 , 2.35 , 2.4 , 2.45 , 2.5 , 2.55 , 2.6 , 2.65 , 2.7 , 2.75 , 2.8 , 2.85 , 2.9 , 2.95 , 3 , 3.05 , 3.1 , 3.15 , 3.2 , 3.25 , 3.3 , 3.35 , 3.4 , 3.45 , 3.5 , 3.55 , 3.6 , 3.65 , 3.7 , 3.75 , 3.8 , 3.85 , 3.9 , 3.95 , 4}" y="{0.877488110747292 , 0.877241294796172 , 0.876508894961439 , 0.875315431705427 , 0.873702251676607 , 0.871727861298556 , 0.869468183691833 , 0.867016533875369 , 0.864483058078454 , 0.861993345805791 , 0.859685908125936 , 0.857708237896588 , 0.856211246805514 , 0.855342028928939 , 0.855235139759068 , 0.856002890229248 , 0.857725492359971 , 0.86044217960822 , 0.864144566072796 , 0.86877342225368 , 0.874219697734826 , 0.880330053476691 , 0.886916491080207 , 0.893769036273326 , 0.900669992220508 , 0.907408113538694 , 0.91379117603717 , 0.919655772539552 , 0.924873651999271 , 0.929354429219066 , 0.933044936057106 , 0.935925805509338 , 0.938006056807902 , 0.939316491881781 , 0.939902650148237 , 0.939817937557184 , 0.939117384879952 , 0.937852330839787 , 0.936066189704804 , 0.933791362175146 , 0.931047285684387 , 0.928122864906579 , 0.925299566352555 , 0.922575361838053 , 0.919948261406942 , 0.917416314914796 , 0.91497761356895 , 0.912630291423796 , 0.910372526830294 , 0.908202543838839 , 0.906118613554862 , 0.904119055446659 , 0.902202238605168 , 0.900366582955539 , 0.898610560420492 , 0.896932696035609 , 0.895331569016811 , 0.893805813780383 , 0.892354120916027 , 0.890975238113474 , 0.889667971043298 , 0.888431184192586 , 0.88726380165621 , 0.886164807884454 , 0.885133248387775 , 0.884168230399481 , 0.883268923497134 , 0.882434560183432 , 0.881664436427326 , 0.880957912166106 , 0.880314411769107 , 0.879733424463677 , 0.879214504723962 , 0.878757272623008 , 0.878361414148606 , 0.87802668148321 , 0.877752893248209 , 0.877539934712695 , 0.877387757966819 , 0.877296382059701 , 0.877265893101781}"/>
@@ -75,7 +100,7 @@
                     <Origin type="marker" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}"/>
                 </ChildMarker>
             </Ground>
-            <FrontBody type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="BodyGamma" graphic_file_path="${Body_graphic}">
+            <FrontBody type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="FBodyGamma" graphic_file_path="${FBody_graphic}">
                 <ChildMarker type="marker_pool_element">
                     <BodyCenter type="marker" active="true" pe="{-0 , 0 , -0 , -0 , 0 , -0}"/>
                     <LF_Base type="marker" active="true" pe="LFpe"/>
@@ -90,7 +115,7 @@
                     <BF_R2i type="marker" active="true" pe="BF_R2ipe"/>
                 </ChildMarker>
             </FrontBody>
-            <MiddleBody type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="BodyGamma" graphic_file_path="${Body_graphic}">
+            <MiddleBody type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="MBodyGamma" graphic_file_path="${MBody_graphic}">
                 <ChildMarker type="marker_pool_element">
                     <BodyCenter type="marker" active="true" pe="{-0 , 0 , -0 , -0 , 0 , -0}"/>
                     <LM_Base type="marker" active="true" pe="LMpe"/>
@@ -103,9 +128,10 @@
                     <RM_U3i type="marker" active="true" pe="U3ipe" relative_to="RM_Base"/>
                     <BM_R1i type="marker" active="true" pe="BM_R1ipe"/>
                     <BM_R2i type="marker" active="true" pe="BM_R2ipe"/>
+                    <BM_R3i type="marker" active="true" pe="BM_R3ipe"/>
                 </ChildMarker>
             </MiddleBody>
-            <RearBody type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="BodyGamma" graphic_file_path="${Body_graphic}">
+            <RearBody type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="RBodyGamma" graphic_file_path="${RBody_graphic}">
                 <ChildMarker type="marker_pool_element">
                     <BodyCenter type="marker" active="true" pe="{-0 , 0 , -0 , -0 , 0 , -0}"/>
                     <LR_Base type="marker" active="true" pe="LRpe"/>
@@ -120,34 +146,34 @@
                     <BR_R2i type="marker" active="true" pe="BR_R2ipe"/>
                 </ChildMarker>
             </RearBody>
-            <LowerLink type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="BodyGamma" graphic_file_path="${Body_graphic}">
+            <LowerLink type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="LLinkGamma" graphic_file_path="${LLink_graphic}">
                 <ChildMarker type="marker_pool_element">
                     <BF_R1j type="marker" active="true" pe="BF_R1jpe"/>
                     <BM_R1j type="marker" active="true" pe="BM_R1jpe"/>
                     <BR_R1j type="marker" active="true" pe="BR_R1jpe"/>
+                    <SN_R1i type="marker" active="true" pe="SN_R1ipe"/>
                 </ChildMarker>
             </LowerLink>
-            <UpperLink type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="BodyGamma" graphic_file_path="${Body_graphic}">
+            <UpperLink type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="ULinkGamma" graphic_file_path="${ULink_graphic}">
                 <ChildMarker type="marker_pool_element">
                     <BF_R2j type="marker" active="true" pe="BF_R2jpe"/>
                     <BM_R2j type="marker" active="true" pe="BM_R2jpe"/>
                     <BR_R2j type="marker" active="true" pe="BR_R2jpe"/>
                 </ChildMarker>
             </UpperLink>
-            <Screw type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="BodyGamma" graphic_file_path="${Body_graphic}">
+            <Screw type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="ScrewGamma" graphic_file_path="${Screw_graphic}">
                 <ChildMarker type="marker_pool_element">
-                    <BF_R2j type="marker" active="true" pe="BF_R2jpe"/>
-                    <BM_R2j type="marker" active="true" pe="BM_R2jpe"/>
-                    <BR_R2j type="marker" active="true" pe="BR_R2jpe"/>
+                    <BM_R3j type="marker" active="true" pe="BM_R3jpe"/>
+                    <SN_P1i type="marker" active="true" pe="SN_P1ipe"/>
                 </ChildMarker>
             </Screw>
-            <Nut type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="BodyGamma" graphic_file_path="${Body_graphic}">
+            <Nut type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="NutGamma" graphic_file_path="${Nut_graphic}">
                 <ChildMarker type="marker_pool_element">
-                    <BF_R2j type="marker" active="true" pe="BF_R2jpe"/>
-                    <BM_R2j type="marker" active="true" pe="BM_R2jpe"/>
-                    <BR_R2j type="marker" active="true" pe="BR_R2jpe"/>
+                    <SN_R1j type="marker" active="true" pe="SN_R1jpe"/>
+                    <SN_P1j type="marker" active="true" pe="SN_P1jpe"/>
                 </ChildMarker>
             </Nut>
+
             <LF_P1a type="part" active="true" pe="{-0.05433 , 0 , -0.3253 , 1.87076482717163 , 2.55246655579383 , 3.81038157127293}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P1aGamma" graphic_file_path="${P1a_graphic}">
                 <ChildMarker type="marker_pool_element">
                     <P1j type="marker" active="true" pe="P1jpe"/>
@@ -262,8 +288,6 @@
                     <Sfi type="marker" active="true" pe="Sfipe"/>
                 </ChildMarker>
             </LR_Thigh>
-
-
             <RF_P1a type="part" active="true" pe="{0.05433 , 0 , -0.3253 , 1.27082782641815 , 0.589126097795963 , 3.81038157127293}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="P1aGamma" graphic_file_path="${P1a_graphic}">
                 <ChildMarker type="marker_pool_element">
                     <P1j type="marker" active="true" pe="P1jpe"/>
@@ -380,62 +404,74 @@
             </RR_Thigh>
         </Part>
         <Joint type="joint_pool_element">
+            <BF_R1 type="revolute" active="true" prt_m="FrontBody" prt_n="LowerLink" mak_i="BF_R1i" mak_j="BF_R1j"/>
+            <BF_R2 type="revolute" active="true" prt_m="FrontBody" prt_n="UpperLink" mak_i="BF_R2i" mak_j="BF_R2j"/>
+            <BM_R1 type="revolute" active="true" prt_m="MiddleBody" prt_n="LowerLink" mak_i="BM_R1i" mak_j="BM_R1j"/>
+            <BM_R2 type="revolute" active="true" prt_m="MiddleBody" prt_n="UpperLink" mak_i="BM_R2i" mak_j="BM_R2j"/>
+            <BR_R1 type="revolute" active="true" prt_m="RearBody" prt_n="LowerLink" mak_i="BR_R1i" mak_j="BR_R1j"/>
+            <BR_R2 type="revolute" active="true" prt_m="RearBody" prt_n="UpperLink" mak_i="BR_R2i" mak_j="BR_R2j"/>
+            <BM_R3 type="revolute" active="true" prt_m="MiddleBody" prt_n="Screw" mak_i="BM_R3i" mak_j="BM_R3j"/>
+            <SN_R1 type="revolute" active="true" prt_m="LowerLink" prt_n="Nut" mak_i="SN_R1i" mak_j="SN_R1j"/>
+            <SN_P1 type="translational" active="true" prt_m="Screw" prt_n="Nut" mak_i="SN_P1i" mak_j="SN_P1j"/>
+
             <LF_P1 type="translational" active="true" prt_m="LF_Thigh" prt_n="LF_P1a" mak_i="P1i" mak_j="P1j"/>
             <LF_P2 type="translational" active="true" prt_m="LF_P2b" prt_n="LF_P2a" mak_i="P2i" mak_j="P2j"/>
             <LF_P3 type="translational" active="true" prt_m="LF_P3b" prt_n="LF_P3a" mak_i="P3i" mak_j="P3j"/>
             <LF_S2 type="spherical" active="true" prt_m="LF_Thigh" prt_n="LF_P2b" mak_i="S2i" mak_j="S2j"/>
             <LF_S3 type="spherical" active="true" prt_m="LF_Thigh" prt_n="LF_P3b" mak_i="S3i" mak_j="S3j"/>
             <LF_Sf type="spherical" active="true" prt_m="LF_Thigh" prt_n="Ground" mak_i="Sfi" mak_j="LF_Sfj"/>
-            <LF_U1 type="universal" active="true" prt_m="MainBody" prt_n="LF_P1a" mak_i="LF_U1i" mak_j="U1j"/>
-            <LF_U2 type="universal" active="true" prt_m="MainBody" prt_n="LF_P2a" mak_i="LF_U2i" mak_j="U2j"/>
-            <LF_U3 type="universal" active="true" prt_m="MainBody" prt_n="LF_P3a" mak_i="LF_U3i" mak_j="U3j"/>
+            <LF_U1 type="universal" active="true" prt_m="FrontBody" prt_n="LF_P1a" mak_i="LF_U1i" mak_j="U1j"/>
+            <LF_U2 type="universal" active="true" prt_m="FrontBody" prt_n="LF_P2a" mak_i="LF_U2i" mak_j="U2j"/>
+            <LF_U3 type="universal" active="true" prt_m="FrontBody" prt_n="LF_P3a" mak_i="LF_U3i" mak_j="U3j"/>
             <LM_P1 type="translational" active="true" prt_m="LM_Thigh" prt_n="LM_P1a" mak_i="P1i" mak_j="P1j"/>
             <LM_P2 type="translational" active="true" prt_m="LM_P2b" prt_n="LM_P2a" mak_i="P2i" mak_j="P2j"/>
             <LM_P3 type="translational" active="true" prt_m="LM_P3b" prt_n="LM_P3a" mak_i="P3i" mak_j="P3j"/>
             <LM_S2 type="spherical" active="true" prt_m="LM_Thigh" prt_n="LM_P2b" mak_i="S2i" mak_j="S2j"/>
             <LM_S3 type="spherical" active="true" prt_m="LM_Thigh" prt_n="LM_P3b" mak_i="S3i" mak_j="S3j"/>
             <LM_Sf type="spherical" active="true" prt_m="LM_Thigh" prt_n="Ground" mak_i="Sfi" mak_j="LM_Sfj"/>
-            <LM_U1 type="universal" active="true" prt_m="MainBody" prt_n="LM_P1a" mak_i="LM_U1i" mak_j="U1j"/>
-            <LM_U2 type="universal" active="true" prt_m="MainBody" prt_n="LM_P2a" mak_i="LM_U2i" mak_j="U2j"/>
-            <LM_U3 type="universal" active="true" prt_m="MainBody" prt_n="LM_P3a" mak_i="LM_U3i" mak_j="U3j"/>
+            <LM_U1 type="universal" active="true" prt_m="MiddleBody" prt_n="LM_P1a" mak_i="LM_U1i" mak_j="U1j"/>
+            <LM_U2 type="universal" active="true" prt_m="MiddleBody" prt_n="LM_P2a" mak_i="LM_U2i" mak_j="U2j"/>
+            <LM_U3 type="universal" active="true" prt_m="MiddleBody" prt_n="LM_P3a" mak_i="LM_U3i" mak_j="U3j"/>
             <LR_P1 type="translational" active="true" prt_m="LR_Thigh" prt_n="LR_P1a" mak_i="P1i" mak_j="P1j"/>
             <LR_P2 type="translational" active="true" prt_m="LR_P2b" prt_n="LR_P2a" mak_i="P2i" mak_j="P2j"/>
             <LR_P3 type="translational" active="true" prt_m="LR_P3b" prt_n="LR_P3a" mak_i="P3i" mak_j="P3j"/>
             <LR_S2 type="spherical" active="true" prt_m="LR_Thigh" prt_n="LR_P2b" mak_i="S2i" mak_j="S2j"/>
             <LR_S3 type="spherical" active="true" prt_m="LR_Thigh" prt_n="LR_P3b" mak_i="S3i" mak_j="S3j"/>
             <LR_Sf type="spherical" active="true" prt_m="LR_Thigh" prt_n="Ground" mak_i="Sfi" mak_j="LR_Sfj"/>
-            <LR_U1 type="universal" active="true" prt_m="MainBody" prt_n="LR_P1a" mak_i="LR_U1i" mak_j="U1j"/>
-            <LR_U2 type="universal" active="true" prt_m="MainBody" prt_n="LR_P2a" mak_i="LR_U2i" mak_j="U2j"/>
-            <LR_U3 type="universal" active="true" prt_m="MainBody" prt_n="LR_P3a" mak_i="LR_U3i" mak_j="U3j"/>
+            <LR_U1 type="universal" active="true" prt_m="RearBody" prt_n="LR_P1a" mak_i="LR_U1i" mak_j="U1j"/>
+            <LR_U2 type="universal" active="true" prt_m="RearBody" prt_n="LR_P2a" mak_i="LR_U2i" mak_j="U2j"/>
+            <LR_U3 type="universal" active="true" prt_m="RearBody" prt_n="LR_P3a" mak_i="LR_U3i" mak_j="U3j"/>
             <RF_P1 type="translational" active="true" prt_m="RF_Thigh" prt_n="RF_P1a" mak_i="P1i" mak_j="P1j"/>
             <RF_P2 type="translational" active="true" prt_m="RF_P2b" prt_n="RF_P2a" mak_i="P2i" mak_j="P2j"/>
             <RF_P3 type="translational" active="true" prt_m="RF_P3b" prt_n="RF_P3a" mak_i="P3i" mak_j="P3j"/>
             <RF_S2 type="spherical" active="true" prt_m="RF_Thigh" prt_n="RF_P2b" mak_i="S2i" mak_j="S2j"/>
             <RF_S3 type="spherical" active="true" prt_m="RF_Thigh" prt_n="RF_P3b" mak_i="S3i" mak_j="S3j"/>
             <RF_Sf type="spherical" active="true" prt_m="RF_Thigh" prt_n="Ground" mak_i="Sfi" mak_j="RF_Sfj"/>
-            <RF_U1 type="universal" active="true" prt_m="MainBody" prt_n="RF_P1a" mak_i="RF_U1i" mak_j="U1j"/>
-            <RF_U2 type="universal" active="true" prt_m="MainBody" prt_n="RF_P2a" mak_i="RF_U2i" mak_j="U2j"/>
-            <RF_U3 type="universal" active="true" prt_m="MainBody" prt_n="RF_P3a" mak_i="RF_U3i" mak_j="U3j"/>
+            <RF_U1 type="universal" active="true" prt_m="FrontBody" prt_n="RF_P1a" mak_i="RF_U1i" mak_j="U1j"/>
+            <RF_U2 type="universal" active="true" prt_m="FrontBody" prt_n="RF_P2a" mak_i="RF_U2i" mak_j="U2j"/>
+            <RF_U3 type="universal" active="true" prt_m="FrontBody" prt_n="RF_P3a" mak_i="RF_U3i" mak_j="U3j"/>
             <RM_P1 type="translational" active="true" prt_m="RM_Thigh" prt_n="RM_P1a" mak_i="P1i" mak_j="P1j"/>
             <RM_P2 type="translational" active="true" prt_m="RM_P2b" prt_n="RM_P2a" mak_i="P2i" mak_j="P2j"/>
             <RM_P3 type="translational" active="true" prt_m="RM_P3b" prt_n="RM_P3a" mak_i="P3i" mak_j="P3j"/>
             <RM_S2 type="spherical" active="true" prt_m="RM_Thigh" prt_n="RM_P2b" mak_i="S2i" mak_j="S2j"/>
             <RM_S3 type="spherical" active="true" prt_m="RM_Thigh" prt_n="RM_P3b" mak_i="S3i" mak_j="S3j"/>
             <RM_Sf type="spherical" active="true" prt_m="RM_Thigh" prt_n="Ground" mak_i="Sfi" mak_j="RM_Sfj"/>
-            <RM_U1 type="universal" active="true" prt_m="MainBody" prt_n="RM_P1a" mak_i="RM_U1i" mak_j="U1j"/>
-            <RM_U2 type="universal" active="true" prt_m="MainBody" prt_n="RM_P2a" mak_i="RM_U2i" mak_j="U2j"/>
-            <RM_U3 type="universal" active="true" prt_m="MainBody" prt_n="RM_P3a" mak_i="RM_U3i" mak_j="U3j"/>
+            <RM_U1 type="universal" active="true" prt_m="MiddleBody" prt_n="RM_P1a" mak_i="RM_U1i" mak_j="U1j"/>
+            <RM_U2 type="universal" active="true" prt_m="MiddleBody" prt_n="RM_P2a" mak_i="RM_U2i" mak_j="U2j"/>
+            <RM_U3 type="universal" active="true" prt_m="MiddleBody" prt_n="RM_P3a" mak_i="RM_U3i" mak_j="U3j"/>
             <RR_P1 type="translational" active="true" prt_m="RR_Thigh" prt_n="RR_P1a" mak_i="P1i" mak_j="P1j"/>
             <RR_P2 type="translational" active="true" prt_m="RR_P2b" prt_n="RR_P2a" mak_i="P2i" mak_j="P2j"/>
             <RR_P3 type="translational" active="true" prt_m="RR_P3b" prt_n="RR_P3a" mak_i="P3i" mak_j="P3j"/>
             <RR_S2 type="spherical" active="true" prt_m="RR_Thigh" prt_n="RR_P2b" mak_i="S2i" mak_j="S2j"/>
             <RR_S3 type="spherical" active="true" prt_m="RR_Thigh" prt_n="RR_P3b" mak_i="S3i" mak_j="S3j"/>
             <RR_Sf type="spherical" active="true" prt_m="RR_Thigh" prt_n="Ground" mak_i="Sfi" mak_j="RR_Sfj"/>
-            <RR_U1 type="universal" active="true" prt_m="MainBody" prt_n="RR_P1a" mak_i="RR_U1i" mak_j="U1j"/>
-            <RR_U2 type="universal" active="true" prt_m="MainBody" prt_n="RR_P2a" mak_i="RR_U2i" mak_j="U2j"/>
-            <RR_U3 type="universal" active="true" prt_m="MainBody" prt_n="RR_P3a" mak_i="RR_U3i" mak_j="U3j"/>
+            <RR_U1 type="universal" active="true" prt_m="RearBody" prt_n="RR_P1a" mak_i="RR_U1i" mak_j="U1j"/>
+            <RR_U2 type="universal" active="true" prt_m="RearBody" prt_n="RR_P2a" mak_i="RR_U2i" mak_j="U2j"/>
+            <RR_U3 type="universal" active="true" prt_m="RearBody" prt_n="RR_P3a" mak_i="RR_U3i" mak_j="U3j"/>
         </Joint>
         <Motion type="motion_pool_element">
+            <SN_M1 type="motion" active="true" prt_m="Screw" prt_n="Nut" mak_i="SN_P1i" mak_j="SN_P1j" frc_coe="Mot_friction" component="2"/>
+
             <LF_M1 type="motion" active="true" prt_m="LF_Thigh" prt_n="LF_P1a" mak_i="P1i" mak_j="P1j" frc_coe="Mot_friction" component="2"/>
             <LF_M2 type="motion" active="true" prt_m="LF_P2b" prt_n="LF_P2a" mak_i="P2i" mak_j="P2j" frc_coe="Mot_friction" component="2"/>
             <LF_M3 type="motion" active="true" prt_m="LF_P3b" prt_n="LF_P3a" mak_i="P3i" mak_j="P3j" frc_coe="Mot_friction" component="2"/>
@@ -456,6 +492,7 @@
             <RR_M3 type="motion" active="true" prt_m="RR_P3b" prt_n="RR_P3a" mak_i="P3i" mak_j="P3j" frc_coe="Mot_friction" component="2"/>
         </Motion>
         <Force type="force_pool_element">
+            <SN_F1 type="single_component_force" active="true" prt_m="Screw" prt_n="Nut" mak_i="SN_P1i" mak_j="SN_P1j" component="2"/>
             <LF_F1 type="single_component_force" active="true" prt_m="LF_Thigh" prt_n="LF_P1a" mak_i="P1i" mak_j="P1j" component="2"/>
             <LF_F2 type="single_component_force" active="true" prt_m="LF_P2b" prt_n="LF_P2a" mak_i="P2i" mak_j="P2j" component="2"/>
             <LF_F3 type="single_component_force" active="true" prt_m="LF_P3b" prt_n="LF_P3a" mak_i="P3i" mak_j="P3j" component="2"/>

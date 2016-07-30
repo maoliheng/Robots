@@ -1184,7 +1184,13 @@ namespace Robots
 		Model::loadXml(ele);
 
 		/*Update Parts*/
-		body_ = partPool().find("MainBody");
+		body_ = partPool().find("MiddleBody");
+		fbody_ = partPool().find("FrontBody");
+		rbody_ = partPool().find("RearBody");
+		llink_ = partPool().find("LowerLink");
+		ulink_ = partPool().find("UpperLink");
+		screw_ = partPool().find("Screw");
+		nut_ = partPool().find("Nut");
 		force_sensor_mak_ = body_->markerPool().find("ForceSensorMak");
 
 		for (int j = 0; j < 6; ++j)
@@ -1198,6 +1204,27 @@ namespace Robots
 		}
 
 		// Update Markers //
+		bf_r1i_ = fbody().markerPool().find("BF_R1i");
+		bf_r1j_ = llink().markerPool().find("BF_R1j");
+		bm_r1i_ = body().markerPool().find("BM_R1i");
+		bm_r1j_ = llink().markerPool().find("BM_R1j");
+		br_r1i_ = rbody().markerPool().find("BR_R1i");
+		br_r1j_ = llink().markerPool().find("BR_R1j");
+
+		bf_r2i_ = fbody().markerPool().find("BF_R2i");
+		bf_r2j_ = ulink().markerPool().find("BF_R2j");
+		bm_r2i_ = body().markerPool().find("BM_R2i");
+		bm_r2j_ = ulink().markerPool().find("BM_R2j");
+		br_r2i_ = rbody().markerPool().find("BR_R2i");
+		br_r2j_ = ulink().markerPool().find("BR_R2j");
+
+		bm_r3i_ = body().markerPool().find("BM_R3i");
+		bm_r3j_ = screw().markerPool().find("BM_R3j");
+		sn_r1i_ = llink().markerPool().find("SN_R1i");
+		sn_r1j_ = nut().markerPool().find("SN_R1j");
+		sn_p1i_ = screw().markerPool().find("SN_P1i");
+		sn_p1j_ = nut().markerPool().find("SN_P1j");
+
 		for (int j = 0; j < 6; ++j)
 		{
 			pLegs[j]->base_mak_id_ = body().markerPool().find(pLegs[j]->name() + "_Base");
@@ -1228,6 +1255,16 @@ namespace Robots
 		}
 
 		// Update Joints //
+		bf_r1_ = jointPool().find("BF_R1");
+		bf_r2_ = jointPool().find("BF_R2");
+		bm_r1_ = jointPool().find("BM_R1");
+		bm_r2_ = jointPool().find("BM_R2");
+		br_r1_ = jointPool().find("BR_R1");
+		br_r2_ = jointPool().find("BR_R2");
+		bm_r3_ = jointPool().find("BM_R3");
+		sn_r1_ = jointPool().find("SN_R1");
+		sn_p1_ = jointPool().find("SN_P1");
+
 		for (int j = 0; j < 6; ++j)
 		{
 			pLegs[j]->u1_ = jointPool().find(pLegs[j]->name() + "_U1");
@@ -1242,6 +1279,8 @@ namespace Robots
 		}
 
 		// Update Motions //
+		sn_m1_ = motionPool().find("SN_M1");
+
 		for (int j = 0; j < 6; ++j)
 		{
 			pLegs[j]->m1_ = motionPool().find(pLegs[j]->name() + "_M1");
@@ -1250,6 +1289,7 @@ namespace Robots
 		}
 
 		// Update Forces //
+		sn_f1_ = forcePool().find("SN_F1");
 		for (int j = 0; j < 6; ++j)
 		{
 			pLegs[j]->f1_ = forcePool().find(pLegs[j]->name() + "_F1");
@@ -1354,6 +1394,11 @@ namespace Robots
 
 
 	};
+
+	void RobotTypeIII::SetWaist(double angle)
+	{
+
+	}
 
 	auto RobotTypeIII::simToAdams(const std::string &adams_file, const aris::dynamic::PlanFunc &func, const aris::dynamic::PlanParamBase &param, int ms_dt)->aris::dynamic::SimResult
 	{

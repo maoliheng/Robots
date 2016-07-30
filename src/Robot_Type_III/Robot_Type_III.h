@@ -206,16 +206,64 @@ namespace Robots
 
 		friend class RobotTypeIII;
 	};
+
 	class RobotTypeIII :public Robots::RobotBase
 	{
 	public:
 		RobotTypeIII();
 		~RobotTypeIII() = default;
 
+		//get parts
+		auto fbody()->aris::dynamic::Part& { return *fbody_; };
+		auto rbody()->aris::dynamic::Part& { return *rbody_; };
+		auto llink()->aris::dynamic::Part& { return *llink_; };
+		auto ulink()->aris::dynamic::Part& { return *ulink_; };
+		auto screw()->aris::dynamic::Part& { return *screw_; };
+		auto nut()->aris::dynamic::Part& { return *nut_; };
+
+		//get markers
+		auto bf_r1i()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*bf_r1i_); };
+		auto bf_r1j()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*bf_r1j_); };
+		auto bm_r1i()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*bm_r1i_); };
+		auto bm_r1j()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*bm_r1j_); };
+		auto br_r1i()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*br_r1i_); };
+		auto br_r1j()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*br_r1j_); };
+		auto bf_r2i()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*bf_r2i_); };
+		auto bf_r2j()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*bf_r2j_); };
+		auto bm_r2i()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*bm_r2i_); };
+		auto bm_r2j()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*bm_r2j_); };
+		auto br_r2i()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*br_r2i_); };
+		auto br_r2j()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*br_r2j_); };
+		auto bm_r3i()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*bm_r3i_); };
+		auto bm_r3j()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*bm_r3j_); };
+		auto sn_r1i()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*sn_r1i_); };
+		auto sn_r1j()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*sn_r1j_); };
+		auto sn_p1i()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*sn_p1i_); };
+		auto sn_p1j()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*sn_p1j_); };
+
+		//get joints
+		auto bf_r1()->aris::dynamic::RevoluteJoint& { return static_cast<aris::dynamic::RevoluteJoint&>(*bf_r1_); };
+		auto bm_r1()->aris::dynamic::RevoluteJoint& { return static_cast<aris::dynamic::RevoluteJoint&>(*bm_r1_); };
+		auto br_r1()->aris::dynamic::RevoluteJoint& { return static_cast<aris::dynamic::RevoluteJoint&>(*br_r1_); };
+		auto bf_r2()->aris::dynamic::RevoluteJoint& { return static_cast<aris::dynamic::RevoluteJoint&>(*bf_r2_); };
+		auto bm_r2()->aris::dynamic::RevoluteJoint& { return static_cast<aris::dynamic::RevoluteJoint&>(*bm_r2_); };
+		auto br_r2()->aris::dynamic::RevoluteJoint& { return static_cast<aris::dynamic::RevoluteJoint&>(*br_r2_); };
+		auto bm_r3()->aris::dynamic::RevoluteJoint& { return static_cast<aris::dynamic::RevoluteJoint&>(*bm_r3_); };
+		auto sn_r1()->aris::dynamic::RevoluteJoint& { return static_cast<aris::dynamic::RevoluteJoint&>(*sn_r1_); };
+		auto sn_p1()->aris::dynamic::RevoluteJoint& { return static_cast<aris::dynamic::RevoluteJoint&>(*sn_p1_); };
+
+		//get motions
+		auto sn_m1()->aris::dynamic::SingleComponentMotion& { return static_cast<aris::dynamic::SingleComponentMotion&>(*sn_m1_); };
+
+		//get forces
+		auto sn_f1()->aris::dynamic::SingleComponentForce& { return static_cast<aris::dynamic::SingleComponentForce&>(*sn_f1_); };
+
 		virtual auto loadXml(const aris::core::XmlElement &xml_ele)->void override;
 		virtual auto saveXml(aris::core::XmlElement &xml_ele)const->void override;
 		using Model::loadXml;
 		using Model::saveXml;
+
+		void SetWaist(double angle);//设置腰关节转角
 
 		void GetFin(double *Fin) const;
 		void GetFinDyn(double *Fin) const;
@@ -268,6 +316,40 @@ namespace Robots
 		};
 
 	private:
+		typedef aris::dynamic::Part* PartPtr;
+		union
+		{
+			PartPtr prt_array_[6];
+			struct
+			{
+				PartPtr fbody_, rbody_, llink_, ulink_, screw_, nut_;
+			};
+		};
+		typedef aris::dynamic::Marker* MarkerPtr;
+		union
+		{
+			MarkerPtr mak_array_[18];
+			struct
+			{
+				MarkerPtr bf_r1i_, bf_r1j_, bm_r1i_, bm_r1j_, br_r1i_, br_r1j_;
+				MarkerPtr bf_r2i_, bf_r2j_, bm_r2i_, bm_r2j_, br_r2i_, br_r2j_;
+				MarkerPtr bm_r3i_, bm_r3j_, sn_r1i_, sn_r1j_, sn_p1i_, sn_p1j_;
+			};
+		};
+		typedef aris::dynamic::Joint* JointPtr;
+		union
+		{
+			JointPtr jnt_array_[9];
+			struct
+			{
+				JointPtr bf_r1_, bm_r1_, br_r1_, bf_r2_, bm_r2_, br_r2_, bm_r3_, sn_r1_, sn_p1_;
+			};
+		};
+		typedef aris::dynamic::Motion* MotionPtr;
+		MotionPtr sn_m1_;
+		typedef aris::dynamic::Force* ForcePtr;
+		ForcePtr sn_f1_;
+
 		LegIII LF_Leg{ "LF", this };
 		LegIII LM_Leg{ "LM", this };
 		LegIII LR_Leg{ "LR", this };
