@@ -29,18 +29,24 @@
             <RMpe type="matrix">{ 0.10241 , 0 ,  0,       PI/2,  PI* 0/6,   -PI/2-PI*75/180}</RMpe>
             <RRpe type="matrix">{ 0.05433 , 0 ,  0.3300,  PI/2,  PI*11/6,   -PI/2-PI*75/180}</RRpe>
             <ForceSensorMakPe type="matrix">{ 0,0,0,0,0,0 }</ForceSensorMakPe>
-            <BF_R1ipe type="matrix">{ 0, 0.135,  0,       PI / 2, PI / 2, 0 }</BF_R1ipe>
-            <BF_R1jpe type="matrix">{ 0, 0,      -0.415,  PI / 2, PI / 2, 0 }</BF_R1jpe>
-            <BM_R1ipe type="matrix">{ 0, 0.135,  0,       PI / 2, PI / 2, 0 }</BM_R1ipe>
-            <BM_R1jpe type="matrix">{ 0, 0,      0,       PI / 2, PI / 2, 0 }</BM_R1jpe>
-            <BR_R1ipe type="matrix">{ 0, 0.135,  0,       PI / 2, PI / 2, 0 }</BR_R1ipe>
-            <BR_R1jpe type="matrix">{ 0, 0,      0.415,   PI / 2, PI / 2, 0 }</BR_R1jpe>
-            <BF_R2ipe type="matrix">{ 0, 0.325,  0,       PI / 2, PI / 2, 0 }</BF_R2ipe>
-            <BF_R2jpe type="matrix">{ 0, 0,      -0.415,  PI / 2, PI / 2, 0 }</BF_R2jpe>
-            <BM_R2ipe type="matrix">{ 0, 0.325,  0,       PI / 2, PI / 2, 0 }</BM_R2ipe>
-            <BM_R2jpe type="matrix">{ 0, 0,      0,       PI / 2, PI / 2, 0 }</BM_R2jpe>
-            <BR_R2ipe type="matrix">{ 0, 0.325,  0,       PI / 2, PI / 2, 0 }</BR_R2ipe>
-            <BR_R2jpe type="matrix">{ 0, 0,      0.415,   PI / 2, PI / 2, 0 }</BR_R2jpe>
+            <BF_R1ipe type="matrix">{ 0,    0.135,  0,      PI/2,  PI/2,   -PI/2 }</BF_R1ipe>
+            <BF_R1jpe type="matrix">{ 0,    0,      -0.415, PI/2,  PI/2,   -PI/2 }</BF_R1jpe>
+            <BM_R1ipe type="matrix">{ 0,    0.135,  0,      PI/2,  PI/2,   -PI/2 }</BM_R1ipe>
+            <BM_R1jpe type="matrix">{ 0,    0,      0,      PI/2,  PI/2,   -PI/2 }</BM_R1jpe>
+            <BR_R1ipe type="matrix">{ 0,    0.135,  0,      PI/2,  PI/2,   -PI/2 }</BR_R1ipe>
+            <BR_R1jpe type="matrix">{ 0,    0,      0.415,  PI/2,  PI/2,   -PI/2 }</BR_R1jpe>
+            <BF_R2ipe type="matrix">{ 0,    0.325,  0,      PI/2,  PI/2,   -PI/2 }</BF_R2ipe>
+            <BF_R2jpe type="matrix">{ 0,    0,      -0.415, PI/2,  PI/2,   -PI/2 }</BF_R2jpe>
+            <BM_R2ipe type="matrix">{ 0,    0.325,  0,      PI/2,  PI/2,   -PI/2 }</BM_R2ipe>
+            <BM_R2jpe type="matrix">{ 0,    0,      0,      PI/2,  PI/2,   -PI/2 }</BM_R2jpe>
+            <BR_R2ipe type="matrix">{ 0,    0.325,  0,      PI/2,  PI/2,   -PI/2 }</BR_R2ipe>
+            <BR_R2jpe type="matrix">{ 0,    0,      0.415,  PI/2,  PI/2,   -PI/2 }</BR_R2jpe>
+            <BM_R3ipe type="matrix">{ 0,    -0.1065,0.117,  PI/2,  PI/2,   -PI/2 }</BM_R3ipe>
+            <BM_R3jpe type="matrix">{ 0,    0,      0,      PI/2,  PI/2,   -PI/2 }</BM_R3jpe>
+            <LN_R1ipe type="matrix">{ 0,    0,      0,      PI/2,  PI/2,   -PI/2 }</LN_R1ipe>
+            <LN_R1jpe type="matrix">{ 0,    0,      0.165,  PI/2,  PI/2,   -PI/2 }</LN_R1jpe>
+            <SN_P1ipe type="matrix">{ 0,    0,      0,      0,     0,      0 }</SN_P1ipe>
+            <SN_P1jpe type="matrix">{ 0,    0,      0,      0,     0,      0 }</SN_P1jpe>
 
             <FBodyGamma type="matrix">{40,0,0,0,0,0,0,0,0,0}</FBodyGamma>
             <MBodyGamma type="matrix">{60,0,0,0,0,0,0,0,0,0}</MBodyGamma>
@@ -129,6 +135,7 @@
                     <BM_R1i type="marker" active="true" pe="BM_R1ipe"/>
                     <BM_R2i type="marker" active="true" pe="BM_R2ipe"/>
                     <BM_R3i type="marker" active="true" pe="BM_R3ipe"/>
+                    <ForceSensorMak type="marker" active="true" pe="ForceSensorMakPe"/>
                 </ChildMarker>
             </MiddleBody>
             <RearBody type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="RBodyGamma" graphic_file_path="${RBody_graphic}">
@@ -151,7 +158,7 @@
                     <BF_R1j type="marker" active="true" pe="BF_R1jpe"/>
                     <BM_R1j type="marker" active="true" pe="BM_R1jpe"/>
                     <BR_R1j type="marker" active="true" pe="BR_R1jpe"/>
-                    <SN_R1i type="marker" active="true" pe="SN_R1ipe"/>
+                    <LN_R1j type="marker" active="true" pe="LN_R1jpe"/>
                 </ChildMarker>
             </LowerLink>
             <UpperLink type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="ULinkGamma" graphic_file_path="${ULink_graphic}">
@@ -164,13 +171,13 @@
             <Screw type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="ScrewGamma" graphic_file_path="${Screw_graphic}">
                 <ChildMarker type="marker_pool_element">
                     <BM_R3j type="marker" active="true" pe="BM_R3jpe"/>
-                    <SN_P1i type="marker" active="true" pe="SN_P1ipe"/>
+                    <SN_P1j type="marker" active="true" pe="SN_P1jpe"/>
                 </ChildMarker>
             </Screw>
             <Nut type="part" active="true" pe="{0 , 0 , 0 , -0 , 0 , -0}" vel="{0 , 0 , 0 , 0 , 0 , 0}" acc="{0 , 0 , 0 , 0 , 0 , 0}" inertia="NutGamma" graphic_file_path="${Nut_graphic}">
                 <ChildMarker type="marker_pool_element">
-                    <SN_R1j type="marker" active="true" pe="SN_R1jpe"/>
-                    <SN_P1j type="marker" active="true" pe="SN_P1jpe"/>
+                    <LN_R1i type="marker" active="true" pe="LN_R1ipe"/>
+                    <SN_P1i type="marker" active="true" pe="SN_P1ipe"/>
                 </ChildMarker>
             </Nut>
 
@@ -411,7 +418,7 @@
             <BR_R1 type="revolute" active="true" prt_m="RearBody" prt_n="LowerLink" mak_i="BR_R1i" mak_j="BR_R1j"/>
             <BR_R2 type="revolute" active="true" prt_m="RearBody" prt_n="UpperLink" mak_i="BR_R2i" mak_j="BR_R2j"/>
             <BM_R3 type="revolute" active="true" prt_m="MiddleBody" prt_n="Screw" mak_i="BM_R3i" mak_j="BM_R3j"/>
-            <SN_R1 type="revolute" active="true" prt_m="LowerLink" prt_n="Nut" mak_i="SN_R1i" mak_j="SN_R1j"/>
+            <LN_R1 type="revolute" active="true" prt_m="LowerLink" prt_n="Nut" mak_i="LN_R1i" mak_j="LN_R1j"/>
             <SN_P1 type="translational" active="true" prt_m="Screw" prt_n="Nut" mak_i="SN_P1i" mak_j="SN_P1j"/>
 
             <LF_P1 type="translational" active="true" prt_m="LF_Thigh" prt_n="LF_P1a" mak_i="P1i" mak_j="P1j"/>

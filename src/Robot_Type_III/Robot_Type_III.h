@@ -236,8 +236,8 @@ namespace Robots
 		auto br_r2j()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*br_r2j_); };
 		auto bm_r3i()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*bm_r3i_); };
 		auto bm_r3j()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*bm_r3j_); };
-		auto sn_r1i()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*sn_r1i_); };
-		auto sn_r1j()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*sn_r1j_); };
+		auto ln_r1i()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*ln_r1i_); };
+		auto ln_r1j()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*ln_r1j_); };
 		auto sn_p1i()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*sn_p1i_); };
 		auto sn_p1j()->aris::dynamic::Marker& { return static_cast<aris::dynamic::Marker&>(*sn_p1j_); };
 
@@ -249,7 +249,7 @@ namespace Robots
 		auto bm_r2()->aris::dynamic::RevoluteJoint& { return static_cast<aris::dynamic::RevoluteJoint&>(*bm_r2_); };
 		auto br_r2()->aris::dynamic::RevoluteJoint& { return static_cast<aris::dynamic::RevoluteJoint&>(*br_r2_); };
 		auto bm_r3()->aris::dynamic::RevoluteJoint& { return static_cast<aris::dynamic::RevoluteJoint&>(*bm_r3_); };
-		auto sn_r1()->aris::dynamic::RevoluteJoint& { return static_cast<aris::dynamic::RevoluteJoint&>(*sn_r1_); };
+		auto ln_r1()->aris::dynamic::RevoluteJoint& { return static_cast<aris::dynamic::RevoluteJoint&>(*ln_r1_); };
 		auto sn_p1()->aris::dynamic::RevoluteJoint& { return static_cast<aris::dynamic::RevoluteJoint&>(*sn_p1_); };
 
 		//get motions
@@ -263,7 +263,7 @@ namespace Robots
 		using Model::loadXml;
 		using Model::saveXml;
 
-		void SetWaist(double angle);//设置腰关节转角
+		void SetWa(const double angle);//设置腰关节转角(Waist Angle)
 
 		void GetFin(double *Fin) const;
 		void GetFinDyn(double *Fin) const;
@@ -316,39 +316,23 @@ namespace Robots
 		};
 
 	private:
-		typedef aris::dynamic::Part* PartPtr;
-		union
-		{
-			PartPtr prt_array_[6];
-			struct
-			{
-				PartPtr fbody_, rbody_, llink_, ulink_, screw_, nut_;
-			};
-		};
-		typedef aris::dynamic::Marker* MarkerPtr;
-		union
-		{
-			MarkerPtr mak_array_[18];
-			struct
-			{
-				MarkerPtr bf_r1i_, bf_r1j_, bm_r1i_, bm_r1j_, br_r1i_, br_r1j_;
-				MarkerPtr bf_r2i_, bf_r2j_, bm_r2i_, bm_r2j_, br_r2i_, br_r2j_;
-				MarkerPtr bm_r3i_, bm_r3j_, sn_r1i_, sn_r1j_, sn_p1i_, sn_p1j_;
-			};
-		};
-		typedef aris::dynamic::Joint* JointPtr;
-		union
-		{
-			JointPtr jnt_array_[9];
-			struct
-			{
-				JointPtr bf_r1_, bm_r1_, br_r1_, bf_r2_, bm_r2_, br_r2_, bm_r3_, sn_r1_, sn_p1_;
-			};
-		};
-		typedef aris::dynamic::Motion* MotionPtr;
-		MotionPtr sn_m1_;
-		typedef aris::dynamic::Force* ForcePtr;
-		ForcePtr sn_f1_;
+		//腰部关节尺寸参数
+		const double BF_R1x{ 0 }, BF_R1y{ 0 }, BF_R1z{ 0 }, BR_R1x{ 0 }, BR_R1y{ 0 }, BR_R1z{ 0 };
+		const double BM_R3x{ 0 }, BM_R3y{ 0 }, BM_R3z{ 0 }, LN_R1x{ 0 }, LN_R1y{ 0 }, LN_R1z{ 0 };
+
+		const double L_f{ 0 }, L_r{ 0 }, L_n{ 0 }, L_s{ 0 }, theta{ 0 };
+
+		aris::dynamic::Part *fbody_, *rbody_, *llink_, *ulink_, *screw_, *nut_;
+		
+		aris::dynamic::Marker *bf_r1i_, *bf_r1j_, *bm_r1i_, *bm_r1j_, *br_r1i_, *br_r1j_;
+		aris::dynamic::Marker *bf_r2i_, *bf_r2j_, *bm_r2i_, *bm_r2j_, *br_r2i_, *br_r2j_;
+		aris::dynamic::Marker *bm_r3i_, *bm_r3j_, *ln_r1i_, *ln_r1j_, *sn_p1i_, *sn_p1j_;
+
+		aris::dynamic::Joint *bf_r1_, *bm_r1_, *br_r1_, *bf_r2_, *bm_r2_, *br_r2_, *bm_r3_, *ln_r1_, *sn_p1_;
+
+		aris::dynamic::Motion* sn_m1_;
+
+		aris::dynamic::Force* sn_f1_;
 
 		LegIII LF_Leg{ "LF", this };
 		LegIII LM_Leg{ "LM", this };

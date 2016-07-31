@@ -1191,7 +1191,6 @@ namespace Robots
 		ulink_ = partPool().find("UpperLink");
 		screw_ = partPool().find("Screw");
 		nut_ = partPool().find("Nut");
-		force_sensor_mak_ = body_->markerPool().find("ForceSensorMak");
 
 		for (int j = 0; j < 6; ++j)
 		{
@@ -1205,25 +1204,27 @@ namespace Robots
 
 		// Update Markers //
 		bf_r1i_ = fbody().markerPool().find("BF_R1i");
-		bf_r1j_ = llink().markerPool().find("BF_R1j");
-		bm_r1i_ = body().markerPool().find("BM_R1i");
-		bm_r1j_ = llink().markerPool().find("BM_R1j");
-		br_r1i_ = rbody().markerPool().find("BR_R1i");
-		br_r1j_ = llink().markerPool().find("BR_R1j");
-
 		bf_r2i_ = fbody().markerPool().find("BF_R2i");
-		bf_r2j_ = ulink().markerPool().find("BF_R2j");
+		bm_r1i_ = body().markerPool().find("BM_R1i");
 		bm_r2i_ = body().markerPool().find("BM_R2i");
-		bm_r2j_ = ulink().markerPool().find("BM_R2j");
+		bm_r3i_ = body().markerPool().find("BM_R3i");
+		br_r1i_ = rbody().markerPool().find("BR_R1i");
 		br_r2i_ = rbody().markerPool().find("BR_R2i");
+
+		bf_r1j_ = llink().markerPool().find("BF_R1j");
+		bm_r1j_ = llink().markerPool().find("BM_R1j");
+		br_r1j_ = llink().markerPool().find("BR_R1j");
+		ln_r1j_ = llink().markerPool().find("LN_R1j");
+		bf_r2j_ = ulink().markerPool().find("BF_R2j");
+		bm_r2j_ = ulink().markerPool().find("BM_R2j");
 		br_r2j_ = ulink().markerPool().find("BR_R2j");
 
-		bm_r3i_ = body().markerPool().find("BM_R3i");
 		bm_r3j_ = screw().markerPool().find("BM_R3j");
-		sn_r1i_ = llink().markerPool().find("SN_R1i");
-		sn_r1j_ = nut().markerPool().find("SN_R1j");
-		sn_p1i_ = screw().markerPool().find("SN_P1i");
-		sn_p1j_ = nut().markerPool().find("SN_P1j");
+		sn_p1j_ = screw().markerPool().find("SN_P1j");
+		ln_r1i_ = nut().markerPool().find("LN_R1i");
+		sn_p1i_ = nut().markerPool().find("SN_P1i");
+
+		force_sensor_mak_ = body_->markerPool().find("ForceSensorMak");
 
 		for (int j = 0; j < 6; ++j)
 		{
@@ -1262,7 +1263,7 @@ namespace Robots
 		br_r1_ = jointPool().find("BR_R1");
 		br_r2_ = jointPool().find("BR_R2");
 		bm_r3_ = jointPool().find("BM_R3");
-		sn_r1_ = jointPool().find("SN_R1");
+		ln_r1_ = jointPool().find("LN_R1");
 		sn_p1_ = jointPool().find("SN_P1");
 
 		for (int j = 0; j < 6; ++j)
@@ -1290,6 +1291,7 @@ namespace Robots
 
 		// Update Forces //
 		sn_f1_ = forcePool().find("SN_F1");
+
 		for (int j = 0; j < 6; ++j)
 		{
 			pLegs[j]->f1_ = forcePool().find(pLegs[j]->name() + "_F1");
@@ -1298,6 +1300,29 @@ namespace Robots
 		}
 
 		// Update Dimension Variables //
+		double pm[4][4];
+		s_inv_pm_dot_pm(*bm_r1j().prtPm(), *bf_r1j().prtPm(), *pm);
+		*const_cast<double *>(&BF_R1x) = pm[0][3];
+		*const_cast<double *>(&BF_R1y) = pm[1][3];
+		*const_cast<double *>(&BF_R1z) = pm[2][3];
+		s_inv_pm_dot_pm(*bm_r1j().prtPm(), *br_r1j().prtPm(), *pm);
+		*const_cast<double *>(&BR_R1x) = pm[0][3];
+		*const_cast<double *>(&BR_R1y) = pm[1][3];
+		*const_cast<double *>(&BR_R1z) = pm[2][3];
+		s_inv_pm_dot_pm(*bm_r1i().prtPm(), *bm_r3i().prtPm(), *pm);
+		*const_cast<double *>(&BM_R3x) = pm[0][3];
+		*const_cast<double *>(&BM_R3y) = pm[1][3];
+		*const_cast<double *>(&BM_R3z) = pm[2][3];
+		s_inv_pm_dot_pm(*bm_r1j().prtPm(), *ln_r1j().prtPm(), *pm);
+		*const_cast<double *>(&LN_R1x) = pm[0][3];
+		*const_cast<double *>(&LN_R1y) = pm[1][3];
+		*const_cast<double *>(&LN_R1y) = pm[2][3];
+
+		*const_cast<double *>(&L_f) = std::fabs(BF_R1x);
+		*const_cast<double *>(&L_r) = std::fabs(BR_R1x);
+		*const_cast<double *>(&L_s) = std::sqrt(BM_R3x*BM_R3x + BM_R3y*BM_R3y);
+		*const_cast<double *>(&L_n) = std::fabs(LN_R1x);
+
 		for (int i = 0; i < 6; ++i)
 		{
 			double pm[4][4];
@@ -1395,9 +1420,15 @@ namespace Robots
 
 	};
 
-	void RobotTypeIII::SetWaist(double angle)
+	void RobotTypeIII::SetWa(const double angle)
 	{
+		double gamma = theta - angle;
+		double c = std::sqrt(a*a + b*b - 2 * a*b*std::cos(gamma));
+		double beta = std::asin(b / c*std::sin(gamma));
+		double alpha = PI - beta - gamma;
 
+
+		sn_m1().update();
 	}
 
 	auto RobotTypeIII::simToAdams(const std::string &adams_file, const aris::dynamic::PlanFunc &func, const aris::dynamic::PlanParamBase &param, int ms_dt)->aris::dynamic::SimResult
