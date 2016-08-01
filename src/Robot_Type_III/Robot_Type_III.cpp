@@ -1181,7 +1181,11 @@ namespace Robots
 
 	auto RobotTypeIII::loadXml(const aris::core::XmlElement &ele)->void
 	{
+		std::cout << "start to load xml" << endl;
+
 		Model::loadXml(ele);
+
+		std::cout << "finish load xml" << endl;
 
 		/*Update Parts*/
 		body_ = partPool().find("MiddleBody");
@@ -1201,6 +1205,8 @@ namespace Robots
 			pLegs[j]->p2b_ = partPool().find(pLegs[j]->name() + "_P2b");
 			pLegs[j]->p3b_ = partPool().find(pLegs[j]->name() + "_P3b");
 		}
+
+		std::cout << "load parts finish" << endl;
 
 		// Update Markers //
 		bf_r1i_ = fbody().markerPool().find("BF_R1i");
@@ -1254,6 +1260,8 @@ namespace Robots
 			pLegs[j]->s3j_ = pLegs[j]->p3b().markerPool().find("S3j");
 			pLegs[j]->sfj_ = ground().markerPool().find(pLegs[j]->name() + "_Sfj");
 		}
+		
+		std::cout << "load markers finish" << endl;
 
 		// Update Joints //
 		bf_r1_ = jointPool().find("BF_R1");
@@ -1279,6 +1287,8 @@ namespace Robots
 			pLegs[j]->s3_ = jointPool().find(pLegs[j]->name() + "_S3");
 		}
 
+		std::cout << "load joints finish" << endl;
+
 		// Update Motions //
 		sn_m1_ = motionPool().find("SN_M1");
 
@@ -1288,6 +1298,8 @@ namespace Robots
 			pLegs[j]->m2_ = motionPool().find(pLegs[j]->name() + "_M2");
 			pLegs[j]->m3_ = motionPool().find(pLegs[j]->name() + "_M3");
 		}
+
+		std::cout << "load motions finish" << endl;
 
 		// Update Forces //
 		sn_f1_ = forcePool().find("SN_F1");
@@ -1300,28 +1312,38 @@ namespace Robots
 		}
 
 		// Update Dimension Variables //
-		double pm[4][4];
-		s_inv_pm_dot_pm(*bm_r1j().prtPm(), *bf_r1j().prtPm(), *pm);
-		*const_cast<double *>(&BF_R1x) = pm[0][3];
-		*const_cast<double *>(&BF_R1y) = pm[1][3];
-		*const_cast<double *>(&BF_R1z) = pm[2][3];
-		s_inv_pm_dot_pm(*bm_r1j().prtPm(), *br_r1j().prtPm(), *pm);
-		*const_cast<double *>(&BR_R1x) = pm[0][3];
-		*const_cast<double *>(&BR_R1y) = pm[1][3];
-		*const_cast<double *>(&BR_R1z) = pm[2][3];
-		s_inv_pm_dot_pm(*bm_r1i().prtPm(), *bm_r3i().prtPm(), *pm);
-		*const_cast<double *>(&BM_R3x) = pm[0][3];
-		*const_cast<double *>(&BM_R3y) = pm[1][3];
-		*const_cast<double *>(&BM_R3z) = pm[2][3];
-		s_inv_pm_dot_pm(*bm_r1j().prtPm(), *ln_r1j().prtPm(), *pm);
-		*const_cast<double *>(&LN_R1x) = pm[0][3];
-		*const_cast<double *>(&LN_R1y) = pm[1][3];
-		*const_cast<double *>(&LN_R1y) = pm[2][3];
-
-		*const_cast<double *>(&L_f) = std::fabs(BF_R1x);
-		*const_cast<double *>(&L_r) = std::fabs(BR_R1x);
-		*const_cast<double *>(&L_s) = std::sqrt(BM_R3x*BM_R3x + BM_R3y*BM_R3y);
-		*const_cast<double *>(&L_n) = std::fabs(LN_R1x);
+		double pe[6];
+		//获取部件坐标系下各marker的位置参数
+		aris::dynamic::s_pm2pe(*bf_r1j().prtPm(), pe);
+		*const_cast<double *>(&BF_R1x) = pe[0];
+		*const_cast<double *>(&BF_R1y) = pe[1];
+		*const_cast<double *>(&BF_R1z) = pe[2];
+		aris::dynamic::s_pm2pe(*br_r1j().prtPm(), pe);
+		*const_cast<double *>(&BR_R1x) = pe[0];
+		*const_cast<double *>(&BR_R1y) = pe[1];
+		*const_cast<double *>(&BR_R1z) = pe[2];
+		aris::dynamic::s_pm2pe(*bm_r1i().prtPm(), pe);
+		*const_cast<double *>(&BM_R1x) = pe[0];
+		*const_cast<double *>(&BM_R1y) = pe[1];
+		*const_cast<double *>(&BM_R1z) = pe[2];
+		aris::dynamic::s_pm2pe(*bm_r2i().prtPm(), pe);
+		*const_cast<double *>(&BM_R2x) = pe[0];
+		*const_cast<double *>(&BM_R2y) = pe[1];
+		*const_cast<double *>(&BM_R2z) = pe[2];
+		aris::dynamic::s_pm2pe(*bm_r3i().prtPm(), pe);
+		*const_cast<double *>(&BM_R3x) = pe[0];
+		*const_cast<double *>(&BM_R3y) = pe[1];
+		*const_cast<double *>(&BM_R3z) = pe[2];
+		aris::dynamic::s_pm2pe(*ln_r1j().prtPm(), pe);
+		*const_cast<double *>(&LN_R1x) = pe[0];
+		*const_cast<double *>(&LN_R1y) = pe[1];
+		*const_cast<double *>(&LN_R1y) = pe[2];
+		
+		*const_cast<double *>(&L_f) = std::fabs(BF_R1z);
+		*const_cast<double *>(&L_r) = std::fabs(BR_R1z);
+		*const_cast<double *>(&b) = std::fabs(LN_R1z); //摇臂尺寸
+		*const_cast<double *>(&a) = std::sqrt((BM_R3z - BM_R1z)*(BM_R3z - BM_R1z) + (BM_R3y - BM_R1y)*(BM_R3y - BM_R1y)); //机架尺寸
+		*const_cast<double *>(&theta) = std::atan((BM_R1y - BM_R3y) / (BM_R3z - BM_R1z));
 
 		for (int i = 0; i < 6; ++i)
 		{
@@ -1426,7 +1448,42 @@ namespace Robots
 		double c = std::sqrt(a*a + b*b - 2 * a*b*std::cos(gamma));
 		double beta = std::asin(b / c*std::sin(gamma));
 		double alpha = PI - beta - gamma;
+		
+		//设置各铰链marker在bm_r1i坐标系下的pe
+		double pm[4][4], pm_g[4][4];
 
+		body().update();
+
+		double pe1[6]{ BM_R1x, BM_R1y, BM_R1z, 0, angle, 0 };
+		s_pe2pm(pe1, *pm);
+		s_pm_dot_pm(*body().pm(), *pm, *pm_g);
+		llink().setPm(*pm_g);
+
+		double pe2[6]{ BM_R2x, BM_R2y, BM_R2z, 0, angle, 0 };
+		s_pe2pm(pe2, *pm);
+		s_pm_dot_pm(*body().pm(), *pm, *pm_g);
+		llink().setPm(*pm_g);
+
+		double pe3[6]{ 0, L_f*std::sin(angle), -L_f*std::cos(angle), 0, 0, 0 };
+		s_pe2pm(pe3, *pm);
+		s_pm_dot_pm(*body().pm(), *pm, *pm_g);
+		fbody().setPm(*pm_g);
+
+		double pe4[6]{ 0, -L_r*std::sin(angle), L_r*std::cos(angle), 0, 0, 0 };
+		s_pe2pm(pe4, *pm);
+		s_pm_dot_pm(*body().pm(), *pm, *pm_g);
+		rbody().setPm(*pm_g);
+
+		//反解丝杆、螺母
+		double pe5[6]{ BM_R3x,BM_R3y,BM_R3z,0,-(PI - theta - beta) ,0 };
+		s_pe2pm(pe5, *pm);
+		s_pm_dot_pm(*body().pm(), *pm, *pm_g);
+		screw().setPm(*pm_g);
+
+		double pe6[6]{ 0,0,c,0,0,0 };
+		s_pe2pm(pe6, *pm);
+		s_pm_dot_pm(*screw().pm(), *pm, *pm_g);
+		nut().setPm(*pm_g);
 
 		sn_m1().update();
 	}
@@ -1437,8 +1494,6 @@ namespace Robots
 		this->GetPee(begin_pee);
 		this->GetPeb(begin_peb);
 		this->saveDynEle("before_robotTypeI_simToAdams");
-
-
 
 		enum STATE { STAND, SUSPEND, MOVE, } last_state[6], this_state[6];
 		std::int32_t sim_time{ 0 };

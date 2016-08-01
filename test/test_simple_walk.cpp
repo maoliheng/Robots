@@ -1,10 +1,10 @@
 #include <Eigen/Eigen>
 
 #include <aris.h>
-#include <Robot_Type_I.h>
+#include <Robot_Type_III.h>
 
 
-Robots::RobotTypeI rbt;
+Robots::RobotTypeIII rbt;
 
 int main_test(int argc, char *argv[]);
 int main(int argc, char *argv[])
@@ -30,7 +30,7 @@ int main_test(int argc, char *argv[])
 {
 	
 #ifdef WIN32
-	rbt.loadXml("C:\\Robots\\resource\\Robot_Type_I\\Robot_III\\Robot_III.xml");
+	rbt.loadXml("G:\\Hexapod\\Robots_LJM\\src\\Robot_Type_III\\resource\\Robot_IX\\Robot_IX.xml");
 	//rbt.loadXml("C:\\Robots\\resource\\Robot_Type_I\\Robot_VIII\\Robot_VIII.xml");
 #endif
 #ifdef UNIX
@@ -46,6 +46,7 @@ int main_test(int argc, char *argv[])
 		0.3, -0.85, 0.65 };
 
 	double beginPE[6]{ 0 };
+	double beginWa{ 0 };
 	
 	Robots::WalkParam wk_param;
 	wk_param.totalCount = 2000;
@@ -55,13 +56,14 @@ int main_test(int argc, char *argv[])
 	wk_param.d = 0.9;
 
 	rbt.SetPeb(beginPE);
+	rbt.SetWa(beginWa);
 	rbt.SetPee(beginEE);
 	
-	auto result = rbt.simToAdams("C:\\Users\\yang\\Desktop\\test.cmd", Robots::walkGait, wk_param, 50);
+	auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test.cmd", Robots::walkGait, wk_param, 50);
 	
-	result.saveToTxt("C:\\Users\\yang\\Desktop\\test");
+	result.saveToTxt("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test");
 
-	rbt.saveXml("C:\\Users\\yang\\Desktop\\test.xml");
+	rbt.saveXml("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test.xml");
 	
 	/*
 	Robots::WalkParam wk_param;

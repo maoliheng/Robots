@@ -318,9 +318,10 @@ namespace Robots
 	private:
 		//腰部关节尺寸参数
 		const double BF_R1x{ 0 }, BF_R1y{ 0 }, BF_R1z{ 0 }, BR_R1x{ 0 }, BR_R1y{ 0 }, BR_R1z{ 0 };
+		const double BM_R1x{ 0 }, BM_R1y{ 0 }, BM_R1z{ 0 }, BM_R2x{ 0 }, BM_R2y{ 0 }, BM_R2z{ 0 };
 		const double BM_R3x{ 0 }, BM_R3y{ 0 }, BM_R3z{ 0 }, LN_R1x{ 0 }, LN_R1y{ 0 }, LN_R1z{ 0 };
 
-		const double L_f{ 0 }, L_r{ 0 }, L_n{ 0 }, L_s{ 0 }, theta{ 0 };
+		const double L_f{ 0 }, L_r{ 0 }, a{ 0 }, b{ 0 }, theta{ 0 };
 
 		aris::dynamic::Part *fbody_, *rbody_, *llink_, *ulink_, *screw_, *nut_;
 		
