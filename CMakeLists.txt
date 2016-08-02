@@ -139,7 +139,7 @@ set(INCLUDE_HEADER_FILES ${INCLUDE_HEADER_FILES} ${FULL_H})
 ################################### build tests for Robots ####################################
 enable_testing()
 
-add_executable(test_simple_walk test/test_simple_walk.cpp)
+add_executable(test_simple_walk test/test_simple_walk.cpp test/test_gait.cpp)
 target_link_libraries(test_simple_walk ${ALL_LINK_LIB})
 add_test(NAME test_simple_walk COMMAND test_simple_walk)
 

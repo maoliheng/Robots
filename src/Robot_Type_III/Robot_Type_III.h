@@ -264,6 +264,7 @@ namespace Robots
 		using Model::saveXml;
 
 		void SetWa(const double angle);//设置腰关节转角(Waist Angle)
+		void GetWa(double angle) const;//获取当前腰关节转角(Waist Angle)
 
 		void GetFin(double *Fin) const;
 		void GetFinDyn(double *Fin) const;
@@ -322,6 +323,8 @@ namespace Robots
 		const double BM_R3x{ 0 }, BM_R3y{ 0 }, BM_R3z{ 0 }, LN_R1x{ 0 }, LN_R1y{ 0 }, LN_R1z{ 0 };
 
 		const double L_f{ 0 }, L_r{ 0 }, a{ 0 }, b{ 0 }, theta{ 0 };
+
+		double wa_; //waist angle;
 
 		aris::dynamic::Part *fbody_, *rbody_, *llink_, *ulink_, *screw_, *nut_;
 		
