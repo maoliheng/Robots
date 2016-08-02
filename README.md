@@ -5,7 +5,8 @@ xml文件修改了很多模型参数，请在新的xml文件上添加步态参�
 步态规划参考test/test_simple_walk工程，跟原来相比，需要注意以下两点：
     1）model的类型转换改为
         auto &robot = static_cast<Robots::RobotTypeIII &>(model);
-    2）SetPeb和SetPee之间加一行SetWa，设置腰关节转角。若不使用腰关节，则可写成 SetWa(0)
+    2）SetPeb和SetPee之间加一行SetWa，设置腰关节转角。
         robot.SetPeb(Peb, beginMak);
-	      robot.SetWa(Wa);
-	      robot.SetPee(Pee, beginMak);
+	robot.SetWa(Wa);
+	robot.SetPee(Pee, beginMak);
+	若不使用腰关节，则可写成 SetWa(0)
