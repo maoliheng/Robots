@@ -2,7 +2,7 @@
 
 #include <aris.h>
 #include <Robot_Type_III.h>
-#include "test_gait.h"
+#include "creeping_gait.h"
 
 
 Robots::RobotTypeIII rbt;
@@ -38,7 +38,7 @@ int main_test(int argc, char *argv[])
 	rbt.loadXml("/usr/Robots/resource/Robot_Type_I/Robot_III/Robot_III.xml");
 #endif
 	
-	const double beginEE[]{
+	double beginEE[]{
 		-0.3, -0.85, -0.65,
 		-0.45, -0.85, 0,
 		-0.3, -0.85, 0.65,
@@ -48,24 +48,30 @@ int main_test(int argc, char *argv[])
 
 	double beginPE[6]{ 0 };
 	double beginWa{ 0 };
-	
-	/*
-	Robots::WalkParam wk_param;
-	wk_param.totalCount = 2000;
-	wk_param.n = 1;
-	wk_param.beta = 0.3;
-	wk_param.alpha = 0;
-	wk_param.d = 0.9;
-	*/
 
-	walkParam wk_param;
+	//ÅÀÆÂ²âÊÔ
+	//double phi = PI / 9; //²àÆÂ½Ç¶È
+	//for (int i = 0; i < 6; ++i)
+	//{
+	//	beginEE[3 * i + 1] += beginEE[3 * i] * std::tan(phi);
+	//}
+	//beginPE[3] = phi;
+	
+	//walkParam wk_param;
+	//wk_param.totalCount = 2000;
+	//wk_param.n = 2;
+	//wk_param.beta = 0;
+	//wk_param.alpha = 0;
+	//wk_param.d = 0.5;
+
+	creepingParam cp_param;
 
 	rbt.SetPeb(beginPE);
 	rbt.SetWa(beginWa);
 	rbt.SetPee(beginEE);
 	
 	//auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test.cmd", Robots::walkGait, wk_param, 50);
-	auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test.cmd", walkGait, wk_param, 50);
+	auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\creeping.cmd", creepingGait, cp_param, 50);
 
 	result.saveToTxt("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test");
 

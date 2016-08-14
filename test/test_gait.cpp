@@ -231,8 +231,9 @@ auto walkGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &p
 		aris::dynamic::s_pq2pe(pq, pe);
 		std::copy(pe + 3, pe + 6, Peb + 3);
 	}
-
-	double Wa = PI / 12 * std::sin(s);
+	//测试腰关节
+	//double Wa = PI / 12 * std::sin(s);
+	double Wa = 0;
 
 	robot.SetPeb(Peb, beginMak);
 	robot.SetWa(Wa);
@@ -243,8 +244,8 @@ auto walkGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &p
 		double angle;
 		robot.GetWa(angle);
 		double deg = angle / PI * 180;
-		rt_printf("Set Waist angle: %f\n", Wa / PI * 180);
-		rt_printf("Get Waist angle: %f\n", deg);
+		//rt_printf("Set Waist angle: %f\n", Wa / PI * 180);
+		//rt_printf("Get Waist angle: %f\n", deg);
 	}
 
 	return 2 * param.n * param.totalCount - param.count - 1;
