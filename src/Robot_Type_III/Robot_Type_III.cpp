@@ -1513,8 +1513,9 @@ namespace Robots
 
 	auto RobotTypeIII::simToAdams(const std::string &adams_file, const aris::dynamic::PlanFunc &func, const aris::dynamic::PlanParamBase &param, int ms_dt)->aris::dynamic::SimResult
 	{
-		double begin_pee[18], begin_peb[6];
+		double begin_pee[18], begin_peb[6], begin_wa;
 		this->GetPee(begin_pee);
+		this->GetWa(begin_wa);
 		this->GetPeb(begin_peb);
 		this->saveDynEle("before_robotTypeI_simToAdams");
 
@@ -1705,8 +1706,9 @@ namespace Robots
 		}
 
 		this->loadDynEle("before_robotTypeI_simToAdams");
-		this->SetPee(begin_pee);
 		this->SetPeb(begin_peb);
+		this->SetWa(begin_wa);
+		this->SetPee(begin_pee);
 
 		return this->aris::dynamic::Model::simToAdams(adams_file, func, param, ms_dt, &scriptPool().at(0));
 	}
