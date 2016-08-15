@@ -264,7 +264,7 @@ namespace Robots
 		using Model::saveXml;
 
 		void SetWa(const double angle);//设置腰关节转角(Waist Angle)
-		void GetWa(double angle) const;//获取当前腰关节转角(Waist Angle)
+		void GetWa(double& angle) const;//获取当前腰关节转角(Waist Angle)
 
 		void GetFin(double *Fin) const;
 		void GetFinDyn(double *Fin) const;

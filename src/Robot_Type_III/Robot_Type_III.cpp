@@ -1506,7 +1506,7 @@ namespace Robots
 		sn_m1().update();
 	}
 
-	void RobotTypeIII::GetWa(double angle) const
+	void RobotTypeIII::GetWa(double& angle) const
 	{
 		angle = wa_;
 	}

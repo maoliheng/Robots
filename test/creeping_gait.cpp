@@ -94,38 +94,33 @@ auto creepingGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
 		basic_param.targetPee[3 * k + 9 * i + 1] = y;
 		basic_param.targetPee[3 * k + 9 * i + 2] = z;
 		//test
-		if (param.count%param.totalCount == 0)
-		{
-			rt_printf("x0 = %f\n", x0);
-			rt_printf("y0 = %f\n", y0);
-			rt_printf("z0 = %f\n", z0);
-			rt_printf("alpha0 = %f\n", alpha0);
-			rt_printf("d = %f\n", d);
-			rt_printf("m = %d\n", m);
-			rt_printf("n = %d\n", n);
-			rt_printf("z = %f\n", z);
-			rt_printf("y = %f\n", y);
-		}
+		//if (param.count%param.totalCount == 0)
+		//{
+		//	rt_printf("x0 = %f\n", x0);
+		//	rt_printf("y0 = %f\n", y0);
+		//	rt_printf("z0 = %f\n", z0);
+		//	rt_printf("alpha0 = %f\n", alpha0);
+		//	rt_printf("d = %f\n", d);
+		//	rt_printf("m = %d\n", m);
+		//	rt_printf("n = %d\n", n);
+		//	rt_printf("z = %f\n", z);
+		//	rt_printf("y = %f\n\n", y);
+		//}
 	}
 
 	basic_param.targetPeb[1] = (basic_param.targetPee[1] + basic_param.targetPee[10] + basic_param.targetPee[7] + basic_param.targetPee[16]) / 4 - beginPee[1];
 	basic_param.targetPeb[2] = (basic_param.targetPee[2] + basic_param.targetPee[11] + basic_param.targetPee[8] + basic_param.targetPee[17]) / 4;
-	double dy = ((basic_param.targetPee[1] - basic_param.targetPee[10]) + (basic_param.targetPee[7] - basic_param.targetPee[16])) / 2;
-	double dz = -((basic_param.targetPee[2] - basic_param.targetPee[11]) + (basic_param.targetPee[8] - basic_param.targetPee[17])) / 2;
+	double dy = ((basic_param.targetPee[1] - basic_param.targetPee[7]) + (basic_param.targetPee[10] - basic_param.targetPee[16])) / 2;
+	double dz = -((basic_param.targetPee[2] - basic_param.targetPee[8]) + (basic_param.targetPee[11] - basic_param.targetPee[17])) / 2;
 	basic_param.targetWa = std::atan(dy / dz);
 	int ret = basicGait(robot, basic_param);
 	//for test
-	if (param.count%param.totalCount == 0)
-	{
-		rt_printf("count: %d\n", param.count);
-		rt_printf("basic_param.targetWa: %f\n", basic_param.targetWa);
-		rt_printf("basic_param.targetPeb: %f %f %f %f %f %f\n",
-			basic_param.targetPeb[0], basic_param.targetPeb[1], basic_param.targetPeb[2], basic_param.targetPeb[3], basic_param.targetPeb[4], basic_param.targetPeb[5]);
-		rt_printf("basic_param.targetPee: %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f\n\n",
-			basic_param.targetPee[0], basic_param.targetPee[1], basic_param.targetPee[2], basic_param.targetPee[3], basic_param.targetPee[4], basic_param.targetPee[5],
-			basic_param.targetPee[6], basic_param.targetPee[7], basic_param.targetPee[8], basic_param.targetPee[9], basic_param.targetPee[10], basic_param.targetPee[11],
-			basic_param.targetPee[12], basic_param.targetPee[13], basic_param.targetPee[14], basic_param.targetPee[15], basic_param.targetPee[16], basic_param.targetPee[17]);
-	}
+	//if (param.count%param.totalCount == 0)
+	//{
+	//	rt_printf("count: %d\n", param.count);
+	//	rt_printf("dy: %f\n", dy);
+	//	rt_printf("dz: %f\n", dz);
+	//}
 
     return 3 * param.totalCount - param.count - 1;
 }
@@ -151,10 +146,19 @@ auto basicGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &
 		//for test
 		rt_printf("lifting_leg: %d %d %d %d %d %d\n", param.lifting_leg[0], param.lifting_leg[1],
 			param.lifting_leg[2], param.lifting_leg[3], param.lifting_leg[4], param.lifting_leg[5]);
-		rt_printf("beginPee: %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f\n\n", 
+		rt_printf("Get beginWa: %f\n", beginWa);
+		rt_printf("beginPee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f\n\n", 
 			beginPee[0], beginPee[1], beginPee[2], beginPee[3], beginPee[4], beginPee[5], 
 			beginPee[6], beginPee[7], beginPee[8], beginPee[9], beginPee[10], beginPee[11], 
 			beginPee[12], beginPee[13], beginPee[14], beginPee[15], beginPee[16], beginPee[17]);
+
+		rt_printf("targetWa: %f\n", param.targetWa);
+		rt_printf("targetPeb: %f %f %f %f %f %f\n",
+			param.targetPeb[0], param.targetPeb[1], param.targetPeb[2], param.targetPeb[3], param.targetPeb[4], param.targetPeb[5]);
+		rt_printf("targetPee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f\n\n",
+			param.targetPee[0], param.targetPee[1], param.targetPee[2], param.targetPee[3], param.targetPee[4], param.targetPee[5],
+			param.targetPee[6], param.targetPee[7], param.targetPee[8], param.targetPee[9], param.targetPee[10], param.targetPee[11],
+			param.targetPee[12], param.targetPee[13], param.targetPee[14], param.targetPee[15], param.targetPee[16], param.targetPee[17]);
 	}
 
 	double Peb[6]{ 0 }, Pee[18]{ 0 };
@@ -182,8 +186,6 @@ auto basicGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &
 			Pee[3 * i] += dx * s;
 			Pee[3 * i + 1] += std::cos(alpha) * y0 - std::sin(alpha) * z0;
 			Pee[3 * i + 2] += std::sin(alpha) * y0 + std::cos(alpha) * z0;
-			//rt_printf("Pee: %f %f %f\n", Pee[3 * i], Pee[3 * i + 1], Pee[3 * i + 2]);
-
 		}
 	}
 	//Ñü¹Ø½Ú²åÖµ
@@ -191,9 +193,9 @@ auto basicGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &
 	//
 	if (param.count % 100 == 0)
 	{
-		rt_printf("Wa: %f\n", Wa);
+		rt_printf("count: %d\n", param.count);
+		rt_printf("SetWa: %f\n", Wa);
 	}
-	//rt_printf("bs_count: %d\n", param.count);
 
 	robot.SetPeb(Peb, *param.beginMak);
 	robot.SetWa(Wa);
