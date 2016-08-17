@@ -38,8 +38,9 @@
 struct creepingParam final :public aris::server::GaitParamBase
 {
 	std::int32_t totalCount{ 2000 };
-	double d{ 0.5 };
+	double d{ 0.3 };
 	double h{ 0.05 };
+	int n{ 1 };
 };
 
 auto creepingParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg)->void;

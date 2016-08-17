@@ -55,16 +55,20 @@ auto creepingGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
 	//初始化
 	static aris::dynamic::FloatMarker beginMak{ robot.ground() };
 	static double beginPee[18];
+	static double beginHeight;
 	if (param.count == 0)
 	{
 		beginMak.setPrtPm(*robot.body().pm());
 		beginMak.update();
+		double begin_pee[18];
+		robot.GetPee(begin_pee, beginMak);
+		beginHeight = begin_pee[1];
 	}
 	if (param.count%param.totalCount == 0)
 	{
 		robot.GetPee(beginPee, beginMak);
 	}
-	const int LegSeq[3]{ 0, 2, 1 };
+	const int LegSeq[3]{ 1, 0, 2 };
 	int k = LegSeq[(param.count / param.totalCount) % 3];
 
 	static basicParam basic_param;
@@ -75,18 +79,23 @@ auto creepingGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
 	basic_param.beginMak = &beginMak;
 
 	std::copy_n(beginPee, 18, basic_param.targetPee);
+	double step_d = param.d;
+	if (param.count < param.totalCount)
+	{
+		step_d = param.d / 2;
+	}
 	for (int i = 0; i < 2; ++i)
 	{
 		double targetPee[3];
 		std::copy_n(beginPee + 3 * k + 9 * i, 3, targetPee);
 		double x0 = targetPee[0];
-		double z0 = targetPee[2] - param.d;
+		double z0 = targetPee[2] - step_d;
 		int m = int((0.6 + x0) / 0.01);
 		int n = int((0.7 - z0) / 0.01);
 		double y0 = gridMap[m][n];
 		double dy0 = y0 - targetPee[1];
-		double alpha0 = std::atan(dy0 / param.d);
-		double d = param.d*std::cos(alpha0);
+		double alpha0 = std::atan(dy0 / step_d);
+		double d = step_d * std::cos(alpha0);
 		double z = targetPee[2] - d;
 		n = int((0.7 - z) / 0.01);
 		double y = gridMap[m][n] + 0.045;
@@ -108,7 +117,7 @@ auto creepingGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
 		//}
 	}
 
-	basic_param.targetPeb[1] = (basic_param.targetPee[1] + basic_param.targetPee[10] + basic_param.targetPee[7] + basic_param.targetPee[16]) / 4 - beginPee[1];
+	basic_param.targetPeb[1] = (basic_param.targetPee[1] + basic_param.targetPee[10] + basic_param.targetPee[7] + basic_param.targetPee[16]) / 4 - beginHeight;
 	basic_param.targetPeb[2] = (basic_param.targetPee[2] + basic_param.targetPee[11] + basic_param.targetPee[8] + basic_param.targetPee[17]) / 4;
 	double dy = ((basic_param.targetPee[1] - basic_param.targetPee[7]) + (basic_param.targetPee[10] - basic_param.targetPee[16])) / 2;
 	double dz = -((basic_param.targetPee[2] - basic_param.targetPee[8]) + (basic_param.targetPee[11] - basic_param.targetPee[17])) / 2;
@@ -122,7 +131,45 @@ auto creepingGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
 	//	rt_printf("dz: %f\n", dz);
 	//}
 
-    return 3 * param.totalCount - param.count - 1;
+	//行程保护
+	double pin[18];
+	robot.GetPin(pin);
+	const double p1_max = 1.067;
+	const double p1_min = 0.639;
+	const double p23_max = 1.09;
+	const double p23_min = 0.69;
+	bool out_of_limit = false;
+	for (int i = 0; i < 18; ++i)
+	{
+		double max, min;
+		if (i % 3 == 0)
+		{
+			max = p1_max;
+			min = p1_min;
+		}
+		else
+		{
+			max = p23_max;
+			min = p23_min;
+		}
+		if (pin[i] > max)
+		{
+			rt_printf("pin[%d] = %f, longer than limit.\n", i, pin[i]);
+			out_of_limit = true;
+		}
+		else if (pin[i] < min)
+		{
+			rt_printf("pin[%d] = %f, shorter than limit.\n", i, pin[i]);
+			out_of_limit = true;
+		}
+	}
+	if (out_of_limit)
+	{
+		rt_printf("Pin out of limit at count: %d\n", param.count);
+		return 0;
+	}
+
+    return 6 * param.totalCount - param.count - 1;
 }
 
 auto basicGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int
@@ -190,12 +237,12 @@ auto basicGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &
 	}
 	//腰关节插值
 	Wa = beginWa * (1 - s) + param.targetWa * s;
-	//
-	if (param.count % 100 == 0)
-	{
-		rt_printf("count: %d\n", param.count);
-		rt_printf("SetWa: %f\n", Wa);
-	}
+	//test
+	//if (param.count % 100 == 0)
+	//{
+	//	rt_printf("count: %d\n", param.count);
+	//	rt_printf("SetWa: %f\n", Wa);
+	//}
 
 	robot.SetPeb(Peb, *param.beginMak);
 	robot.SetWa(Wa);
