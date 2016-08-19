@@ -65,6 +65,8 @@ int main_test(int argc, char *argv[])
 	//wk_param.d = 0.5;
 
 	creepingParam cp_param;
+	cp_param.n = 3;
+	cp_param.d = 0.4;
 
 	rbt.SetPeb(beginPE);
 	rbt.SetWa(beginWa);

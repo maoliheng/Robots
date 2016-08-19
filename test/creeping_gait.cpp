@@ -39,97 +39,171 @@ auto creepingGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
 	auto &param = static_cast<const creepingParam &>(param_in);
 
 	//模拟地图数据
-	double gridMap[120][400]{ 0 };
+	double gridMap[120][600]{ 0 };
 	for (int i = 0; i < 120; ++i)
 	{
 		for (int j = 0; j < 150; ++j)
 		{
-			gridMap[i][j] = -0.895;
+			gridMap[i][j] = -0.85;
 		}
-		for (int j = 150; j < 400; ++j)
+		for (int j = 150; j < 450; ++j)
 		{
-			gridMap[i][j] = -0.895 + 0.01*(j - 150)*std::tan(PI * 35 / 180);
+			gridMap[i][j] = -0.85 + 0.01 * (j - 150) * std::tan(PI * 35 / 180);
+		}
+		for (int j = 450; j < 600; ++j)
+		{
+			gridMap[i][j] = -0.85 + 3 * std::tan(PI * 35 / 180);
 		}
 	}
+	static double curretMap[120][300];
+	static int mapOffset{ 0 };
+	static double heightOffset{ 0 };
 
 	//初始化
 	static aris::dynamic::FloatMarker beginMak{ robot.ground() };
-	static double beginPee[18];
-	static double beginHeight;
+	static double beginPee[18]{ 0 };
+	static double beginPeb[6]{ 0 };
+	static double targetPee[18]{ 0 };
+	static double targetPeb[6]{ 0 };
+	static double targetWa{ 0 };
+	static bool isLiftingLeg[6]{ false };
+
 	if (param.count == 0)
 	{
-		beginMak.setPrtPm(*robot.body().pm());
-		beginMak.update();
-		double begin_pee[18];
-		robot.GetPee(begin_pee, beginMak);
-		beginHeight = begin_pee[1];
+		std::fill_n(beginPee, 18, 0);
+		std::fill_n(beginPeb, 6, 0);
+		std::fill_n(targetPee, 18, 0);
+		std::fill_n(targetPeb, 6, 0);
+		targetWa = 0;
+		mapOffset = 0;
+		heightOffset = 0;
 	}
-	if (param.count%param.totalCount == 0)
-	{
-		robot.GetPee(beginPee, beginMak);
-	}
-	const int LegSeq[3]{ 1, 0, 2 };
-	int k = LegSeq[(param.count / param.totalCount) % 3];
 
-	static basicParam basic_param;
-	std::fill_n(basic_param.lifting_leg, 6, false);
-	basic_param.lifting_leg[k] = true;
-	basic_param.lifting_leg[k + 3] = true;
-	basic_param.count = param.count % param.totalCount;
-	basic_param.beginMak = &beginMak;
-
-	std::copy_n(beginPee, 18, basic_param.targetPee);
-	double step_d = param.d;
-	if (param.count < param.totalCount)
+	double step_d;
+	if (param.count / param.totalCount == 0 || param.count / param.totalCount == param.n * 4)
 	{
 		step_d = param.d / 2;
 	}
-	for (int i = 0; i < 2; ++i)
+	else
 	{
-		double targetPee[3];
-		std::copy_n(beginPee + 3 * k + 9 * i, 3, targetPee);
-		double x0 = targetPee[0];
-		double z0 = targetPee[2] - step_d;
-		int m = int((0.6 + x0) / 0.01);
-		int n = int((0.7 - z0) / 0.01);
-		double y0 = gridMap[m][n];
-		double dy0 = y0 - targetPee[1];
-		double alpha0 = std::atan(dy0 / step_d);
-		double d = step_d * std::cos(alpha0);
-		double z = targetPee[2] - d;
-		n = int((0.7 - z) / 0.01);
-		double y = gridMap[m][n] + 0.045;
-		basic_param.targetPee[3 * k + 9 * i] = x0;
-		basic_param.targetPee[3 * k + 9 * i + 1] = y;
-		basic_param.targetPee[3 * k + 9 * i + 2] = z;
-		//test
-		//if (param.count%param.totalCount == 0)
-		//{
-		//	rt_printf("x0 = %f\n", x0);
-		//	rt_printf("y0 = %f\n", y0);
-		//	rt_printf("z0 = %f\n", z0);
-		//	rt_printf("alpha0 = %f\n", alpha0);
-		//	rt_printf("d = %f\n", d);
-		//	rt_printf("m = %d\n", m);
-		//	rt_printf("n = %d\n", n);
-		//	rt_printf("z = %f\n", z);
-		//	rt_printf("y = %f\n\n", y);
-		//}
+		step_d = param.d;
 	}
 
-	basic_param.targetPeb[1] = (basic_param.targetPee[1] + basic_param.targetPee[10] + basic_param.targetPee[7] + basic_param.targetPee[16]) / 4 - beginHeight;
-	basic_param.targetPeb[2] = (basic_param.targetPee[2] + basic_param.targetPee[11] + basic_param.targetPee[8] + basic_param.targetPee[17]) / 4;
-	double dy = ((basic_param.targetPee[1] - basic_param.targetPee[7]) + (basic_param.targetPee[10] - basic_param.targetPee[16])) / 2;
-	double dz = -((basic_param.targetPee[2] - basic_param.targetPee[8]) + (basic_param.targetPee[11] - basic_param.targetPee[17])) / 2;
-	basic_param.targetWa = std::atan(dy / dz);
+	std::int32_t count = param.count % (4 * param.totalCount);
+	if (count == 0)
+	{
+		beginMak.setPrtPm(*robot.body().pm());
+		beginMak.update();
+		
+		//update map
+		mapOffset += int(-targetPeb[2] / 0.01);
+		heightOffset += targetPeb[1];
+
+		if (param.count == 0)
+		{
+			mapOffset = 0;
+			heightOffset = 0;
+		}
+
+		for (int i = 0; i < 120; ++i)
+		{
+			for (int j = 0; j < 300; ++j)
+			{
+				curretMap[i][j] = gridMap[i][j + mapOffset] - heightOffset;
+			}
+		}
+		rt_printf("mapOffset: %d\n", mapOffset);
+		rt_printf("heightOffset: %f\n", heightOffset);
+	}
+	if (count % param.totalCount == 0)
+	{
+		rt_printf("\ncount: %d\n\n", param.count);
+
+		robot.GetPee(beginPee, beginMak);
+		robot.GetPeb(beginPeb, beginMak);
+		std::copy_n(beginPee, 18, targetPee);
+		std::copy_n(beginPeb, 6, targetPeb);
+		const int LegSeq[4]{ 1, 0, -1, 2 };
+		int k = LegSeq[count / param.totalCount];
+		std::fill_n(isLiftingLeg, 6, false);
+		if (k >= 0)
+		{
+			for (int i = 0; i < 2; ++i)
+			{
+				isLiftingLeg[k + 3 * i] = true;
+				double tmpPee[3];
+				std::copy_n(beginPee + 3 * k + 9 * i, 3, tmpPee);
+				double x0 = tmpPee[0];
+				double z0 = tmpPee[2] - step_d;
+				int m = int((0.6 + x0) / 0.01);
+				int n = int((0.701 - z0) / 0.01);
+				double y0 = curretMap[m][n];
+
+				rt_printf("tmpPee[0]: %f\n", tmpPee[0]);
+				rt_printf("tmpPee[2]: %f\n", tmpPee[2]);
+				rt_printf("z0: %f\n", z0);
+				rt_printf("m: %d\n", m);
+				rt_printf("n: %d\n", n);
+				rt_printf("y0: %f\n", y0);
+
+				double dy0 = y0 - tmpPee[1];
+				double alpha0 = std::atan(dy0 / step_d);
+				double d = step_d * std::cos(alpha0);
+				double z = tmpPee[2] - d;
+				n = int((0.701 - z) / 0.01);
+				double y = curretMap[m][n];
+				targetPee[3 * k + 9 * i] = x0;
+				targetPee[3 * k + 9 * i + 1] = y;
+				targetPee[3 * k + 9 * i + 2] = z;
+				//for test
+				rt_printf("k: %d\n", k);
+				rt_printf("step_d: %f\n", step_d);
+				rt_printf("dy0: %f\n", dy0);
+				rt_printf("alpha0: %f\n", alpha0);
+				rt_printf("y: %f\n", y);
+			}
+		}
+		double pee_upward{ 0 };
+		double pee_forward{ 0 };
+		for (int i = 0; i < 6; ++i)
+		{
+			pee_upward += (targetPee[3 * i + 1] - beginPee[3 * i + 1]);
+			pee_forward += targetPee[3 * i + 2];
+		}
+		double dy = ((targetPee[1] - targetPee[7]) + (targetPee[10] - targetPee[16])) / 2;
+		double dz = -((targetPee[2] - targetPee[8]) + (targetPee[11] - targetPee[17])) / 2;
+		targetPeb[1] = beginPeb[1] + pee_upward / 6;
+		if (k == 0)
+		{
+			targetPeb[2] = (targetPee[5] + targetPee[14]) / 2 + param.d / 10;
+			targetWa = 1.5 * std::atan(dy / dz);
+		}
+		else if (k == -1)
+		{
+			targetPeb[2] = (targetPee[5] + targetPee[14]) / 2 - param.d / 10;
+			targetWa = 1.5 * std::atan(dy / dz);
+		}
+		else if (k == 2)
+		{
+			targetPeb[2] = (targetPee[2] + targetPee[5] + targetPee[14] + targetPee[17]) / 4;
+			targetWa = 1.2 * std::atan(dy / dz);
+		}
+		else
+		{
+			targetPeb[2] = pee_forward / 6;
+			targetWa = 1.5 * std::atan(dy / dz);
+		}
+	}
+
+	basicParam basic_param;
+	basic_param.count = count % param.totalCount;
+	basic_param.beginMak = &beginMak;
+	std::copy_n(isLiftingLeg, 6, basic_param.lifting_leg);
+	std::copy_n(targetPeb, 6, basic_param.targetPeb);
+	std::copy_n(targetPee, 18, basic_param.targetPee);
+	basic_param.targetWa = targetWa;
+
 	int ret = basicGait(robot, basic_param);
-	//for test
-	//if (param.count%param.totalCount == 0)
-	//{
-	//	rt_printf("count: %d\n", param.count);
-	//	rt_printf("dy: %f\n", dy);
-	//	rt_printf("dz: %f\n", dz);
-	//}
 
 	//行程保护
 	double pin[18];
@@ -169,7 +243,7 @@ auto creepingGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
 		return 0;
 	}
 
-    return 6 * param.totalCount - param.count - 1;
+	return (4 * param.n + 1) * param.totalCount - param.count - 1;
 }
 
 auto basicGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int
@@ -194,7 +268,9 @@ auto basicGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &
 		rt_printf("lifting_leg: %d %d %d %d %d %d\n", param.lifting_leg[0], param.lifting_leg[1],
 			param.lifting_leg[2], param.lifting_leg[3], param.lifting_leg[4], param.lifting_leg[5]);
 		rt_printf("Get beginWa: %f\n", beginWa);
-		rt_printf("beginPee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f\n\n", 
+		rt_printf("beginPeb: %f %f %f %f %f %f\n",
+			beginPeb[0], beginPeb[1], beginPeb[2], beginPeb[3], beginPeb[4], beginPeb[5]);
+		rt_printf("beginPee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f\n\n",
 			beginPee[0], beginPee[1], beginPee[2], beginPee[3], beginPee[4], beginPee[5], 
 			beginPee[6], beginPee[7], beginPee[8], beginPee[9], beginPee[10], beginPee[11], 
 			beginPee[12], beginPee[13], beginPee[14], beginPee[15], beginPee[16], beginPee[17]);
