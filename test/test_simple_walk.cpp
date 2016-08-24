@@ -2,6 +2,7 @@
 
 #include <aris.h>
 #include <Robot_Type_III.h>
+#include <Basic_Gait.h>
 #include "creeping_gait.h"
 
 
@@ -64,6 +65,9 @@ int main_test(int argc, char *argv[])
 	//wk_param.alpha = 0;
 	//wk_param.d = 0.5;
 
+	Robots::Gait::AdjustWaistParam ad_param;
+	ad_param.angle = PI / 6;
+
 	creepingParam cp_param;
 	cp_param.n = 3;
 	cp_param.d = 0.4;
@@ -72,8 +76,8 @@ int main_test(int argc, char *argv[])
 	rbt.SetWa(beginWa);
 	rbt.SetPee(beginEE);
 	
-	//auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test.cmd", Robots::walkGait, wk_param, 50);
-	auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\creeping.cmd", creepingGait, cp_param, 50);
+	auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test.cmd", Robots::Gait::adjustWaistGait, ad_param, 50);
+	//auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\creeping.cmd", creepingGait, cp_param, 50);
 
 	result.saveToTxt("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test");
 

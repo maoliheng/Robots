@@ -76,10 +76,10 @@ set(XNNITE_LINK_LIB )
 set(OPENNI_INCL_DIR "/usr/include/ni")#open NI for kinect
 set(OPENNI_LINK_DIR "/usr/lib")
 set(OPENNI_LINK_LIB OpenNI)
-set(ARIS_INCL_DIR "/usr/aris/include")
-set(ARIS_LINK_DIR "/usr/aris/lib")
+set(ARIS_INCL_DIR "/usr/aris2/include")
+set(ARIS_LINK_DIR "/usr/aris2/lib")
 set(ARIS_LINK_LIB aris_server aris_sensor aris_dynamic aris_control aris_core)
-set(ROBOTS_INCL_DIR "src/Robot_Type_I" "src/Robot_Type_II" "src/Robot_Base")
+set(ROBOTS_INCL_DIR "src/Robot_Type_I" "src/Robot_Type_II" "src/Robot_Type_III" "src/Robot_Base")
 set(ROBOTS_LINK_LIB Robot_Type_I Robot_Type_II Robot_Base)
 
 set(ALL_INCL_DIR ${ROBOTS_INCL_DIR} ${ARIS_INCL_DIR} ${OPENNI_INCL_DIR} ${XNNITE_INCL_DIR} ${XSENS_INCL_DIR} ${ETHERLAB_INCL_DIR} ${XENOMAI_INCL_DIR} ${GENERAL_INCL_DIR})
@@ -92,8 +92,8 @@ set(SYSTEM_LINK_LIB ws2_32 setupapi)
 set(XSENS_INCL_DIR "C:/Aris_Dependent/xsens/include")
 set(XSENS_LINK_DIR "C:/Aris_Dependent/xsens/lib")
 set(XSENS_LINK_LIB xdeviceclass)
-set(ARIS_INCL_DIR "C:/aris/include")
-set(ARIS_LINK_DIR "C:/aris/lib")
+set(ARIS_INCL_DIR "C:/aris2/include")
+set(ARIS_LINK_DIR "C:/aris2/lib")
 set(ARIS_LINK_LIB aris_server aris_sensor aris_dynamic aris_control aris_core)
 set(ROBOTS_INCL_DIR "src/Robot_Type_I" "src/Robot_Type_II" "src/Robot_Type_III" "src/Robot_Base")
 set(ROBOTS_LINK_LIB Robot_Type_I Robot_Type_II Robot_Type_III Robot_Base)
@@ -130,7 +130,7 @@ add_library(Robot_Type_II STATIC ${FULL_SRC} ${FULL_H})
 set(INCLUDE_HEADER_FILES ${INCLUDE_HEADER_FILES} ${FULL_H})
 
 # build Robot_Type_III lib
-set(SOURCE Robot_Type_III)
+set(SOURCE Robot_Type_III Basic_Gait)
 PREPEND_CPP(FULL_SRC src/Robot_Type_III ${SOURCE})
 PREPEND_H(FULL_H src/Robot_Type_III ${SOURCE})
 add_library(Robot_Type_III STATIC ${FULL_SRC} ${FULL_H})
@@ -139,7 +139,7 @@ set(INCLUDE_HEADER_FILES ${INCLUDE_HEADER_FILES} ${FULL_H})
 ################################### build tests for Robots ####################################
 enable_testing()
 
-add_executable(test_simple_walk test/test_simple_walk.cpp test/test_gait.cpp)
+add_executable(test_simple_walk test/test_simple_walk.cpp test/test_gait.cpp test/creeping_gait.cpp)
 target_link_libraries(test_simple_walk ${ALL_LINK_LIB})
 add_test(NAME test_simple_walk COMMAND test_simple_walk)
 
@@ -186,6 +186,7 @@ endif(WIN32)
 
 install(TARGETS Robot_Type_I Robot_Type_II Robot_Type_III Robot_Base ARCHIVE DESTINATION lib)
 install(FILES ${INCLUDE_HEADER_FILES} DESTINATION include)
+install(DIRECTORY src/Robot_Type_I/resource/ DESTINATION resource/Robot_Type_I)
 install(DIRECTORY src/Robot_Type_III/resource/ DESTINATION resource/Robot_Type_III)
 
 ############################################ uninstall ############################################
