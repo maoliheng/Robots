@@ -174,6 +174,13 @@ namespace Robots
 				
 				//for test
 				rt_printf("Size of motion_feedback_pos: %d\n", param.motion_feedback_pos->size());
+				rt_printf("beginPin: \n");
+				for (std::size_t i = 0; i < param.motion_feedback_pos->size(); ++i)
+				{
+					rt_printf("%f ", param.motion_feedback_pos->at(i));
+				}
+				rt_printf("\n");
+
 			}
 
 			int leftCount = param.count < param.recover_count ? 0 : param.recover_count;
@@ -235,7 +242,7 @@ namespace Robots
 					}
 				}
 			}
-			//test
+			//for test
 			if (param.count % 500 == 0)
 			{
 				double wa;
