@@ -79,10 +79,10 @@ int main(int argc, char *argv[])
 	if (argc <= 1)throw std::runtime_error("please input the cmd name");
 
 #ifdef UNIX
-	sendRequest(argc - 1, argv + 1, "/usr/Robots/resource/Robot_Type_I/Robot_III/Robot_III.xml");
+    sendRequest(argc - 1, argv + 1, "/usr/Robots2/resource/Robot_Type_III/Robot_IX/Robot_IX.xml");
 #endif
 #ifdef WIN32
-	sendRequest(argc - 1, argv + 1, "C:\\Robots\\resource\\Robot_Type_I\\Robot_III\\Robot_III.xml");
+    sendRequest(argc - 1, argv + 1, "C:\\Robots\\resource\\Robot_Type_III\\Robot_IX\\Robot_IX.xml");
 #endif
 
 	return 0;
