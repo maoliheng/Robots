@@ -151,10 +151,10 @@ namespace Robots
 
 			msg_out.copyStruct(param);
 		}
-		auto recoverGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase & plan_param)->int
+		auto recoverGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int
 		{
-            auto &robot = static_cast<Robots::RobotTypeIII &>(model);
-			auto &param = static_cast<const RecoverParam &>(plan_param);
+			auto &robot = static_cast<Robots::RobotTypeIII &>(model);
+			auto &param = static_cast<const RecoverParam &>(param_in);
 
 			static aris::server::ControlServer &cs = aris::server::ControlServer::instance();
 
@@ -171,6 +171,9 @@ namespace Robots
 
 				robot.GetPin(alignPin);
 				robot.SetPee(beginPee, robot.body());
+				
+				//for test
+				rt_printf("Size of motion_feedback_pos: %d\n", param.motion_feedback_pos->size());
 			}
 
 			int leftCount = param.count < param.recover_count ? 0 : param.recover_count;
@@ -232,18 +235,18 @@ namespace Robots
 					}
 				}
 			}
-            //test
-            if(param.count%500==0)
-            {
-                double wa;
-                robot.GetWa(wa);
-                rt_printf("Wa: %f\n",wa);
-            }
+			//test
+			if (param.count % 500 == 0)
+			{
+				double wa;
+				robot.GetWa(wa);
+				rt_printf("Wa: %f\n", wa);
+			}
 
 			return param.align_count + param.recover_count - param.count - 1;
 		}
 
-		auto walkParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg)->void
+		auto walkParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void
 		{
 			WalkParam param;
 
@@ -274,7 +277,7 @@ namespace Robots
 					param.beta = std::stod(i.second);
 				}
 			}
-			msg.copyStruct(param);
+			msg_out.copyStruct(param);
 		}
 		auto walkGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int
 		{
@@ -443,10 +446,10 @@ namespace Robots
 			return 2 * param.n * param.totalCount - param.count - 1;
 		}
 
-		auto resetOriginParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg)->void
+		auto resetOriginParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void
 		{
 			Robots::ResetOriginParam param;
-			msg.copyStruct(param);
+			msg_out.copyStruct(param);
 		}
 		auto resetOriginGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int
 		{
@@ -477,75 +480,75 @@ namespace Robots
 			return 0;
 		}
 
-        auto waistPreHomeParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void
-        {
-            WaistPreHomeParam param;
+		auto waistPreHomeParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void
+		{
+			WaistPreHomeParam param;
 
-            std::fill_n(param.active_motor, MOTOR_NUM, false);
-            for (auto &i : params)
-            {
-                if (i.first == "offset")
-                {
-                    param.offset = std::stod(i.second);
-                }
-                if (i.first == "velocity")
-                {
-                    param.vel = std::stod(i.second);
-                }
-            }
+			std::fill_n(param.active_motor, MOTOR_NUM, false);
+			for (auto &i : params)
+			{
+				if (i.first == "offset")
+				{
+					param.offset = std::stod(i.second);
+				}
+				if (i.first == "velocity")
+				{
+					param.vel = std::stod(i.second);
+				}
+			}
 
-            msg_out.copyStruct(param);
-        }
-        auto waistPreHomeGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int
-        {
-            auto &robot = static_cast<Robots::RobotTypeIII &>(model);
-            auto &param = static_cast<const WaistPreHomeParam &>(param_in);
+			msg_out.copyStruct(param);
+		}
+		auto waistPreHomeGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int
+		{
+			auto &robot = static_cast<Robots::RobotTypeIII &>(model);
+			auto &param = static_cast<const WaistPreHomeParam &>(param_in);
 
-            static aris::server::ControlServer &cs = aris::server::ControlServer::instance();
-            int input2count = cs.controller().motionAtAbs(18).pos2countRatio();
-            std::int32_t remain_count = static_cast<std::int32_t>(std::fabs(param.offset / param.vel) * 1000);
+			static aris::server::ControlServer &cs = aris::server::ControlServer::instance();
+			int input2count = cs.controller().motionAtAbs(18).pos2countRatio();
+			std::int32_t remain_count = static_cast<std::int32_t>(std::fabs(param.offset / param.vel) * 1000);
 
-            //trigger
-            static bool is_homed;
-            static std::int32_t offset_count;
-            if (param.count == 0)
-            {
-                is_homed = false;
-                offset_count = 0;
-            }
+			//trigger
+			static bool is_homed;
+			static std::int32_t offset_count;
+			if (param.count == 0)
+			{
+				is_homed = false;
+				offset_count = 0;
+			}
 
-            double fdback_pos = static_cast<double>(param.motion_raw_data->at(18).feedback_pos) / input2count;
-            double mot_pos = fdback_pos + param.vel*0.001; //单位m
-            robot.motionPool().at(18).setMotPos(mot_pos);
+			double fdback_pos = static_cast<double>(param.motion_raw_data->at(18).feedback_pos) / input2count;
+			double mot_pos = fdback_pos + param.vel*0.001; //单位m
+			robot.motionPool().at(18).setMotPos(mot_pos);
 
-            auto fdback_dgi = param.motion_raw_data->at(18).feedback_dgi;
-            if (is_homed)
-            {
-                ++offset_count;
-                if (offset_count > remain_count)
-                {
-                    return 0;
-                }
-            }
-            else
-            {
-                if ((fdback_dgi & 0x00300000) == 0x00200000)
-                {
-                    is_homed = true;
-                    rt_printf("inversely homed");
-                }
-            }
-            //test
-            if (param.count % 100 == 0)
-            {
-                rt_printf("condition:%x\t", fdback_dgi & 0x00300000);
-                rt_printf("feedback_dgi:%x\t", fdback_dgi);
-                rt_printf("feedback_pos:%f\n", fdback_pos);
-            }
-            return 1;
-        }
+			auto fdback_dgi = param.motion_raw_data->at(18).feedback_dgi;
+			if (is_homed)
+			{
+				++offset_count;
+				if (offset_count > remain_count)
+				{
+					return 0;
+				}
+			}
+			else
+			{
+				if ((fdback_dgi & 0x00300000) == 0x00200000)
+				{
+					is_homed = true;
+					rt_printf("inversely homed");
+				}
+			}
+			//test
+			if (param.count % 100 == 0)
+			{
+				rt_printf("condition:%x\t", fdback_dgi & 0x00300000);
+				rt_printf("feedback_dgi:%x\t", fdback_dgi);
+				rt_printf("feedback_pos:%f\n", fdback_pos);
+			}
+			return 1;
+		}
 
-        auto adjustWaistParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg) -> void
+		auto adjustWaistParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out) -> void
 		{
 			AdjustWaistParam param;
 
@@ -560,7 +563,7 @@ namespace Robots
 					param.angle = std::stod(i.second);
 				}
 			}
-			msg.copyStruct(param);
+			msg_out.copyStruct(param);
 		}
 		auto adjustWaistGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int
 		{
@@ -591,17 +594,64 @@ namespace Robots
 			robot.SetWa(Wa);
 			robot.SetPee(Pee, beginMak);
 
-            //for test
-            if(param.count%100==0)
-            {\
-                rt_printf("count: %d\n", param.count);
-                rt_printf("Wa: %f\n", Wa);
-                double pin[18];
-                robot.GetPin(pin);
-                rt_printf("Pin: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f\n\n",
-                          pin[0], pin[1], pin[2], pin[3], pin[4], pin[5], pin[6], pin[7], pin[8],
-                          pin[9], pin[10], pin[11], pin[12], pin[13], pin[14], pin[15], pin[16], pin[17]);
-            }
+			//for test
+			if (param.count % 100 == 0)
+			{
+				\
+					rt_printf("count: %d\n", param.count);
+				rt_printf("Wa: %f\n", Wa);
+				double pin[18];
+				robot.GetPin(pin);
+				rt_printf("Pin: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f\n\n",
+					pin[0], pin[1], pin[2], pin[3], pin[4], pin[5], pin[6], pin[7], pin[8],
+					pin[9], pin[10], pin[11], pin[12], pin[13], pin[14], pin[15], pin[16], pin[17]);
+			}
+
+			return param.totalCount - param.count - 1;
+		}
+		
+		auto extendChainParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out) -> void
+		{
+			ExtendChainParam param;
+
+			for (auto &i : params)
+			{
+				if (i.first == "totalCount")
+				{
+					param.totalCount = std::stoi(i.second);
+				}
+				else if (i.first == "motor")
+				{
+					param.motor_id = std::stoi(i.second);
+				}
+				else if (i.first == "length")
+				{
+					param.length = std::stod(i.second);
+				}
+			}
+			msg_out.copyStruct(param);
+		}
+		auto extendChainGait(aris::dynamic::Model & model, const aris::dynamic::PlanParamBase & param_in) -> int
+		{
+			auto &robot = static_cast<Robots::RobotTypeIII &>(model);
+			auto &param = static_cast<const ExtendChainParam &>(param_in);
+
+			const double s = -0.5*cos(PI * (param.count + 1) / param.totalCount) + 0.5; //s从0到1. 
+
+			static double beginPin[MOTOR_NUM];
+			if (param.count == 0)
+			{
+				std::copy_n(param.motion_feedback_pos->data(), MOTOR_NUM, beginPin);
+				//for test
+				rt_printf("beginPin: \n");
+				for (int i = 0; i < MOTOR_NUM; ++i)
+				{
+					rt_printf("%f ", beginPin[i]);
+				}
+				rt_printf("\n");
+			}
+
+			robot.motionPool().at(param.motor_id).setMotPos(beginPin[param.motor_id] + param.length * s);
 
 			return param.totalCount - param.count - 1;
 		}

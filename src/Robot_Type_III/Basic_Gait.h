@@ -16,14 +16,6 @@ namespace Robots
 
 		auto basicParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
 
-		struct WaistPreHomeParam final :public aris::server::GaitParamBase
-		{
-			double vel{ 0.002 }; //速度
-			double offset{ 0.005 }; //触发行程开关后再走5mm
-		};
-		auto waistPreHomeParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
-		auto waistPreHomeGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
-
 		struct RecoverParam final :public aris::server::GaitParamBase
 		{
 			std::int32_t recover_count{ 3000 };
@@ -46,7 +38,7 @@ namespace Robots
 				0.3,   -0.85,     0.65 };
 		};
 		auto recoverParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
-		auto recoverGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase & plan_param)->int;
+		auto recoverGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
 
 		struct WalkParam final :public aris::server::GaitParamBase
 		{
@@ -57,20 +49,37 @@ namespace Robots
 			double alpha{ 0.3 };
 			double beta{ 0.3 };
 		};
-		auto walkParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg)->void;
+		auto walkParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
 		auto walkGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
+
+		struct ResetOriginParam final :public aris::server::GaitParamBase {};
+		auto resetOriginParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
+		auto resetOriginGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
+
+		struct WaistPreHomeParam final :public aris::server::GaitParamBase
+		{
+			double vel{ 0.002 }; //速度
+			double offset{ 0.005 }; //触发行程开关后再走5mm
+		};
+		auto waistPreHomeParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
+		auto waistPreHomeGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
 
 		struct AdjustWaistParam final :public aris::server::GaitParamBase
 		{
 			std::int32_t totalCount{ 3000 };
 			double angle{ 0 };
 		};
-		auto adjustWaistParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg)->void;
-		auto adjustWaistGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param)->int;
+		auto adjustWaistParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
+		auto adjustWaistGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
 
-		struct ResetOriginParam final :public aris::server::GaitParamBase {};
-		auto resetOriginParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg)->void;
-		auto resetOriginGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param)->int;
+		struct ExtendChainParam final :public aris::server::GaitParamBase
+		{
+			std::int32_t totalCount{ 3000 };
+			int motor_id{ 0 };
+			double length{ 0.01 }; 
+		};
+		auto extendChainParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
+		auto extendChainGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
 	}
 }
 

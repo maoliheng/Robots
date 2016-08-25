@@ -48,7 +48,7 @@ int main_test(int argc, char *argv[])
 		0.3, -0.85, 0.65 };
 
 	double beginPE[6]{ 0 };
-	double beginWa{ 0 };
+	double beginWa{ 0.2 };
 
 	//ÅÀÆÂ²âÊÔ
 	//double phi = PI / 9; //²àÆÂ½Ç¶È
@@ -65,8 +65,13 @@ int main_test(int argc, char *argv[])
 	//wk_param.alpha = 0;
 	//wk_param.d = 0.5;
 
-	Robots::Gait::AdjustWaistParam ad_param;
-	ad_param.angle = PI / 6;
+	Robots::Gait::RecoverParam rc_param;
+	rc_param.active_leg[1] = false;
+	rc_param.active_leg[3] = false;
+	rc_param.active_leg[5] = false;
+
+	Robots::Gait::AdjustWaistParam aw_param;
+	aw_param.angle = PI / 6;
 
 	creepingParam cp_param;
 	cp_param.n = 3;
@@ -76,7 +81,7 @@ int main_test(int argc, char *argv[])
 	rbt.SetWa(beginWa);
 	rbt.SetPee(beginEE);
 	
-	auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test.cmd", Robots::Gait::adjustWaistGait, ad_param, 50);
+	auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test.cmd", Robots::Gait::adjustWaistGait, aw_param, 50);
 	//auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\creeping.cmd", creepingGait, cp_param, 50);
 
 	result.saveToTxt("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test");
