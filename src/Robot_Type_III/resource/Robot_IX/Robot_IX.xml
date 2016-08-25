@@ -622,6 +622,12 @@
                 </wk_param>
             </wk>
             <ro/>
+            <aw default="aw_param">
+                <aw_param type="group">
+                    <totalCount abbreviation="t" type="int" default="3000"/>
+                    <angle abbreviation="a" type="double" default="0"/>
+                </aw_param>
+            </aw>
         </Commands>
     </Server>
     <Controller>
@@ -660,7 +666,7 @@
                         <homeLowSpeed index="0x6099" subindex="2" type="uint32" config="100000"/>
                         <RatioOfPosDivVel_Numerator index="0x6096" subindex="1" type="uint32" config="1"/>
                         <RatioOfPosDivVel_Divisor index="0x6096" subindex="2" type="uint32" config="1"/>
-                        <homeTorqueLimit index="0x2020" subindex="1" type="int32" config="950"/>
+                        <homeTorqueLimit index="0x2020" subindex="1" type="int32" config="50"/>
                         <p2pMaxSpeed index="0x607F" subindex="0" type="uint32" config="2560"/>
                         <p2pSpeed index="0x6081" subindex="0" type="uint32" config="1792"/>
                         <homeOffset index="0x607C" subindex="0" type="int32" config="0"/>
@@ -698,7 +704,7 @@
 		</EK1122>
             </SlaveType>
             <Slave>
-                <Motion1 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.9481" home_pos="0.69" input2count="9216000" abs_id=" 1" kp="120"/>
+                <Motion1 type="ElmoSoloWhistle" min_pos="0.1" max_pos="0.4" max_vel="0.9481" home_pos="0.246" input2count="1152000" abs_id="18" kp="120"/>
                 <Motion2 type="ElmoSoloWhistle"  min_pos="0.669" max_pos="1.080" max_vel="0.9481" home_pos="0.669" input2count="9216000" abs_id="0"/>
                 <Motion3 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.9481" home_pos="0.69" input2count="9216000" abs_id=" 2"/>
                 <Motion4 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.9481" home_pos="0.69" input2count="9216000" abs_id=" 5"/>
@@ -716,7 +722,7 @@
                 <Motion16 type="ElmoSoloWhistle" min_pos="0.690" max_pos="1.100" max_vel="0.9481" home_pos="0.69" input2count="9216000" abs_id="10"/>
                 <Motion17 type="ElmoSoloWhistle" min_pos="0.669" max_pos="1.080" max_vel="0.9481" home_pos="0.669" input2count="9216000" abs_id="9"/>
                 <Motion18 type="ElmoSoloWhistle" min_pos="0.690" max_pos="1.100" max_vel="0.9481" home_pos="0.69" input2count="9216000" abs_id="11"/>
-                <Motion19 type="ElmoSoloWhistle" min_pos="0.1" max_pos="0.4" max_vel="0.9481" home_pos="0.246" input2count="1152000" abs_id="18"/>
+                <Motion19 type="ElmoSoloWhistle"  min_pos="0.690" max_pos="1.100" max_vel="0.9481" home_pos="0.69" input2count="9216000" abs_id=" 1"/>
                 <ForceSensor type="AtiForceSensor"/>
 		<SlaveStation1 type="EK1100" />
 		<Junction1 type="EK1122" />
