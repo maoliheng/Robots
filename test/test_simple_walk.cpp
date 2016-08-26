@@ -71,7 +71,7 @@ int main_test(int argc, char *argv[])
 	rc_param.active_leg[5] = false;
 
 	Robots::Gait::AdjustWaistParam aw_param;
-	aw_param.angle = PI / 6;
+	aw_param.angle = 0;
 
 	creepingParam cp_param;
 	cp_param.n = 3;

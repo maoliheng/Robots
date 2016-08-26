@@ -64,6 +64,14 @@ namespace Robots
 		auto waistPreHomeParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
 		auto waistPreHomeGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
 
+		struct RecoverWaistParam final :public aris::server::GaitParamBase
+		{
+			std::int32_t totalCount{ 3000 };
+			double angle{ 0 };
+		};
+		auto recoverWaistParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
+		auto recoverWaistGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
+
 		struct AdjustWaistParam final :public aris::server::GaitParamBase
 		{
 			std::int32_t totalCount{ 3000 };

@@ -1348,7 +1348,7 @@ namespace Robots
 		*const_cast<double *>(&LN_R1x) = pe[0];
 		*const_cast<double *>(&LN_R1y) = pe[1];
 		*const_cast<double *>(&LN_R1z) = pe[2];
-		
+
 		*const_cast<double *>(&L_f) = std::fabs(BF_R1z);
 		*const_cast<double *>(&L_r) = std::fabs(BR_R1z);
 		*const_cast<double *>(&b) = std::fabs(LN_R1z); //摇杆尺寸
@@ -1455,17 +1455,9 @@ namespace Robots
 	{
 		wa_ = angle;
 		double gamma = theta - wa_;
-		double c = std::sqrt(a*a + b*b - 2 * a*b*std::cos(gamma));
-		double beta = std::asin(b / c*std::sin(gamma));
+		c_ = std::sqrt(a * a + b * b - 2 * a * b * std::cos(gamma));
+		double beta = std::asin(b / c_ * std::sin(gamma));
 		double alpha = PI - beta - gamma;
-
-		//std::cout << "alpha = " << alpha << endl;
-		//std::cout << "beta = " << beta << endl;
-		//std::cout << "gamma = " << gamma << endl;
-		//std::cout << "theta = " << theta << endl;
-		//std::cout << "a = " << a << endl;
-		//std::cout << "b = " << b << endl;
-		//std::cout << "c = " << c << endl;
 
 		//设置各铰链marker在bm_r1i坐标系下的pe
 		double pm[4][4], pm_g[4][4];
@@ -1498,7 +1490,7 @@ namespace Robots
 		s_pm_dot_pm(*body().pm(), *pm, *pm_g);
 		screw().setPm(*pm_g);
 
-		double pe6[6]{ 0,0,c,0,0,0 };
+		double pe6[6]{ 0,0,c_,0,0,0 };
 		s_pe2pm(pe6, *pm);
 		s_pm_dot_pm(*screw().pm(), *pm, *pm_g);
 		nut().setPm(*pm_g);
@@ -1509,6 +1501,12 @@ namespace Robots
 	void RobotTypeIII::GetWa(double& angle) const
 	{
 		angle = wa_;
+	}
+
+	void RobotTypeIII::GetAllPin(double * pIn) const
+	{
+		GetPin(pIn);
+		*(pIn + 18) = c_;
 	}
 
 	auto RobotTypeIII::simToAdams(const std::string &adams_file, const aris::dynamic::PlanFunc &func, const aris::dynamic::PlanParamBase &param, int ms_dt)->aris::dynamic::SimResult
@@ -1535,7 +1533,7 @@ namespace Robots
 
 				bool is_equal = aris::dynamic::s_is_equal(3, last_Pee[i], Pee_loc, 1e-10);
 
-				if ((is_equal) && (stand_num<3))
+				if ((is_equal) && (stand_num < 3))
 				{
 					this_state[i] = STAND;
 					stand_num++;

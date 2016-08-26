@@ -265,6 +265,7 @@ namespace Robots
 
 		void SetWa(const double angle);//设置腰关节转角(Waist Angle)
 		void GetWa(double& angle) const;//获取当前腰关节转角(Waist Angle)
+		void GetAllPin(double *pIn) const;//获取19根丝杆的长度
 
 		void GetFin(double *Fin) const;
 		void GetFinDyn(double *Fin) const;
@@ -324,6 +325,7 @@ namespace Robots
 
 		const double L_f{ 0 }, L_r{ 0 }, a{ 0 }, b{ 0 }, theta{ 0 };
 
+		double c_;
 		double wa_; //waist angle;
 
 		aris::dynamic::Part *fbody_, *rbody_, *llink_, *ulink_, *screw_, *nut_;

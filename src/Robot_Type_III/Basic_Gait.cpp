@@ -481,6 +481,10 @@ namespace Robots
 			std::copy(param.force_data->at(0).fce, param.force_data->at(0).fce + 6, force_on_marker);
 			aris::dynamic::s_f2f(*robot.forceSensorMak().prtPm(), force_on_marker, force_on_body);
 
+			rt_printf("waist angle: %f \n", Wa);
+			rt_printf("Pee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
+				Pee[0], Pee[1], Pee[2], Pee[3], Pee[4], Pee[5], Pee[6], Pee[7], Pee[8],
+				Pee[9], Pee[10], Pee[11], Pee[12], Pee[13], Pee[14], Pee[15], Pee[16], Pee[17]);
 			rt_printf("force on marker: %f  %f  %f  %f  %f  %f \n", force_on_marker[0], force_on_marker[1], force_on_marker[2], force_on_marker[3], force_on_marker[4], force_on_marker[5]);
 			rt_printf("force on body: %f  %f  %f  %f  %f  %f \n", force_on_body[0], force_on_body[1], force_on_body[2], force_on_body[3], force_on_body[4], force_on_body[5]);
 
@@ -555,6 +559,49 @@ namespace Robots
 			return 1;
 		}
 
+		auto recoverWaistParse(const std::string & cmd, const std::map<std::string, std::string>& params, aris::core::Msg & msg_out) -> void
+		{
+			RecoverWaistParam param;
+
+			for (auto &i : params)
+			{
+				if (i.first == "totalCount")
+				{
+					param.totalCount = std::stoi(i.second);
+				}
+				else if (i.first == "angle")
+				{
+					param.angle = std::stod(i.second);
+				}
+			}
+			msg_out.copyStruct(param);
+		}
+		auto recoverWaistGait(aris::dynamic::Model & model, const aris::dynamic::PlanParamBase & param_in) -> int
+		{
+			auto &robot = static_cast<Robots::RobotTypeIII &>(model);
+			auto &param = static_cast<const RecoverWaistParam &>(param_in);
+
+			static double beginPin[19], recoverPin[19], beginWa;
+
+			if (param.count == 0)
+			{
+				std::copy_n(param.motion_feedback_pos->data(), 19, beginPin);
+				robot.GetWa(beginWa);
+
+				robot.SetWa(param.angle);
+				robot.SetPin(beginPin);
+				robot.GetAllPin(recoverPin);
+
+				robot.SetWa(beginWa);
+				robot.SetPin(beginPin);
+			}
+
+			const double s = -0.5*cos(PI * (param.count + 1) / param.totalCount) + 0.5; //s从0到1. 
+			robot.motionPool().at(18).setMotPos(beginPin[18] * (1 - s) + recoverPin[18] * s);
+
+			return param.totalCount - param.count - 1;
+		}
+
 		auto adjustWaistParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out) -> void
 		{
 			AdjustWaistParam param;
@@ -587,6 +634,16 @@ namespace Robots
 				beginMak.update();
 				robot.GetPee(beginPee, beginMak);
 				robot.GetWa(beginWa);
+				//for test
+				double beginPin[19];
+				robot.GetAllPin(beginPin);
+				rt_printf("beginPin: \n");
+				for (std::size_t i = 0; i < 19; ++i)
+				{
+					rt_printf("%f ", beginPin[i]);
+				}
+				rt_printf("\n");
+
 			}
 
 			double Peb[6]{ 0 };
