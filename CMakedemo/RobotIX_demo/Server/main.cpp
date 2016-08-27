@@ -27,20 +27,16 @@ int main(int argc, char *argv[])
 
 	if (argc <= 1)
 	{
-		std::cout << "you did not type in robot name, in this case ROBOT-III will start" << std::endl;
-		xml_address = "/usr/Robots/resource/Robot_Type_I/Robot_III/Robot_III.xml";
-	}
-	else if (std::string(argv[1]) == "III")
-	{
-		xml_address = "/usr/Robots/resource/Robot_Type_I/Robot_III/Robot_III.xml";
-	}
-	else if (std::string(argv[1]) == "VIII")
-	{
-		xml_address = "/usr/Robots/resource/Robot_Type_I/Robot_VIII/Robot_VIII.xml";
+        std::cout << "you did not type in robot name, in this case ROBOT-IX will start" << std::endl;
+        xml_address = "/usr/Robots/resource/Robot_Type_III/Robot_IX/Robot_IX.xml";
 	}
     else if (std::string(argv[1]) == "IX")
     {
         xml_address = "/home/hex/Desktop/Robots_LJM/src/Robot_Type_III/resource/Robot_IX/Robot_IX.xml";
+    }
+    else if (std::string(argv[1]) == "IXs")
+    {
+        xml_address = "/home/hex/Desktop/Robots_LJM/src/Robot_Type_III/resource/Robot_IX/Robot_IX_single_motor.xml";
     }
     else
 	{

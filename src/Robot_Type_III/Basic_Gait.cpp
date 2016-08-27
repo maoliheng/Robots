@@ -168,20 +168,17 @@ namespace Robots
 				robot.GetPee(beginPee, robot.body());
 				robot.GetWa(beginWa);
 
-				//计算alignPin
+                //计算alignPin, 相对于各腿基坐标系的legAlignPee和legRecoverPee
 				const double pe[6]{ 0 };
 				robot.SetPeb(pe);
 				robot.SetWa(0);
 				robot.SetPee(param.alignPee);
 				robot.GetPin(alignPin);
-				//计算相对于各腿基坐标系的legAlignPee
 				for (int i = 0; i < 6; ++i)
 				{
 					robot.pLegs[i]->GetPee(legAlignPee + 3 * i, robot.pLegs[i]->base());
 					rt_printf("AlignPee in leg%d's base: %f %f %f \n", i, legAlignPee[3 * i], legAlignPee[3 * i + 1], legAlignPee[3 * i + 2]);
 				}
-
-				//计算相对于各腿基坐标系的legRecoverPee
 				robot.SetPee(param.recoverPee);
 				for (int i = 0; i < 6; ++i)
 				{
@@ -193,14 +190,22 @@ namespace Robots
 				robot.SetPee(beginPee, robot.body());
 				
 				//for test
-				rt_printf("Size of motion_feedback_pos: %d\n", param.motion_feedback_pos->size());
-				rt_printf("beginPin: \n");
+                rt_printf("beginWa: %f\n", beginWa);
+                rt_printf("motion_feedback_pos: \n");
 				for (std::size_t i = 0; i < param.motion_feedback_pos->size(); ++i)
 				{
 					rt_printf("%f ", param.motion_feedback_pos->at(i));
 				}
-				rt_printf("\n");
-
+                rt_printf("\n");
+                rt_printf("beginPin: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
+                    beginPin[0], beginPin[1], beginPin[2], beginPin[3], beginPin[4], beginPin[5], beginPin[6], beginPin[7], beginPin[8],
+                    beginPin[9], beginPin[10], beginPin[11], beginPin[12], beginPin[13], beginPin[14], beginPin[15], beginPin[16], beginPin[17]);
+                rt_printf("beginPee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
+                    beginPee[0], beginPee[1], beginPee[2], beginPee[3], beginPee[4], beginPee[5], beginPee[6], beginPee[7], beginPee[8],
+                    beginPee[9], beginPee[10], beginPee[11], beginPee[12], beginPee[13], beginPee[14], beginPee[15], beginPee[16], beginPee[17]);
+                rt_printf("alignPin: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
+                    alignPin[0], alignPin[1], alignPin[2], alignPin[3], alignPin[4], alignPin[5], alignPin[6], alignPin[7], alignPin[8],
+                    alignPin[9], alignPin[10], alignPin[11], alignPin[12], alignPin[13], alignPin[14], alignPin[15], alignPin[16], alignPin[17]);
 			}
 
 			int leftCount = param.count < param.recover_count ? 0 : param.recover_count;
@@ -267,6 +272,9 @@ namespace Robots
 			//for test
 			if (param.count == param.align_count + param.recover_count - 1)
 			{
+                double recoverWa;
+                robot.GetWa(recoverWa);
+                rt_printf("recoverWa: %f\n", recoverWa);
 				double recoverPee[18];
 				robot.GetPee(recoverPee);
 				rt_printf("recoverPee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
@@ -326,7 +334,11 @@ namespace Robots
 				beginMak.update();
 				robot.GetPee(beginPee, beginMak);
 				robot.GetWa(beginWa);
-			}
+                rt_printf("beginWa: %f\n", beginWa);
+                rt_printf("beginPee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
+                    beginPee[0], beginPee[1], beginPee[2], beginPee[3], beginPee[4], beginPee[5], beginPee[6], beginPee[7], beginPee[8],
+                    beginPee[9], beginPee[10], beginPee[11], beginPee[12], beginPee[13], beginPee[14], beginPee[15], beginPee[16], beginPee[17]);
+            }
 
 			//以下设置各个阶段的身体的真实初始位置
 			const double a = param.alpha;
@@ -611,27 +623,30 @@ namespace Robots
 			auto &robot = static_cast<Robots::RobotTypeIII &>(model);
 			auto &param = static_cast<const RecoverWaistParam &>(param_in);
 
-			static double beginPin[19], recoverPin[19], beginWa;
+            static double beginPin[19], recoverPin[19], beginWin, recoverWin;
 
 			if (param.count == 0)
 			{
 				std::copy_n(param.motion_feedback_pos->data(), 19, beginPin);
-				robot.GetWa(beginWa);
+                double beginWa;
+                robot.GetWa(beginWa);
+                beginWin=beginPin[18];
 
-				robot.SetWa(param.angle);
-				robot.SetPin(beginPin);
-				robot.GetAllPin(recoverPin);
+                robot.SetWa(param.angle);
+                robot.GetWin(recoverWin);
+//				robot.SetPin(beginPin);
+//				robot.GetAllPin(recoverPin);
 
-				robot.SetWa(beginWa);
-				robot.SetPin(beginPin);
+                robot.SetWa(beginWa);
+//				robot.SetPin(beginPin);
+
 			}
-			else if (param.count == param.totalCount - 1)
-			{
-				robot.SetWa(param.angle);
-				robot.SetPin(recoverPin);
-			}
+            else if(param.count == param.totalCount - 1)
+            {
+                robot.SetWa(param.angle);
+            }
 			const double s = -0.5*cos(PI * (param.count + 1) / param.totalCount) + 0.5; //s从0到1. 
-			robot.motionPool().at(18).setMotPos(beginPin[18] * (1 - s) + recoverPin[18] * s);
+            robot.motionPool().at(18).setMotPos(beginWin * (1 - s) + recoverWin * s);
 
 			return param.totalCount - param.count - 1;
 		}
@@ -692,18 +707,17 @@ namespace Robots
 			robot.SetWa(Wa);
 			robot.SetPee(Pee, beginMak);
 
-			//for test
-			if (param.count % 100 == 0)
-			{
-				\
-					rt_printf("count: %d\n", param.count);
-				rt_printf("Wa: %f\n", Wa);
-				double pin[18];
-				robot.GetPin(pin);
-				rt_printf("Pin: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f\n\n",
-					pin[0], pin[1], pin[2], pin[3], pin[4], pin[5], pin[6], pin[7], pin[8],
-					pin[9], pin[10], pin[11], pin[12], pin[13], pin[14], pin[15], pin[16], pin[17]);
-			}
+            if (param.count == param.totalCount - 1)
+            {
+                double Pin[18];
+                robot.GetPin(Pin);
+                rt_printf("Final Pee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
+                    Pee[0], Pee[1], Pee[2], Pee[3], Pee[4], Pee[5], Pee[6], Pee[7], Pee[8],
+                    Pee[9], Pee[10], Pee[11], Pee[12], Pee[13], Pee[14], Pee[15], Pee[16], Pee[17]);
+                rt_printf("Final Pin: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
+                    Pin[0], Pin[1], Pin[2], Pin[3], Pin[4], Pin[5], Pin[6], Pin[7], Pin[8],
+                    Pin[9], Pin[10], Pin[11], Pin[12], Pin[13], Pin[14], Pin[15], Pin[16], Pin[17]);
+            }
 
 			return param.totalCount - param.count - 1;
 		}
