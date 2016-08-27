@@ -159,22 +159,23 @@ namespace Robots
             static aris::server::ControlServer &cs = aris::server::ControlServer::instance();
 
             static double beginPin[18], beginPee[18], alignPin[18];
+            static double beginWa;
 
             if (param.count == 0)
             {
                 std::copy_n(param.motion_feedback_pos->data(), 18, beginPin);
                 robot.GetPee(beginPee, robot.body());
+                robot.GetWa(beginWa);
 
                 const double pe[6]{ 0 };
                 robot.SetPeb(pe);
+                robot.SetWa(beginWa);
                 robot.SetPee(param.alignPee);
 
                 robot.GetPin(alignPin);
                 robot.SetPee(beginPee, robot.body());
 
                 //for test
-                double beginWa;
-                robot.GetWa(beginWa);
                 rt_printf("beginWa: %f\n", beginWa);
             }
 
@@ -201,7 +202,7 @@ namespace Robots
                         {
                             pEE[j] = param.alignPee[i * 3 + j] * (cos(s) + 1) / 2 + param.recoverPee[i * 3 + j] * (1 - cos(s)) / 2;
                         }
-
+                        robot.SetWa(beginWa);
                         robot.pLegs[i]->SetPee(pEE);
                     }
                 }
