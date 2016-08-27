@@ -40,7 +40,15 @@ namespace Robots
 		auto recoverParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
 		auto recoverGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
 
-		struct WalkParam final :public aris::server::GaitParamBase
+        struct RecoverWaistParam final :public aris::server::GaitParamBase
+        {
+            std::int32_t totalCount{ 3000 };
+            double angle{ 0 };
+        };
+        auto recoverWaistParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
+        auto recoverWaistGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
+
+        struct WalkParam final :public aris::server::GaitParamBase
 		{
 			std::int32_t totalCount{ 3000 };
 			std::int32_t n{ 2 };
@@ -63,14 +71,6 @@ namespace Robots
 		};
 		auto waistPreHomeParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
 		auto waistPreHomeGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
-
-		struct RecoverWaistParam final :public aris::server::GaitParamBase
-		{
-			std::int32_t totalCount{ 3000 };
-			double angle{ 0 };
-		};
-		auto recoverWaistParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
-		auto recoverWaistGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
 
 		struct AdjustWaistParam final :public aris::server::GaitParamBase
 		{

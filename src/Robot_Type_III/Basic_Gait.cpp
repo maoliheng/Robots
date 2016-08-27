@@ -47,7 +47,7 @@ namespace Robots
 				}
 				else if (i.first == "motor")
 				{
-					int id = { stoi(i.second) };
+                    int id = { std::stoi(i.second) };
                     if (id < 0 || id > MOTOR_NUM - 1)throw std::runtime_error("invalid param in basicParse func");
 
 					std::fill_n(param.active_motor, MOTOR_NUM, false);
@@ -55,7 +55,7 @@ namespace Robots
 				}
 				else if (i.first == "physical_motor")
 				{
-					int id = { stoi(i.second) };
+                    int id = { std::stoi(i.second) };
                     if (id < 0 || id > MOTOR_NUM - 1)throw std::runtime_error("invalid param in basicParse func");
 
 					std::fill_n(param.active_motor, MOTOR_NUM, false);
@@ -151,139 +151,213 @@ namespace Robots
 
 			msg_out.copyStruct(param);
 		}
-		auto recoverGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int
-		{
-			auto &robot = static_cast<Robots::RobotTypeIII &>(model);
-			auto &param = static_cast<const RecoverParam &>(param_in);
+        auto recoverGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase & plan_param)->int
+        {
+            auto &robot = static_cast<Robots::RobotTypeIII &>(model);
+            auto &param = static_cast<const RecoverParam &>(plan_param);
 
-			static aris::server::ControlServer &cs = aris::server::ControlServer::instance();
+            static aris::server::ControlServer &cs = aris::server::ControlServer::instance();
 
-			static double beginPin[18], beginPee[18], alignPin[18];
-			static double beginWa;
-			static double legAlignPee[18], legRecoverPee[18];
+            static double beginPin[18], beginPee[18], alignPin[18];
 
-			if (param.count == 0)
-			{
-				std::copy_n(param.motion_feedback_pos->data(), 18, beginPin);
-				robot.GetPee(beginPee, robot.body());
-				robot.GetWa(beginWa);
+            if (param.count == 0)
+            {
+                std::copy_n(param.motion_feedback_pos->data(), 18, beginPin);
+                robot.GetPee(beginPee, robot.body());
 
-                //计算alignPin, 相对于各腿基坐标系的legAlignPee和legRecoverPee
-				const double pe[6]{ 0 };
-				robot.SetPeb(pe);
-				robot.SetWa(0);
-				robot.SetPee(param.alignPee);
-				robot.GetPin(alignPin);
-				for (int i = 0; i < 6; ++i)
-				{
-					robot.pLegs[i]->GetPee(legAlignPee + 3 * i, robot.pLegs[i]->base());
-					rt_printf("AlignPee in leg%d's base: %f %f %f \n", i, legAlignPee[3 * i], legAlignPee[3 * i + 1], legAlignPee[3 * i + 2]);
-				}
-				robot.SetPee(param.recoverPee);
-				for (int i = 0; i < 6; ++i)
-				{
-					robot.pLegs[i]->GetPee(legRecoverPee + 3 * i, robot.pLegs[i]->base());
-					rt_printf("RecoverPee in leg%d's base: %f %f %f \n", i, legRecoverPee[3 * i], legRecoverPee[3 * i + 1], legRecoverPee[3 * i + 2]);
-				}
+                const double pe[6]{ 0 };
+                robot.SetPeb(pe);
+                robot.SetPee(param.alignPee);
 
-				robot.SetWa(beginWa);
-				robot.SetPee(beginPee, robot.body());
-				
-				//for test
+                robot.GetPin(alignPin);
+                robot.SetPee(beginPee, robot.body());
+
+                //for test
+                double beginWa;
+                robot.GetWa(beginWa);
                 rt_printf("beginWa: %f\n", beginWa);
-                rt_printf("motion_feedback_pos: \n");
-				for (std::size_t i = 0; i < param.motion_feedback_pos->size(); ++i)
-				{
-					rt_printf("%f ", param.motion_feedback_pos->at(i));
-				}
-                rt_printf("\n");
-                rt_printf("beginPin: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
-                    beginPin[0], beginPin[1], beginPin[2], beginPin[3], beginPin[4], beginPin[5], beginPin[6], beginPin[7], beginPin[8],
-                    beginPin[9], beginPin[10], beginPin[11], beginPin[12], beginPin[13], beginPin[14], beginPin[15], beginPin[16], beginPin[17]);
-                rt_printf("beginPee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
-                    beginPee[0], beginPee[1], beginPee[2], beginPee[3], beginPee[4], beginPee[5], beginPee[6], beginPee[7], beginPee[8],
-                    beginPee[9], beginPee[10], beginPee[11], beginPee[12], beginPee[13], beginPee[14], beginPee[15], beginPee[16], beginPee[17]);
-                rt_printf("alignPin: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
-                    alignPin[0], alignPin[1], alignPin[2], alignPin[3], alignPin[4], alignPin[5], alignPin[6], alignPin[7], alignPin[8],
-                    alignPin[9], alignPin[10], alignPin[11], alignPin[12], alignPin[13], alignPin[14], alignPin[15], alignPin[16], alignPin[17]);
-			}
+            }
 
-			int leftCount = param.count < param.recover_count ? 0 : param.recover_count;
-			int rightCount = param.count < param.recover_count ? param.recover_count : param.recover_count + param.align_count;
+            int leftCount = param.count < param.recover_count ? 0 : param.recover_count;
+            int rightCount = param.count < param.recover_count ? param.recover_count : param.recover_count + param.align_count;
 
-			double s = -(PI / 2)*cos(PI * (param.count - leftCount + 1) / (rightCount - leftCount)) + PI / 2;
+            double s = -(PI / 2)*cos(PI * (param.count - leftCount + 1) / (rightCount - leftCount)) + PI / 2;
 
-			for (int i = 0; i < 6; ++i)
-			{
-				if (param.active_leg[i])
-				{
-					if (param.count < param.recover_count)
-					{
-						for (int j = 0; j < 3; ++j)
-						{
-							robot.motionPool().at(i * 3 + j).setMotPos(beginPin[i * 3 + j] * (cos(s) + 1) / 2 + alignPin[i * 3 + j] * (1 - cos(s)) / 2);
-						}
-					}
-					else
-					{
-						double pEE[3];
-						for (int j = 0; j < 3; ++j)
-						{
-							pEE[j] = legAlignPee[i * 3 + j] * (cos(s) + 1) / 2 + legRecoverPee[i * 3 + j] * (1 - cos(s)) / 2;
-						}
+            for (int i = 0; i < 6; ++i)
+            {
+                if (param.active_leg[i])
+                {
+                    if (param.count < param.recover_count)
+                    {
+                        for (int j = 0; j < 3; ++j)
+                        {
+                            robot.motionPool().at(i * 3 + j).setMotPos(beginPin[i * 3 + j] * (cos(s) + 1) / 2 + alignPin[i * 3 + j] * (1 - cos(s)) / 2);
+                        }
+                    }
+                    else
+                    {
+                        double pEE[3];
+                        for (int j = 0; j < 3; ++j)
+                        {
+                            pEE[j] = param.alignPee[i * 3 + j] * (cos(s) + 1) / 2 + param.recoverPee[i * 3 + j] * (1 - cos(s)) / 2;
+                        }
 
-						robot.SetWa(beginWa);
-						robot.pLegs[i]->SetPee(pEE, robot.pLegs[i]->base());
-					}
-				}
-			}
+                        robot.pLegs[i]->SetPee(pEE);
+                    }
+                }
+            }
 
-			// recover 自己做检查 // 
-			for (int i = 0; i < 18; ++i)
-			{
-				if (param.active_motor[i] && (param.last_motion_raw_data->at(i).cmd == aris::control::EthercatMotion::RUN))
-				{
+            // recover 自己做检查 //
+            for (int i = 0; i < 18; ++i)
+            {
+                if (param.active_motor[i] && (param.last_motion_raw_data->at(i).cmd == aris::control::EthercatMotion::RUN))
+                {
 
-					if (param.motion_raw_data->at(i).target_pos > (cs.controller().motionAtAbs(i).maxPosCount() + param.margin_offset * cs.controller().motionAtAbs(i).pos2countRatio()))
-					{
-						rt_printf("Motor %i's target position is bigger than its MAX permitted value in recover, you might forget to GO HOME\n", i);
-						rt_printf("The min, max and current count are:\n");
-						for (std::size_t i = 0; i < cs.controller().motionNum(); ++i)
-						{
-							rt_printf("%d   %d   %d\n", cs.controller().motionAtAbs(i).minPosCount(), cs.controller().motionAtAbs(i).maxPosCount(), param.motion_raw_data->at(i).target_pos);
-						}
-						rt_printf("recover failed\n");
-						return 0;
-					}
-					if (param.motion_raw_data->at(i).target_pos < (cs.controller().motionAtAbs(i).minPosCount() - param.margin_offset * cs.controller().motionAtAbs(i).pos2countRatio()))
-					{
-						rt_printf("Motor %i's target position is smaller than its MIN permitted value in recover, you might forget to GO HOME\n", i);
-						rt_printf("The min, max and current count are:\n");
-						for (std::size_t i = 0; i < cs.controller().motionNum(); ++i)
-						{
-							rt_printf("%d   %d   %d\n", cs.controller().motionAtAbs(i).minPosCount(), cs.controller().motionAtAbs(i).maxPosCount(), param.motion_raw_data->at(i).target_pos);
-						}
-						rt_printf("recover failed\n");
-						return 0;
-					}
-				}
-			}
+                    if (param.motion_raw_data->at(i).target_pos > (cs.controller().motionAtAbs(i).maxPosCount() + param.margin_offset * cs.controller().motionAtAbs(i).pos2countRatio()))
+                    {
+                        rt_printf("Motor %i's target position is bigger than its MAX permitted value in recover, you might forget to GO HOME\n", i);
+                        rt_printf("The min, max and current count are:\n");
+                        for (std::size_t i = 0; i < cs.controller().motionNum(); ++i)
+                        {
+                            rt_printf("%d   %d   %d\n", cs.controller().motionAtAbs(i).minPosCount(), cs.controller().motionAtAbs(i).maxPosCount(), param.motion_raw_data->at(i).target_pos);
+                        }
+                        rt_printf("recover failed\n");
+                        return 0;
+                    }
+                    if (param.motion_raw_data->at(i).target_pos < (cs.controller().motionAtAbs(i).minPosCount() - param.margin_offset * cs.controller().motionAtAbs(i).pos2countRatio()))
+                    {
+                        rt_printf("Motor %i's target position is smaller than its MIN permitted value in recover, you might forget to GO HOME\n", i);
+                        rt_printf("The min, max and current count are:\n");
+                        for (std::size_t i = 0; i < cs.controller().motionNum(); ++i)
+                        {
+                            rt_printf("%d   %d   %d\n", cs.controller().motionAtAbs(i).minPosCount(), cs.controller().motionAtAbs(i).maxPosCount(), param.motion_raw_data->at(i).target_pos);
+                        }
+                        rt_printf("recover failed\n");
+                        return 0;
+                    }
+                }
+            }
 
-			//for test
-			if (param.count == param.align_count + param.recover_count - 1)
-			{
+            //for test
+            if (param.count == param.align_count + param.recover_count - 1)
+            {
                 double recoverWa;
                 robot.GetWa(recoverWa);
                 rt_printf("recoverWa: %f\n", recoverWa);
-				double recoverPee[18];
-				robot.GetPee(recoverPee);
-				rt_printf("recoverPee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
-					recoverPee[0], recoverPee[1], recoverPee[2], recoverPee[3], recoverPee[4], recoverPee[5], recoverPee[6], recoverPee[7], recoverPee[8],
-					recoverPee[9], recoverPee[10], recoverPee[11], recoverPee[12], recoverPee[13], recoverPee[14], recoverPee[15], recoverPee[16], recoverPee[17]);
-			}
+                double recoverPee[18];
+                robot.GetPee(recoverPee);
+                rt_printf("recoverPee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
+                    recoverPee[0], recoverPee[1], recoverPee[2], recoverPee[3], recoverPee[4], recoverPee[5], recoverPee[6], recoverPee[7], recoverPee[8],
+                    recoverPee[9], recoverPee[10], recoverPee[11], recoverPee[12], recoverPee[13], recoverPee[14], recoverPee[15], recoverPee[16], recoverPee[17]);
+            }
 
-			return param.align_count + param.recover_count - param.count - 1;
-		}
+            return param.align_count + param.recover_count - param.count - 1;
+        }
+
+        auto recoverWaistParse(const std::string & cmd, const std::map<std::string, std::string>& params, aris::core::Msg & msg_out) -> void
+        {
+            RecoverWaistParam param;
+
+            param.if_check_pos_min = false;
+            param.if_check_pos_max = false;
+
+            for (auto &i : params)
+            {
+                if (i.first == "totalCount")
+                {
+                    param.totalCount = std::stoi(i.second);
+                }
+                else if (i.first == "angle")
+                {
+                    param.angle = std::stod(i.second);
+                }
+            }
+            std::fill_n(param.active_motor, 18, false);
+            param.active_motor[18] = true;
+
+            msg_out.copyStruct(param);
+        }
+        auto recoverWaistGait(aris::dynamic::Model & model, const aris::dynamic::PlanParamBase & param_in) -> int
+        {
+            auto &robot = static_cast<Robots::RobotTypeIII &>(model);
+            auto &param = static_cast<const RecoverWaistParam &>(param_in);
+
+            static double beginWin, recoverWin;
+
+            if (param.count == 0)
+            {
+                beginWin = param.motion_feedback_pos->at(18);
+                double beginWa;
+                robot.GetWa(beginWa);
+
+                robot.SetWa(param.angle);
+                robot.GetWin(recoverWin);
+
+                robot.SetWa(beginWa);
+            }
+            else if(param.count == param.totalCount - 1)
+            {
+                robot.SetWa(param.angle);
+            }
+            const double s = -0.5*cos(PI * (param.count + 1) / param.totalCount) + 0.5; //s从0到1.
+            robot.motionPool().at(18).setMotPos(beginWin * (1 - s) + recoverWin * s);
+
+            return param.totalCount - param.count - 1;
+        }
+
+        auto extendChainParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out) -> void
+        {
+            ExtendChainParam param;
+
+            param.if_check_pos_min = false;
+            param.if_check_pos_max = false;
+
+            for (auto &i : params)
+            {
+                if (i.first == "totalCount")
+                {
+                    param.totalCount = std::stoi(i.second);
+                }
+                else if (i.first == "motor")
+                {
+                    int id = { std::stoi(i.second) };
+                    if (id < 0 || id > MOTOR_NUM - 1)throw std::runtime_error("invalid param in basicParse func");
+                    std::fill_n(param.active_motor, MOTOR_NUM, false);
+                    param.active_motor[id] = true;
+
+                    param.motor_id = std::stoi(i.second);
+                }
+                else if (i.first == "length")
+                {
+                    param.length = std::stod(i.second);
+                }
+            }
+            msg_out.copyStruct(param);
+        }
+        auto extendChainGait(aris::dynamic::Model & model, const aris::dynamic::PlanParamBase & param_in) -> int
+        {
+            auto &robot = static_cast<Robots::RobotTypeIII &>(model);
+            auto &param = static_cast<const ExtendChainParam &>(param_in);
+
+            const double s = -0.5*cos(PI * (param.count + 1) / param.totalCount) + 0.5; //s从0到1.
+
+            static double beginPin[MOTOR_NUM];
+            if (param.count == 0)
+            {
+                std::copy_n(param.motion_feedback_pos->data(), MOTOR_NUM, beginPin);
+                //for test
+                rt_printf("beginPin: \n");
+                for (int i = 0; i < MOTOR_NUM; ++i)
+                {
+                    rt_printf("%f ", beginPin[i]);
+                }
+                rt_printf("\n");
+            }
+
+            robot.motionPool().at(param.motor_id).setMotPos(beginPin[param.motor_id] + param.length * s);
+
+            return param.totalCount - param.count - 1;
+        }
 
 		auto walkParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void
 		{
@@ -601,56 +675,6 @@ namespace Robots
 			return 1;
 		}
 
-		auto recoverWaistParse(const std::string & cmd, const std::map<std::string, std::string>& params, aris::core::Msg & msg_out) -> void
-		{
-			RecoverWaistParam param;
-
-			for (auto &i : params)
-			{
-				if (i.first == "totalCount")
-				{
-					param.totalCount = std::stoi(i.second);
-				}
-				else if (i.first == "angle")
-				{
-					param.angle = std::stod(i.second);
-				}
-			}
-			msg_out.copyStruct(param);
-		}
-		auto recoverWaistGait(aris::dynamic::Model & model, const aris::dynamic::PlanParamBase & param_in) -> int
-		{
-			auto &robot = static_cast<Robots::RobotTypeIII &>(model);
-			auto &param = static_cast<const RecoverWaistParam &>(param_in);
-
-            static double beginPin[19], recoverPin[19], beginWin, recoverWin;
-
-			if (param.count == 0)
-			{
-				std::copy_n(param.motion_feedback_pos->data(), 19, beginPin);
-                double beginWa;
-                robot.GetWa(beginWa);
-                beginWin=beginPin[18];
-
-                robot.SetWa(param.angle);
-                robot.GetWin(recoverWin);
-//				robot.SetPin(beginPin);
-//				robot.GetAllPin(recoverPin);
-
-                robot.SetWa(beginWa);
-//				robot.SetPin(beginPin);
-
-			}
-            else if(param.count == param.totalCount - 1)
-            {
-                robot.SetWa(param.angle);
-            }
-			const double s = -0.5*cos(PI * (param.count + 1) / param.totalCount) + 0.5; //s从0到1. 
-            robot.motionPool().at(18).setMotPos(beginWin * (1 - s) + recoverWin * s);
-
-			return param.totalCount - param.count - 1;
-		}
-
 		auto adjustWaistParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out) -> void
 		{
 			AdjustWaistParam param;
@@ -718,52 +742,6 @@ namespace Robots
                     Pin[0], Pin[1], Pin[2], Pin[3], Pin[4], Pin[5], Pin[6], Pin[7], Pin[8],
                     Pin[9], Pin[10], Pin[11], Pin[12], Pin[13], Pin[14], Pin[15], Pin[16], Pin[17]);
             }
-
-			return param.totalCount - param.count - 1;
-		}
-		
-		auto extendChainParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out) -> void
-		{
-			ExtendChainParam param;
-
-			for (auto &i : params)
-			{
-				if (i.first == "totalCount")
-				{
-					param.totalCount = std::stoi(i.second);
-				}
-				else if (i.first == "motor")
-				{
-					param.motor_id = std::stoi(i.second);
-				}
-				else if (i.first == "length")
-				{
-					param.length = std::stod(i.second);
-				}
-			}
-			msg_out.copyStruct(param);
-		}
-		auto extendChainGait(aris::dynamic::Model & model, const aris::dynamic::PlanParamBase & param_in) -> int
-		{
-			auto &robot = static_cast<Robots::RobotTypeIII &>(model);
-			auto &param = static_cast<const ExtendChainParam &>(param_in);
-
-			const double s = -0.5*cos(PI * (param.count + 1) / param.totalCount) + 0.5; //s从0到1. 
-
-			static double beginPin[MOTOR_NUM];
-			if (param.count == 0)
-			{
-				std::copy_n(param.motion_feedback_pos->data(), MOTOR_NUM, beginPin);
-				//for test
-				rt_printf("beginPin: \n");
-				for (int i = 0; i < MOTOR_NUM; ++i)
-				{
-					rt_printf("%f ", beginPin[i]);
-				}
-				rt_printf("\n");
-			}
-
-			robot.motionPool().at(param.motor_id).setMotPos(beginPin[param.motor_id] + param.length * s);
 
 			return param.totalCount - param.count - 1;
 		}
