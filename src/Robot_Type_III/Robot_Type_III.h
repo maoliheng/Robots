@@ -264,7 +264,8 @@ namespace Robots
 		using Model::saveXml;
 
 		void SetWa(const double angle);//设置腰关节转角(Waist Angle)
-		void GetWa(double& angle) const;//获取当前腰关节转角(Waist Angle)
+		void GetWa(double& angle) const;//获取当前腰关节转角
+		void GetWin(double& length) const;//获取当前腰关节丝杆长度
 		void GetAllPin(double *pIn) const;//获取19根丝杆的长度
 
 		void GetFin(double *Fin) const;

@@ -1503,6 +1503,11 @@ namespace Robots
 		angle = wa_;
 	}
 
+	void RobotTypeIII::GetWin(double & length) const
+	{
+		length = c_;
+	}
+
 	void RobotTypeIII::GetAllPin(double * pIn) const
 	{
 		GetPin(pIn);

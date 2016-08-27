@@ -159,17 +159,37 @@ namespace Robots
 			static aris::server::ControlServer &cs = aris::server::ControlServer::instance();
 
 			static double beginPin[18], beginPee[18], alignPin[18];
+			static double beginWa;
+			static double legAlignPee[18], legRecoverPee[18];
 
 			if (param.count == 0)
 			{
 				std::copy_n(param.motion_feedback_pos->data(), 18, beginPin);
 				robot.GetPee(beginPee, robot.body());
+				robot.GetWa(beginWa);
 
+				//计算alignPin
 				const double pe[6]{ 0 };
 				robot.SetPeb(pe);
+				robot.SetWa(0);
 				robot.SetPee(param.alignPee);
-
 				robot.GetPin(alignPin);
+				//计算相对于各腿基坐标系的legAlignPee
+				for (int i = 0; i < 6; ++i)
+				{
+					robot.pLegs[i]->GetPee(legAlignPee + 3 * i, robot.pLegs[i]->base());
+					rt_printf("AlignPee in leg%d's base: %f %f %f \n", i, legAlignPee[3 * i], legAlignPee[3 * i + 1], legAlignPee[3 * i + 2]);
+				}
+
+				//计算相对于各腿基坐标系的legRecoverPee
+				robot.SetPee(param.recoverPee);
+				for (int i = 0; i < 6; ++i)
+				{
+					robot.pLegs[i]->GetPee(legRecoverPee + 3 * i, robot.pLegs[i]->base());
+					rt_printf("RecoverPee in leg%d's base: %f %f %f \n", i, legRecoverPee[3 * i], legRecoverPee[3 * i + 1], legRecoverPee[3 * i + 2]);
+				}
+
+				robot.SetWa(beginWa);
 				robot.SetPee(beginPee, robot.body());
 				
 				//for test
@@ -204,10 +224,11 @@ namespace Robots
 						double pEE[3];
 						for (int j = 0; j < 3; ++j)
 						{
-							pEE[j] = param.alignPee[i * 3 + j] * (cos(s) + 1) / 2 + param.recoverPee[i * 3 + j] * (1 - cos(s)) / 2;
+							pEE[j] = legAlignPee[i * 3 + j] * (cos(s) + 1) / 2 + legRecoverPee[i * 3 + j] * (1 - cos(s)) / 2;
 						}
 
-						robot.pLegs[i]->SetPee(pEE);
+						robot.SetWa(beginWa);
+						robot.pLegs[i]->SetPee(pEE, robot.pLegs[i]->base());
 					}
 				}
 			}
@@ -242,12 +263,15 @@ namespace Robots
 					}
 				}
 			}
+
 			//for test
-			if (param.count % 500 == 0)
+			if (param.count == param.align_count + param.recover_count - 1)
 			{
-				double wa;
-				robot.GetWa(wa);
-				rt_printf("Wa: %f\n", wa);
+				double recoverPee[18];
+				robot.GetPee(recoverPee);
+				rt_printf("recoverPee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
+					recoverPee[0], recoverPee[1], recoverPee[2], recoverPee[3], recoverPee[4], recoverPee[5], recoverPee[6], recoverPee[7], recoverPee[8],
+					recoverPee[9], recoverPee[10], recoverPee[11], recoverPee[12], recoverPee[13], recoverPee[14], recoverPee[15], recoverPee[16], recoverPee[17]);
 			}
 
 			return param.align_count + param.recover_count - param.count - 1;
@@ -601,7 +625,11 @@ namespace Robots
 				robot.SetWa(beginWa);
 				robot.SetPin(beginPin);
 			}
-
+			else if (param.count == param.totalCount - 1)
+			{
+				robot.SetWa(param.angle);
+				robot.SetPin(recoverPin);
+			}
 			const double s = -0.5*cos(PI * (param.count + 1) / param.totalCount) + 0.5; //s从0到1. 
 			robot.motionPool().at(18).setMotPos(beginPin[18] * (1 - s) + recoverPin[18] * s);
 
