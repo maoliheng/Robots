@@ -16,3 +16,4 @@ src/Robot_Type_III/Basic_Gait.cpp
 src/Robot_Type_III/Basic_Gait.h
 src/Robot_Type_III/Robot_Type_III.cpp
 src/Robot_Type_III/Robot_Type_III.h
+src/Robot_Type_III/resource/Robot_IX/Robot_IX_single_motor.xml

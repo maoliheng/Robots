@@ -473,6 +473,9 @@ namespace Robots
 			robot.SetWa(Wa);
 			robot.SetPee(Pee);
 
+            double Pin[19];
+            robot.GetAllPin(Pin);
+
 			if (param.imu_data)rt_printf("imu(pitch roll yaw): %f  %f  %f\n", param.imu_data->pitch, param.imu_data->roll, param.imu_data->yaw);
 
 			double force_on_body[6], force_on_marker[6];
@@ -485,7 +488,10 @@ namespace Robots
 			rt_printf("Pee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
 				Pee[0], Pee[1], Pee[2], Pee[3], Pee[4], Pee[5], Pee[6], Pee[7], Pee[8],
 				Pee[9], Pee[10], Pee[11], Pee[12], Pee[13], Pee[14], Pee[15], Pee[16], Pee[17]);
-			rt_printf("force on marker: %f  %f  %f  %f  %f  %f \n", force_on_marker[0], force_on_marker[1], force_on_marker[2], force_on_marker[3], force_on_marker[4], force_on_marker[5]);
+            rt_printf("Pin: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f %f \n",
+                Pin[0], Pin[1], Pin[2], Pin[3], Pin[4], Pin[5], Pin[6], Pin[7], Pin[8],
+                Pin[9], Pin[10], Pin[11], Pin[12], Pin[13], Pin[14], Pin[15], Pin[16], Pin[17], Pin[18]);
+            rt_printf("force on marker: %f  %f  %f  %f  %f  %f \n", force_on_marker[0], force_on_marker[1], force_on_marker[2], force_on_marker[3], force_on_marker[4], force_on_marker[5]);
 			rt_printf("force on body: %f  %f  %f  %f  %f  %f \n", force_on_body[0], force_on_body[1], force_on_body[2], force_on_body[3], force_on_body[4], force_on_body[5]);
 
 			return 0;
