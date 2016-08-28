@@ -51,7 +51,8 @@ int main(int argc, char *argv[])
     rs.addCmd("en", Robots::Gait::basicParse, nullptr);
     rs.addCmd("ds", Robots::Gait::basicParse, nullptr);
     rs.addCmd("hm", Robots::Gait::basicParse, nullptr);
-    rs.addCmd("rc", Robots::Gait::recoverParse, Robots::Gait::recoverGait);
+	rs.addCmd("hmsw", Robots::Gait::basicParse, nullptr);
+	rs.addCmd("rc", Robots::Gait::recoverParse, Robots::Gait::recoverGait);
     rs.addCmd("wk", Robots::Gait::walkParse, Robots::Gait::walkGait);
     rs.addCmd("ro", Robots::Gait::resetOriginParse, Robots::Gait::resetOriginGait);
     rs.addCmd("ec", Robots::Gait::extendChainParse, Robots::Gait::extendChainGait);
