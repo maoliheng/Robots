@@ -43,8 +43,30 @@ struct creepingParam final :public aris::server::GaitParamBase
 	int n{ 1 };
 };
 
+enum class GaitPhase
+{
+	Swing,
+	Stance,
+	Follow,
+};
+
+class CmdState
+{
+public:
+	static CmdState& getState()
+	{
+		static CmdState s;
+		return s;
+	}
+	bool& isStoppingCmd() { return isStoppingCmd_; }
+private:
+	bool isStoppingCmd_{ true };
+	CmdState() = default;
+};
+
 auto creepingParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg)->void;
 auto creepingGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
+auto forceCreepingGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
 
 struct basicParam final :public aris::server::GaitParamBase
 {

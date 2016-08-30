@@ -151,10 +151,10 @@ namespace Robots
 
 			msg_out.copyStruct(param);
 		}
-        auto recoverGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase & plan_param)->int
+        auto recoverGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int
         {
             auto &robot = static_cast<Robots::RobotTypeIII &>(model);
-            auto &param = static_cast<const RecoverParam &>(plan_param);
+            auto &param = static_cast<const RecoverParam &>(param_in);
 
             static aris::server::ControlServer &cs = aris::server::ControlServer::instance();
 
@@ -254,6 +254,54 @@ namespace Robots
 
             return param.align_count + param.recover_count - param.count - 1;
         }
+		auto recoverInRampGait(aris::dynamic::Model & model, const aris::dynamic::PlanParamBase & param_in) -> int
+		{
+			auto &robot = static_cast<Robots::RobotTypeIII &>(model);
+			auto &param = static_cast<const RecoverParam &>(param_in);
+
+			static double alignPee[18];
+			static double recoverPee[18];
+			if (param.count == 0)
+			{
+				double theta;
+				robot.GetWa(theta);
+				std::copy_n(param.alignPee, 18, alignPee);
+				std::copy_n(param.recoverPee, 18, recoverPee);
+				double l = recoverPee[8] - recoverPee[5];
+				double h = l*std::sin(theta);
+				double d = l*std::cos(theta);
+				alignPee[1] += h;
+				alignPee[2] = -d;
+				alignPee[10] += h;
+				alignPee[11] = -d;
+				alignPee[7] += -h;
+				alignPee[8] = d;
+				alignPee[16] += -h;
+				alignPee[17] = -d;
+				recoverPee[1] += h;
+				recoverPee[2] = -d;
+				recoverPee[10] += h;
+				recoverPee[11] = -d;
+				recoverPee[7] += -h;
+				recoverPee[8] = d;
+				recoverPee[16] += -h;
+				recoverPee[17] = -d;
+				//for test
+				rt_printf("l: %f\n", l);
+			}
+
+			Robots::Gait::RecoverParam realParam = param;
+			std::copy_n(alignPee, 18, realParam.alignPee);
+			std::copy_n(recoverPee, 18, realParam.recoverPee);
+			//for test
+			if (param.count % 1000 == 0)
+			{
+				rt_printf("param.count: %d\n", param.count);
+				rt_printf("realParam.count: %d\n", realParam.count);
+			}
+			int ret = Robots::Gait::recoverGait(robot, param);
+            return ret;
+		}
 
         auto recoverWaistParse(const std::string & cmd, const std::map<std::string, std::string>& params, aris::core::Msg & msg_out) -> void
         {

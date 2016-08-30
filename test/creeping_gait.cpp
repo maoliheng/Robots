@@ -30,6 +30,8 @@ auto creepingParse(const std::string &cmd, const std::map<std::string, std::stri
 		}
 	}
 
+	CmdState::getState().isStoppingCmd() = false;
+
 	msg.copyStruct(param);
 }
 
@@ -94,7 +96,7 @@ auto creepingGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
 	{
 		beginMak.setPrtPm(*robot.body().pm());
 		beginMak.update();
-		
+
 		//update map
 		mapOffset += int(-targetPeb[2] / 0.01);
 		heightOffset += targetPeb[1];
@@ -246,6 +248,160 @@ auto creepingGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBas
 	return (4 * param.n + 1) * param.totalCount - param.count - 1;
 }
 
+auto forceCreepingGait(aris::dynamic::Model & model, const aris::dynamic::PlanParamBase & param_in) -> int
+{
+	auto &robot = static_cast<Robots::RobotTypeIII &>(model);
+	auto &param = static_cast<const creepingParam &>(param_in);
+
+	static aris::dynamic::FloatMarker beginMak{ robot.ground() };
+	static double beginPee[18];
+	static double beginWa;
+
+	//力传感器
+	static double forceOffsetSum[36]{ 0 };
+	double forceOffsetAvg[36]{ 0 };
+	double realForceData[36]{ 0 };
+
+	double forceInFoot[6]{ 0 };
+	const double ForceThreshold[6]{ -100, -100, -100, -100, -100, -100 }; //力信号的触发阈值,单位N或Nm
+	const int Leg2Sensor[6]{ 0, 1, 2, 3, 4, 5 }; //力传感器与腿的顺序映射
+	const double ForceJudgeCount{ 500 };
+	for (int i = 0; i < 6; i++)
+	{
+		forceInFoot[i] = param.force_data->at(Leg2Sensor[i]).Fz;
+	}
+
+	//触地判断
+	static bool isTouchingGround[6];
+
+	//迈步规划
+	const int LegSeq[2][4]{ { 1, 0, -1, 2 },{ 1, 2, -1, 0 } }; //LegSeq[0]为向前迈步的次序，LegSeq[1]为向后迈步的次序，-1表示六条腿都不迈
+	static int step{ 0 }; //总步数
+	static double slope[3]{ 0 };//预计坡度
+	static double prePee[18];
+	static double contactPee[18];
+	static double targetPee[18];
+	static double targetPeb[6];
+
+	static std::int32_t beginCount{ 0 };
+	static bool isStepFinished{ false };
+	static bool isProcessFinished{ false };
+	static bool isLastStep{ false };
+	
+	double Pee[18];
+	double Peb[6];
+	double Wa;
+		//初始化
+	if (param.count == 0)
+	{
+		isLastStep = false;
+	}
+
+	int swingLegID{ -1 };
+	if (param.d > 0)
+	{
+		swingLegID = LegSeq[0][step];
+	}
+	else
+	{
+		swingLegID = LegSeq[1][step];
+	}
+
+	//单步规划
+	double period_count = param.count - beginCount;
+	if (period_count == 0)
+	{
+		beginMak.setPrtPm(*robot.body().pm());
+		beginMak.update();
+		robot.GetPee(beginPee, beginMak);
+		robot.GetWa(beginWa);
+
+	}
+
+	//椭圆轨迹
+	const double s = -0.5 * std::cos(PI * (period_count + 1) / param.totalCount) + 0.5; //s从0到1
+	//足尖插值
+
+
+	double h = param.h;
+	std::copy(beginPee, beginPee + 18, Pee);
+	for (int i = swingLegID; i < 6; i+=3)
+	{
+		if (isTouchingGround[i])
+		{
+			std::copy_n(contactPee + 3 * i, 3, Pee + 3 * i);
+		}
+		else
+		{
+			double dx = targetPee[3 * i] - beginPee[3 * i];
+			double dy = targetPee[3 * i + 1] - beginPee[3 * i + 1];
+			double dz = targetPee[3 * i + 2] - beginPee[3 * i + 2];
+			double alpha = std::atan(-dy / dz);
+			double d = dz / std::cos(alpha);
+			double y0 = h * std::sin(PI * s);
+			double z0 = d / 2 * (1 - std::cos(PI * s));
+			Pee[3 * i] += dx * s;
+			Pee[3 * i + 1] += std::cos(alpha) * y0 - std::sin(alpha) * z0;
+			Pee[3 * i + 2] += std::sin(alpha) * y0 + std::cos(alpha) * z0;
+		}
+	}
+	//身体插值
+	for (int i = 0; i < 3; ++i)
+	{
+		Peb[i] = targetPeb[i] * s;
+	}
+	//腰关节插值
+	double targetWa;
+	Wa = beginWa * (1 - s) + targetWa * s;
+
+	if (period_count == param.totalCount - 1)
+	{
+		isStepFinished = true;
+	}
+
+	//触地检测
+	if (period_count > ForceJudgeCount - 1)
+	{
+		for (int i = swingLegID; i < 6; i += 3)
+		{
+			if (forceInFoot[i] < ForceThreshold[i])
+			{
+				isTouchingGround[i] = true;
+				std::copy_n(Pee + 3 * i, 3, contactPee + 3 * i);
+			}
+		}
+		if (isTouchingGround[swingLegID] && isTouchingGround[swingLegID + 3])
+		{
+			isStepFinished = true;
+		}
+	}
+
+	if (isStepFinished)
+	{
+		beginCount += period_count + 1;
+		++step;
+		if (step == 4)
+		{
+			isProcessFinished = true;
+			step -= 4;
+		}
+	}
+
+	if (isProcessFinished && CmdState::getState().isStoppingCmd())
+	{
+		isLastStep = true;
+	}
+
+	if (isLastStep && period_count == param.totalCount - 1)
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
+
 auto basicGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int
 {
 	auto &robot = static_cast<Robots::RobotTypeIII &>(model);
@@ -271,8 +427,8 @@ auto basicGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &
 		rt_printf("beginPeb: %f %f %f %f %f %f\n",
 			beginPeb[0], beginPeb[1], beginPeb[2], beginPeb[3], beginPeb[4], beginPeb[5]);
 		rt_printf("beginPee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f\n\n",
-			beginPee[0], beginPee[1], beginPee[2], beginPee[3], beginPee[4], beginPee[5], 
-			beginPee[6], beginPee[7], beginPee[8], beginPee[9], beginPee[10], beginPee[11], 
+			beginPee[0], beginPee[1], beginPee[2], beginPee[3], beginPee[4], beginPee[5],
+			beginPee[6], beginPee[7], beginPee[8], beginPee[9], beginPee[10], beginPee[11],
 			beginPee[12], beginPee[13], beginPee[14], beginPee[15], beginPee[16], beginPee[17]);
 
 		rt_printf("targetWa: %f\n", param.targetWa);
