@@ -85,8 +85,7 @@ namespace Robots
 		struct ExtendChainParam final :public aris::server::GaitParamBase
 		{
 			std::int32_t totalCount{ 3000 };
-			int motor_id{ 0 };
-			double length{ 0.01 }; 
+            double distance{ 0.01 };
 		};
 		auto extendChainParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
 		auto extendChainGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;

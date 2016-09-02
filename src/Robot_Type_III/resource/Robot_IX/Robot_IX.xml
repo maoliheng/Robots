@@ -608,6 +608,27 @@
             </hmsw>
             <fake_home/>
             <zo/>
+            <ec default="ec_param">
+                <ec_param type="group">
+                    <motor_param type="unique" default="waist">
+                        <all abbreviation="a"/>
+                        <first abbreviation="f"/>
+                        <second abbreviation="s"/>
+                        <waist abbreviation="w"/>
+                        <motor abbreviation="m" type="intArray" default="18"/>
+                        <physical_motor abbreviation="p" type="intArray" default="18"/>
+                        <leg abbreviation="l" type="intArray" default="0"/>
+                    </motor_param>
+                    <totalCount abbreviation="t" type="int" default="3000"/>
+                    <distance abbreviation="d" type="double" default="0.01"/>
+                </ec_param>
+            </ec>
+            <rcw default="rcw_param">
+                <rcw_param type="group">
+                    <totalCount abbreviation="t" type="int" default="3000"/>
+                    <angle abbreviation="a" type="double" default="0"/>
+                </rcw_param>
+            </rcw>
             <rc default="rc_param">
                 <rc_param type="group">
                     <leg_param type="unique" default="all">
@@ -621,6 +642,19 @@
                     <margin_offset abbreviation="m" type="double" default="0.01"/>
                 </rc_param>
             </rc>
+            <rcir default="rc_param">
+                <rc_param type="group">
+                    <leg_param type="unique" default="all">
+                        <all abbreviation="a"/>
+                        <first abbreviation="f"/>
+                        <second abbreviation="s"/>
+                        <leg abbreviation="l" type="intArray" default="0"/>
+                    </leg_param>
+                    <t1 abbreviation="t" type="intArray" default="3000"/>
+                    <t2 type="intArray" default="3000"/>
+                    <margin_offset abbreviation="m" type="double" default="0.01"/>
+                </rc_param>
+            </rcir>
             <wk default="wk_param">
                 <wk_param type="group">
                     <totalCount abbreviation="t" type="int" default="3000"/>
@@ -632,19 +666,6 @@
                 </wk_param>
             </wk>
             <ro/>
-            <ec default="ec_param">
-                <ec_param type="group">
-                    <totalCount abbreviation="t" type="int" default="3000"/>
-                    <motor abbreviation="m" type="int" default="0"/>
-                    <length abbreviation="l" type="double" default="0.01"/>
-                </ec_param>
-            </ec>
-            <rcw default="rcw_param">
-                <rcw_param type="group">
-                    <totalCount abbreviation="t" type="int" default="3000"/>
-                    <angle abbreviation="a" type="double" default="0"/>
-                </rcw_param>
-            </rcw>
             <aw default="aw_param">
                 <aw_param type="group">
                     <totalCount abbreviation="t" type="int" default="3000"/>
@@ -762,5 +783,5 @@
     <Sensors>
         <IMU active="false" type="xsens_imu" portLinux="/dev/ttyUSB0" baudRate="921600" sampleRate="400" PeImuGround2BodyGound="{0,0,0,0,-PI/2,PI}" PeImu2Body="{0,0,0,0,PI/2,0}"/>
     </Sensors>
-    <UDP remote_ip="192.168.1.101" remote_port="6661" local_port="6660"/>
+    <UDP remote_ip="192.168.1.103" remote_port="6661" local_port="6660"/>
 </RobotIX>

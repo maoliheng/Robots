@@ -294,12 +294,13 @@ namespace Robots
 			std::copy_n(alignPee, 18, realParam.alignPee);
 			std::copy_n(recoverPee, 18, realParam.recoverPee);
 			//for test
-			if (param.count % 1000 == 0)
+            if (param.count == 0)
 			{
-				rt_printf("param.count: %d\n", param.count);
-				rt_printf("realParam.count: %d\n", realParam.count);
-			}
-			int ret = Robots::Gait::recoverGait(robot, param);
+                rt_printf("realParam.recoverPee: \n%f %f %f %f %f %f %f %f %f \n%f %f %f %f %f %f %f %f %f \n",
+                    realParam.recoverPee[0], realParam.recoverPee[1], realParam.recoverPee[2], realParam.recoverPee[3], realParam.recoverPee[4], realParam.recoverPee[5], realParam.recoverPee[6], realParam.recoverPee[7], realParam.recoverPee[8],
+                    realParam.recoverPee[9], realParam.recoverPee[10], realParam.recoverPee[11], realParam.recoverPee[12], realParam.recoverPee[13], realParam.recoverPee[14], realParam.recoverPee[15], realParam.recoverPee[16], realParam.recoverPee[17]);
+            }
+            int ret = Robots::Gait::recoverGait(robot, realParam);
             return ret;
 		}
 
@@ -363,22 +364,60 @@ namespace Robots
 
             for (auto &i : params)
             {
-                if (i.first == "totalCount")
+                if (i.first == "all")
                 {
-                    param.totalCount = std::stoi(i.second);
+                    std::fill_n(param.active_motor, MOTOR_NUM, true);
+                }
+                else if (i.first == "first")
+                {
+                    std::fill_n(param.active_motor, MOTOR_NUM, false);
+                    std::fill_n(param.active_motor + 0, 3, true);
+                    std::fill_n(param.active_motor + 6, 3, true);
+                    std::fill_n(param.active_motor + 12, 3, true);
+                }
+                else if (i.first == "second")
+                {
+                    std::fill_n(param.active_motor, MOTOR_NUM, false);
+                    std::fill_n(param.active_motor + 3, 3, true);
+                    std::fill_n(param.active_motor + 9, 3, true);
+                    std::fill_n(param.active_motor + 15, 3, true);
                 }
                 else if (i.first == "motor")
                 {
                     int id = { std::stoi(i.second) };
                     if (id < 0 || id > MOTOR_NUM - 1)throw std::runtime_error("invalid param in basicParse func");
+
                     std::fill_n(param.active_motor, MOTOR_NUM, false);
                     param.active_motor[id] = true;
-
-                    param.motor_id = std::stoi(i.second);
                 }
-                else if (i.first == "length")
+                else if (i.first == "physical_motor")
                 {
-                    param.length = std::stod(i.second);
+                    int id = { std::stoi(i.second) };
+                    if (id < 0 || id > MOTOR_NUM - 1)throw std::runtime_error("invalid param in basicParse func");
+
+                    std::fill_n(param.active_motor, MOTOR_NUM, false);
+                    param.active_motor[aris::server::ControlServer::instance().controller().motionAtPhy(id).absID()] = true;
+                }
+                else if (i.first == "leg")
+                {
+                    auto leg_id = std::stoi(i.second);
+                    if (leg_id < 0 || leg_id > 5)throw std::runtime_error("invalid param in parseRecover func");
+
+                    std::fill_n(param.active_motor, MOTOR_NUM, false);
+                    std::fill_n(param.active_motor + leg_id * 3, 3, true);
+                }
+                else if (i.first == "waist")
+                {
+                    std::fill_n(param.active_motor, MOTOR_NUM, false);
+                    param.active_motor[18] = true;
+                }
+                else if (i.first == "totalCount")
+                {
+                    param.totalCount = std::stoi(i.second);
+                }
+                else if (i.first == "distance")
+                {
+                    param.distance = std::stod(i.second);
                 }
             }
             msg_out.copyStruct(param);
@@ -390,20 +429,20 @@ namespace Robots
 
             const double s = -0.5*cos(PI * (param.count + 1) / param.totalCount) + 0.5; //s从0到1.
 
-            static double beginPin[MOTOR_NUM];
+            static double beginMotPos[MOTOR_NUM];
+
             if (param.count == 0)
             {
-                std::copy_n(param.motion_feedback_pos->data(), MOTOR_NUM, beginPin);
-                //for test
-                rt_printf("beginPin: \n");
-                for (int i = 0; i < MOTOR_NUM; ++i)
-                {
-                    rt_printf("%f ", beginPin[i]);
-                }
-                rt_printf("\n");
+                std::copy_n(param.motion_feedback_pos->data(), MOTOR_NUM, beginMotPos);
             }
 
-            robot.motionPool().at(param.motor_id).setMotPos(beginPin[param.motor_id] + param.length * s);
+            for (int i = 0; i < MOTOR_NUM; ++i)
+            {
+                if(param.active_motor[i])
+                {
+                    robot.motionPool().at(i).setMotPos(beginMotPos[i] + param.distance * s);
+                }
+            }
 
             return param.totalCount - param.count - 1;
         }
