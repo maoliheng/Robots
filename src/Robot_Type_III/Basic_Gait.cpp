@@ -277,7 +277,7 @@ namespace Robots
 				alignPee[7] += -h;
 				alignPee[8] = d;
 				alignPee[16] += -h;
-				alignPee[17] = -d;
+                alignPee[17] = d;
 				recoverPee[1] += h;
 				recoverPee[2] = -d;
 				recoverPee[10] += h;
@@ -285,7 +285,7 @@ namespace Robots
 				recoverPee[7] += -h;
 				recoverPee[8] = d;
 				recoverPee[16] += -h;
-				recoverPee[17] = -d;
+                recoverPee[17] = d;
 				//for test
 				rt_printf("l: %f\n", l);
 			}
