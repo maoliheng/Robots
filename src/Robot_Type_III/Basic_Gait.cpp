@@ -270,13 +270,13 @@ namespace Robots
 				double l = recoverPee[8] - recoverPee[5];
 				double h = l*std::sin(theta);
 				double d = l*std::cos(theta);
-				alignPee[1] += h;
+                alignPee[1] += h;
 				alignPee[2] = -d;
-				alignPee[10] += h;
+                alignPee[10] += h;
 				alignPee[11] = -d;
-				alignPee[7] += -h;
+                alignPee[7] += -h;
 				alignPee[8] = d;
-				alignPee[16] += -h;
+                alignPee[16] += -h;
                 alignPee[17] = d;
 				recoverPee[1] += h;
 				recoverPee[2] = -d;
@@ -693,74 +693,6 @@ namespace Robots
 			rt_printf("force on body: %f  %f  %f  %f  %f  %f \n", force_on_body[0], force_on_body[1], force_on_body[2], force_on_body[3], force_on_body[4], force_on_body[5]);
 
 			return 0;
-		}
-
-		auto waistPreHomeParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void
-		{
-			WaistPreHomeParam param;
-
-			std::fill_n(param.active_motor, MOTOR_NUM, false);
-			for (auto &i : params)
-			{
-				if (i.first == "offset")
-				{
-					param.offset = std::stod(i.second);
-				}
-				if (i.first == "velocity")
-				{
-					param.vel = std::stod(i.second);
-				}
-			}
-
-			msg_out.copyStruct(param);
-		}
-		auto waistPreHomeGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int
-		{
-			auto &robot = static_cast<Robots::RobotTypeIII &>(model);
-			auto &param = static_cast<const WaistPreHomeParam &>(param_in);
-
-			static aris::server::ControlServer &cs = aris::server::ControlServer::instance();
-			int input2count = cs.controller().motionAtAbs(18).pos2countRatio();
-			std::int32_t remain_count = static_cast<std::int32_t>(std::fabs(param.offset / param.vel) * 1000);
-
-			//trigger
-			static bool is_homed;
-			static std::int32_t offset_count;
-			if (param.count == 0)
-			{
-				is_homed = false;
-				offset_count = 0;
-			}
-
-			double fdback_pos = static_cast<double>(param.motion_raw_data->at(18).feedback_pos) / input2count;
-			double mot_pos = fdback_pos + param.vel*0.001; //单位m
-			robot.motionPool().at(18).setMotPos(mot_pos);
-
-			auto fdback_dgi = param.motion_raw_data->at(18).feedback_dgi;
-			if (is_homed)
-			{
-				++offset_count;
-				if (offset_count > remain_count)
-				{
-					return 0;
-				}
-			}
-			else
-			{
-				if ((fdback_dgi & 0x00300000) == 0x00200000)
-				{
-					is_homed = true;
-					rt_printf("inversely homed");
-				}
-			}
-			//test
-			if (param.count % 100 == 0)
-			{
-				rt_printf("condition:%x\t", fdback_dgi & 0x00300000);
-				rt_printf("feedback_dgi:%x\t", fdback_dgi);
-				rt_printf("feedback_pos:%f\n", fdback_pos);
-			}
-			return 1;
 		}
 
 		auto adjustWaistParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out) -> void
