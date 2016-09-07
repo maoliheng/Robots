@@ -66,14 +66,6 @@ namespace Robots
 		auto resetOriginParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
 		auto resetOriginGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
 
-		struct WaistPreHomeParam final :public aris::server::GaitParamBase
-		{
-			double vel{ 0.002 }; //速度
-			double offset{ 0.005 }; //触发行程开关后再走5mm
-		};
-		auto waistPreHomeParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
-		auto waistPreHomeGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int;
-
 		struct AdjustWaistParam final :public aris::server::GaitParamBase
 		{
 			std::int32_t totalCount{ 3000 };
