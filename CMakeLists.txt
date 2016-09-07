@@ -140,7 +140,7 @@ set(INCLUDE_HEADER_FILES ${INCLUDE_HEADER_FILES} ${FULL_H})
 ################################### build tests for Robots ####################################
 enable_testing()
 
-add_executable(test_simple_walk test/test_simple_walk.cpp test/creeping_gait.cpp)
+add_executable(test_simple_walk test/test_simple_walk.cpp test/creeping_gait.cpp test/cross_chasm.cpp)
 target_link_libraries(test_simple_walk ${ALL_LINK_LIB})
 add_test(NAME test_simple_walk COMMAND test_simple_walk)
 
@@ -182,7 +182,7 @@ if(UNIX)
 	set(CMAKE_INSTALL_PREFIX "/usr/Robots2")
 endif(UNIX)
 if(WIN32)
-	set(CMAKE_INSTALL_PREFIX "C:/Robots2")
+	set(CMAKE_INSTALL_PREFIX "C:/Robots")
 endif(WIN32)
 
 install(TARGETS Robot_Type_I Robot_Type_II Robot_Type_III Robot_Base ARCHIVE DESTINATION lib)

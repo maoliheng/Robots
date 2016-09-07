@@ -4,6 +4,7 @@
 #include <Robot_Type_III.h>
 #include <Basic_Gait.h>
 #include "creeping_gait.h"
+#include "cross_chasm.h"
 
 
 Robots::RobotTypeIII rbt;
@@ -40,15 +41,15 @@ int main_test(int argc, char *argv[])
 #endif
 	
 	double beginEE[]{
-		-0.3, -0.85, -0.65,
-		-0.45, -0.85, 0,
-		-0.3, -0.85, 0.65,
-		0.3, -0.85, -0.65,
-		0.45, -0.85, 0,
-		0.3, -0.85, 0.65 };
+		-0.3, -0.95, -0.65,
+		-0.45, -0.95, 0,
+		-0.3, -0.95, 0.65,
+		0.3, -0.95, -0.65,
+		0.45, -0.95, 0,
+		0.3, -0.95, 0.65 };
 
 	double beginPE[6]{ 0 };
-	double beginWa{ 0.2 };
+	double beginWa{ 0 };
 
 	//ÅÀÆÂ²âÊÔ
 	//double phi = PI / 9; //²àÆÂ½Ç¶È
@@ -58,17 +59,13 @@ int main_test(int argc, char *argv[])
 	//}
 	//beginPE[3] = phi;
 	
-	//walkParam wk_param;
-	//wk_param.totalCount = 2000;
-	//wk_param.n = 2;
-	//wk_param.beta = 0;
-	//wk_param.alpha = 0;
-	//wk_param.d = 0.5;
-
-	Robots::Gait::RecoverParam rc_param;
-	rc_param.active_leg[1] = false;
-	rc_param.active_leg[3] = false;
-	rc_param.active_leg[5] = false;
+	Robots::Gait::WalkParam wk_param;
+	wk_param.totalCount = 2000;
+	wk_param.n = 1;
+	wk_param.beta = 0;
+	wk_param.alpha = 0;
+	wk_param.h = 0.1;
+	wk_param.d = 1.3;
 
 	Robots::Gait::AdjustWaistParam aw_param;
 	aw_param.angle = 0;
@@ -77,12 +74,18 @@ int main_test(int argc, char *argv[])
 	cp_param.n = 3;
 	cp_param.d = 0.4;
 
+	ccParam cc_param;
+	cc_param.chasmWidth = 0.8;
+	cc_param.isBackward = true;
+	cc_param.stepHeight = 0.1;
+	cc_param.totalCount = 2000;
+
 	rbt.SetPeb(beginPE);
 	rbt.SetWa(beginWa);
 	rbt.SetPee(beginEE);
 	
-	//auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test.cmd", Robots::Gait::adjustWaistGait, aw_param, 50);
-	auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\creeping.cmd", creepingGait, cp_param, 50);
+	//auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test.cmd", Robots::Gait::walkGait, wk_param, 50);
+	auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\creeping.cmd", crossChasmGait, cc_param, 50);
 
 	result.saveToTxt("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test");
 
