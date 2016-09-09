@@ -2,7 +2,7 @@
 
 auto moveSingleLegParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg)->void
 {
-	mslParam param;
+	MslParam param;
 
 	for (auto &i : params)
 	{
@@ -45,7 +45,7 @@ auto moveSingleLegParse(const std::string &cmd, const std::map<std::string, std:
 auto moveSingleLegGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase &param_in)->int
 {
 	auto &robot = static_cast<Robots::RobotTypeIII &>(model);
-	auto &param = static_cast<const mslParam &>(param_in);
+	auto &param = static_cast<const MslParam &>(param_in);
 
 	static double beginPee[3], targetPee[3];
 	static double beginWa;
@@ -76,5 +76,7 @@ auto moveSingleLegGait(aris::dynamic::Model &model, const aris::dynamic::PlanPar
 		Pee[i] = beginPee[i] * (1 - s) + targetPee[i] * s;
 	}
 	robot.SetWa(beginWa);
-	robot.pLegs[id]->SetPee(Pee);
+	robot.pLegs[id]->SetPee(Pee, robot.body());
+
+	return param.totalCount - param.count - 1;
 }

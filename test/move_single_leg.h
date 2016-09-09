@@ -1,8 +1,6 @@
 #ifndef MOVE_SINGLE_LEG_H
 #define MOVE_SINGLE_LEG_H
 
-#define CROSS_CHASM_H
-
 #include <iostream>
 #include <cstring>
 #include <iomanip>
@@ -11,7 +9,6 @@
 #include <map>
 #include <string>
 #include <stdlib.h>
-#include <atomic>
 
 #include <aris.h>
 #include <Robot_Type_III.h>
@@ -20,7 +17,7 @@
 #define PI 3.141592653589793
 #endif
 
-struct mslParam final :public aris::server::GaitParamBase
+struct MslParam final :public aris::server::GaitParamBase
 {
 	std::int32_t totalCount{ 3000 };
 	int legID{ 0 };

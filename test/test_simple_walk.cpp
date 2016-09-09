@@ -5,7 +5,7 @@
 #include <Basic_Gait.h>
 #include "creeping_gait.h"
 #include "cross_chasm.h"
-
+#include "move_single_leg.h"
 
 Robots::RobotTypeIII rbt;
 
@@ -80,12 +80,20 @@ int main_test(int argc, char *argv[])
 	cc_param.stepHeight = 0.1;
 	cc_param.totalCount = 2000;
 
+	MslParam msl_param;
+	msl_param.legID = 0;
+	msl_param.displacement[0] = 0.05;
+	msl_param.displacement[1] = 0.1;
+	msl_param.displacement[2] = -0.15;
+	msl_param.isAbsolute = false;
+	msl_param.totalCount = 2000;
+
 	rbt.SetPeb(beginPE);
 	rbt.SetWa(beginWa);
 	rbt.SetPee(beginEE);
 	
 	//auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test.cmd", Robots::Gait::walkGait, wk_param, 50);
-	auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\creeping.cmd", crossChasmGait, cc_param, 50);
+	auto result = rbt.simToAdams("G:\\Hexapod\\Robots_LJM_build\\simAdams\\msl_test.cmd", moveSingleLegGait, msl_param, 50);
 
 	result.saveToTxt("G:\\Hexapod\\Robots_LJM_build\\simAdams\\test");
 
