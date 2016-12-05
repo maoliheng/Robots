@@ -17,26 +17,26 @@ namespace Robots
 		std::int32_t recover_count{ 3000 };
 		std::int32_t align_count{ 3000 };
 		bool active_leg[6]{ true,true,true,true,true,true };
-		double margin_offset{0.01};//meter
+		double margin_offset{ 0.01 };//meter
 		double alignPee[18]
-		{ -0.3,   -0.75,   -0.65,
-			-0.45,  -0.75,   0,
-			-0.3,   -0.75,    0.65,
-			0.3,   -0.75,    -0.65,
-			0.45,  -0.75,    0,
-			0.3,   -0.75,     0.65 };
+		{  -0.45,   -0.75,   -0.85,
+		   -0.60,   -0.75,    0,
+		   -0.45,   -0.75,    0.85,
+			0.45,   -0.75,   -0.85,
+			0.60,   -0.75,    0,
+			0.45,   -0.75,    0.85 };
 		double recoverPee[18]
-		{ -0.3,   -0.85,   -0.65,
-			-0.45,  -0.85,   0,
-			-0.3,   -0.85,    0.65,
-			0.3,   -0.85,    -0.65,
-			0.45,  -0.85,    0,
-			0.3,   -0.85,     0.65 };
+		{  -0.45,   -0.85,   -0.85,
+		   -0.60,   -0.85,    0,
+		   -0.45,   -0.85,    0.85,
+			0.45,   -0.85,   -0.85,
+			0.60,   -0.85,    0,
+			0.45,   -0.85,    0.85 };
 	};
 	auto recoverParse(const std::string &cmd, const std::map<std::string, std::string> &params, aris::core::Msg &msg_out)->void;
 	auto recoverGait(aris::dynamic::Model &model, const aris::dynamic::PlanParamBase & plan_param)->int;
-	
-	struct WalkParam final:public aris::server::GaitParamBase
+
+	struct WalkParam final :public aris::server::GaitParamBase
 	{
 		std::int32_t totalCount{ 3000 };
 		std::int32_t n{ 2 };
