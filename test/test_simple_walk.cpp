@@ -30,7 +30,7 @@ int main_test(int argc, char *argv[])
 {
 	
 #ifdef WIN32
-	rbt.loadXml("C:\\Robots\\resource\\Robot_Type_I\\Robot_III\\Robot_III.xml");
+	rbt.loadXml("C:\\Robots\\resource\\Robot_Type_I\\Robot_XI\\Robot_XI.xml");
 	//rbt.loadXml("C:\\Robots\\resource\\Robot_Type_I\\Robot_VIII\\Robot_VIII.xml");
 #endif
 #ifdef UNIX
@@ -38,12 +38,12 @@ int main_test(int argc, char *argv[])
 #endif
 	
 	const double beginEE[]{
-		-0.3, -0.85, -0.65,
-		-0.45, -0.85, 0,
-		-0.3, -0.85, 0.65,
-		0.3, -0.85, -0.65,
-		0.45, -0.85, 0,
-		0.3, -0.85, 0.65 };
+		-0.60,   -0.85,   -0.60,
+		-0.80,   -0.85,    0,
+		-0.60,   -0.85,    0.60,
+		 0.60,   -0.85,   -0.60,
+		 0.80,   -0.85,    0,
+		 0.60,   -0.85,    0.60 };
 
 	double beginPE[6]{ 0 };
 	
@@ -57,11 +57,11 @@ int main_test(int argc, char *argv[])
 	rbt.SetPeb(beginPE);
 	rbt.SetPee(beginEE);
 	
-	auto result = rbt.simToAdams("C:\\Users\\yang\\Desktop\\test.cmd", Robots::walkGait, wk_param, 50);
+	auto result = rbt.simToAdams("D:\\Lab\\Models\\Adams\\RobotXI\\test.cmd", Robots::walkGait, wk_param, 50);
 	
-	result.saveToTxt("C:\\Users\\yang\\Desktop\\test");
+	result.saveToTxt("D:\\Lab\\Models\\Adams\\RobotXI\\test");
 
-	rbt.saveXml("C:\\Users\\yang\\Desktop\\test.xml");
+	rbt.saveXml("D:\\Lab\\Models\\Adams\\RobotXI\\test.xml");
 	
 	/*
 	Robots::WalkParam wk_param;
