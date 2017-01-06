@@ -49,14 +49,12 @@ int main_test(int argc, char *argv[])
 
     double beginPE[6]{ 0 };
 
-    /*
     Robots::WalkParam wk_param;
     wk_param.totalCount = 2000;
     wk_param.n = 3;
-    wk_param.beta = 0.3;
+    wk_param.beta = 0;
     wk_param.alpha = 0;
-    wk_param.d = 0.9;
-    */
+    wk_param.d = -0.6;
 
     mbParam mb_param;
     mb_param.totalCount = 1000;
@@ -74,7 +72,7 @@ int main_test(int argc, char *argv[])
     rbt.SetPeb(beginPE);
     rbt.SetPee(beginEE);
 
-    auto result = rbt.simToAdams("D:\\Lab\\Models\\Adams\\RobotXI\\twist_waist.cmd", twistWaistGait, tw_param, 50);
+    auto result = rbt.simToAdams("D:\\Lab\\Models\\Adams\\RobotXI\\walk.cmd", Robots::walkGait, wk_param, 50);
 
     result.saveToTxt("D:\\Lab\\Models\\Adams\\RobotXI\\test");
 
