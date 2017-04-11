@@ -54,7 +54,7 @@ int main_test(int argc, char *argv[])
     wk_param.n = 3;
     wk_param.beta = 0;
     wk_param.alpha = 0;
-    wk_param.d = -0.6;
+    wk_param.d = -0.3;
 
     mbParam mb_param;
     mb_param.totalCount = 1000;
